@@ -1,0 +1,261 @@
+<!-- AWARD BASICS -->
+<div class="column is-8">
+
+    <!-- Top note -->
+    <div class="notification is-warning is-light">
+        Please complete the form with key details about your award. This information helps ensure the award is accurately represented and clearly understood.
+    </div>
+
+    <!-- Categories include (unchanged) -->
+    <include href="views/settings/forms/categories_form.htm" />
+
+    <div class="box">
+        <!-- Award Name -->
+        <div class="field">
+            <label for="award-name" class="label">Award Name <span class="has-text-danger">*</span></label>
+            <div class="control">
+                <input
+                        class="input"
+                        type="text"
+                        id="award-name"
+                        name="award_name"
+                        value="{{ @award.award_name }}"
+                        required
+                        tabindex="1"
+                >
+            </div>
+            <check if="{{ empty(@award.award_name) }}">
+                <p class="help is-danger">You must enter an award name.</p>
+            </check>
+        </div>
+    </div>
+
+    <!-- MESSAGES & DESCRIPTIONS -->
+    <div class="box">
+        <!-- Welcome Message -->
+        <div class="field">
+            <label for="award-welcome" class="label">
+                Welcome Message
+                <a class="js-modal-trigger" data-target="welcomeHint" title="Get tips for the welcome message">
+                    <i class="fa-sharp fa-solid fa-square-question is-size-5"></i>
+                </a>
+            </label>
+            <div class="control">
+        <textarea
+                class="textarea tinyform"
+                id="award-welcome"
+                name="award_welcome"
+                tabindex="2"
+        >{{ @award.award_welcome }}</textarea>
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="field">
+            <label for="award-description" class="label">
+                Description
+                <a class="js-modal-trigger" data-target="descriptionHint" title="How to write a clear description">
+                    <i class="fa-sharp fa-solid fa-square-question is-size-5"></i>
+                </a>
+            </label>
+            <div class="control">
+        <textarea
+                class="textarea tinyform"
+                id="award-description"
+                name="award_description"
+                tabindex="3"
+        >{{ @award.award_description }}</textarea>
+            </div>
+        </div>
+
+        <!-- Eligibility & Requirements -->
+        <div class="field">
+            <label for="award_nominee_requirements" class="label">
+                Eligibility &amp; Requirements
+                <a class="js-modal-trigger" data-target="eligibilityHint" title="What to include in eligibility">
+                    <i class="fa-sharp fa-solid fa-square-question is-size-5"></i>
+                </a>
+            </label>
+            <div class="control">
+        <textarea
+                class="textarea tinyform"
+                id="award_nominee_requirements"
+                name="award_nominee_requirements"
+                tabindex="4"
+        >{{ @award.award_nominee_requirements }}</textarea>
+            </div>
+        </div>
+
+        <!-- Prize -->
+        <div class="field">
+            <label for="award-prize" class="label">
+                Prize / Position (if applicable)
+                <a class="js-modal-trigger" data-target="prizeHint" title="Describe prizes clearly">
+                    <i class="fa-sharp fa-solid fa-square-question is-size-5"></i>
+                </a>
+            </label>
+            <div class="control">
+        <textarea
+                class="textarea tinyform"
+                id="award-prize"
+                name="award_prize"
+                tabindex="5"
+        >{{ @award.award_prize }}</textarea>
+            </div>
+        </div>
+
+        <!-- Nominator Instructions -->
+        <div class="field">
+            <label for="award-questionnaire-message-nominators" class="label">
+                Nomination Question Instructions for Nominators
+                <a class="js-modal-trigger" data-target="questionnaireHint" title="Guidance shown to nominators">
+                    <i class="fa-sharp fa-solid fa-square-question is-size-5"></i>
+                </a>
+            </label>
+            <div class="control">
+        <textarea
+                class="textarea tinyform"
+                id="award-questionnaire-message-nominators"
+                name="award_questionnaire_message_nominators"
+                tabindex="6"
+        >{{ @award.award_questionnaire_message_nominators }}</textarea>
+            </div>
+            <p class="help">Shown when nominators reach the questions section.</p>
+        </div>
+
+        <!-- Nominee Instructions (conditional) -->
+        <check if="{{ @award.require_nominee == 1 || @award.self_nominate == 1 }}">
+            <div class="field">
+                <label for="award-questionnaire-message-nominees" class="label">
+                    Nomination Questions for Nominees
+                    <a class="js-modal-trigger" data-target="questionnaireHint" title="Guidance shown to nominees">
+                        <i class="fa-sharp fa-solid fa-square-question is-size-5"></i>
+                    </a>
+                </label>
+                <div class="control">
+          <textarea
+                  class="textarea tinyform"
+                  id="award-questionnaire-message-nominees"
+                  name="award_questionnaire_message_nominees"
+                  tabindex="7"
+          >{{ @award.award_questionnaire_message_nominees }}</textarea>
+                </div>
+                <p class="help">Shown when nominees reach the questionnaire section.</p>
+            </div>
+        </check>
+
+        <!-- Success Message -->
+        <div class="field">
+            <label for="success-message" class="label">
+                Success Message <span class="has-text-danger">*</span>
+                <a class="js-modal-trigger" data-target="successHint" title="What users see after submitting">
+                    <i class="fa-sharp fa-solid fa-square-question is-size-5"></i>
+                </a>
+            </label>
+            <div class="control">
+        <textarea
+                class="textarea tinyform"
+                id="success-message"
+                name="award_success_message"
+                tabindex="8"
+        >{{ @award.award_success_message }}</textarea>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- JUDGING MODULE -->
+    <p class="content is-size-5">
+        Complete this section if you choose to use our very useful <strong>judging module</strong> to assist you in your evaluations.
+        <a href="#" class="js-modal-trigger" data-target="judgingModule">Learn more</a>.
+    </p>
+
+    <div class="box">
+        <!-- Judging Criteria -->
+        <div class="field">
+            <label for="judging-criteria" class="label">
+                Judging Criteria
+                <a class="js-modal-trigger" data-target="judgeHint" title="Tips for criteria clarity">
+                    <i class="fa-sharp fa-solid fa-square-question is-size-5"></i>
+                </a>
+            </label>
+            <p class="help">Use this area to explain the overall requirements and expectations you have for the judges.</p>
+            <div class="control">
+        <textarea
+                class="textarea tinyform"
+                name="award_judging"
+                id="judging-criteria"
+                tabindex="9"
+        >{{ isset(@award.award_judging) ? @award.award_judging : '' }}</textarea>
+            </div>
+        </div>
+
+        <!-- Show Criteria on Welcome -->
+        <div class="field">
+            <div class="control">
+                <label class="checkbox">
+                    <input type="hidden" name="show_judging_criteria_on_welcome" value="">
+                    <input
+                            type="checkbox"
+                            class="chkbox"
+                            name="show_judging_criteria_on_welcome"
+                            id="show-judging-criteria-on-welcome"
+                            value="1"
+                            tabindex="10"
+                            {{ isset(@award.show_judging_criteria_on_welcome)==1 ? 'checked' : ''}}
+                    >
+                    <strong>Show Judging Criteria (above) on the Welcome page</strong>
+                </label>
+            </div>
+            <p id="show-judging-criteria-help" class="help"></p>
+        </div>
+
+        <!-- Permit Blind Judging -->
+        <div class="field">
+            <div class="control">
+                <label class="checkbox">
+                    <input type="hidden" name="permit_blind_judging" value="">
+                    <input
+                            type="checkbox"
+                            class="chkbox"
+                            name="permit_blind_judging"
+                            id="permit_blind_judging"
+                            value="on"
+                            tabindex="11"
+                            {{ @award.permit_blind_judging=='on' ? 'checked' : ''}}
+                    >
+                    <span
+                            title="If checked, judges will NOT see the names or email addresses of the nominees. You will not be able to permit nominators to upload any files."
+                    >
+            Permit blind judging
+          </span>
+                </label>
+            </div>
+            <p id="permit-blind-judging-help" class="help is-danger"></p>
+        </div>
+
+        <!-- Permit Vote Changing -->
+        <div class="field">
+            <div class="control">
+                <label class="checkbox">
+                    <input type="hidden" name="permit_vote_changing" value="">
+                    <input
+                            type="checkbox"
+                            class="chkbox"
+                            name="permit_vote_changing"
+                            id="permit_vote_changing"
+                            value="on"
+                            tabindex="12"
+                            {{ @award.permit_vote_changing=='on' ? 'checked' : ''}}
+                    >
+                    <span title="If checked, judges will be able to change their votes up until judging ends.">
+            Permit vote changing
+          </span>
+                </label>
+            </div>
+            <p id="permit-vote-changing-help" class="help"></p>
+        </div>
+    </div>
+
+</div>

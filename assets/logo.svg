@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128" role="img" aria-label="NominatePro Logo">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4F46E5"/>
+      <stop offset="100%" stop-color="#10B981"/>
+    </linearGradient>
+  </defs>
+  <rect rx="28" ry="28" width="128" height="128" fill="url(#g)"/>
+  <path d="M64 26l10.6 21.5 23.7 3.4-17.1 16.7 4 23.5L64 78.6 42.8 91.1l4-23.5L29.7 51l23.7-3.4z" fill="#fff"/>
+  <circle cx="64" cy="64" r="10" fill="#fff" opacity="0.9"/>
+</svg>

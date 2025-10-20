@@ -1,0 +1,37 @@
+<div class="modal" id="notify-of-changes">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Notify Participants of Changes Made to this Award</p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <p class="content">Complete the form below explaining what changes you have made and any other instructions or information you feel is necessary to inform and have participants update their nomination. Once you submit the form, we will email all current users who have submitted a nomination for this award. Currently, {{ @SESSION.ongoing_nominations + @SESSION.completed_nominations }} nominations have been submitted or are in the process of being submitted.</p>
+
+            <form action="/app/notify/{{ @award_slug }}" method="POST">
+                <div class="field">
+                    <label class="label">Explanation of Changes</label>
+                    <div class="control">
+                        <textarea class="textarea" placeholder="Enter explanation here"></textarea>
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="label">Additional Instructions or Information</label>
+                    <div class="control">
+                        <textarea class="textarea" placeholder="Enter instructions or information here"></textarea>
+                    </div>
+                </div>
+                <div class="notification is-warning is-light warning-border">
+                    <p>If you would like to email yourself or someone else to test this, enter the email address in the form below. <strong>The email will NOT be sent to any participants.</strong></p>
+                    <div class="field">
+                        <label class="label" for="test-email"></label>
+                        <div class="control">
+                            <input type="text" class="input" name="test_email" id="test-email">
+                        </div>
+                    </div>
+                </div>
+                <button class="button is-success">Submit</button>
+            </form>
+        </section>
+    </div>
+</div>

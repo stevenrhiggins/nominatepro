@@ -1,0 +1,208 @@
+<div class="columns is-multiline" {{ isset(@data.scoring_module) == 1 ? '' : 'class="is-hidden"' }}>
+    <div class="column is-12">
+        <h1 class="is-size-4 my-3">{{@title}}</h1>
+        <a href="/app/questions/{{@SESSION.type}}/form" class="button is-responsive js-modal-trigger is-pulled-left mt-2">Add a Question</a>
+    </div>
+
+    <div class="column is-10 content">
+        <p  class="content notification has-background-warning-light">Use this area to create questions for nominators/nominees</strong> for this nomination/award. <i class="fa-solid fa-star has-text-danger"></i> Do not include questions asking for the names or email addresses of the nominators or nominees as this application automatically asks for that information. If you need to collect additional information about a nominee/nominator, you should first look at the <strong>Contact Information Forms</strong> where you can choose from a list of options.</p>
+    </div>
+
+    <div class="column is-10 content">
+        <form action="/app/questions/{{@data.award_slug}}/{{@data.question_slug}}/put" method="POST" id="question-update-form">
+            <input type="hidden" name="date_edited" value="{{@data.date_edited}}" readonly>
+            <input type="hidden" name="token" value="{{ @SESSION.csrf }}" readonly>
+            <div class="field">
+                <label class="label">Question</label>
+                <div class="control">
+                    <textarea class="textarea tinyform" name="question" role="textbox" required tabindex="1">{{ @data.question | raw }}</textarea>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Who is the question for?</label>
+                <div class="control">
+                    <div class="select">
+                        <select name="type" id="type" tabindex="2">
+                            <option value="{{ @data.type }}" selected>Current Selection - The {{ ucfirst(@data.type) }}</option>
+                            <option value="nominator">The Nominator</option>
+                            <option value="nominee">The Nominee</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!-- TODO MAKE SURE THIS WORKS -->
+            <div class="field">
+                <label class="label">Select a Section for this Question</label>
+                <div class="control">
+                    <div class="select">
+                        <select name="question_section_slug" required role="listbox" tabindex="2">
+                            <option role="option" selected value="{{ @data.question_section_slug }}">Current Selection - {{ @data.section_name }}</option>
+                            <repeat group="{{ @sections }}" value="{{ @section }}">
+                                <option role="option" value="{{ @section.section_slug }}">{{ @section.section }}</option>
+                            </repeat>
+                        </select>
+                    </div>
+                </div>
+                <a href="/app/sections/index" style="color: #000"><u>Add a new section</u></a>
+            </div>
+            <div class="field">
+                <label class="checkbox">
+                    <div class="control">
+                        <input type="hidden" name="display_status">
+                        <input type="checkbox" name="display_status" role="checkbox" tabindex="3" value="on" {{ @data.display_status == 'on' ? 'checked' : '' }}>
+                        Display this question?
+                    </div>
+                </label>
+            </div>
+            <div class="field">
+                <label class="checkbox">
+                    <div class="control">
+                        <input type="hidden" name="required">
+                        <input type="checkbox" name="required" role="checkbox" tabindex="4" value="on" {{ @data.required == 'on' ? 'checked' : '' }}>
+                        Check if this question is required to be completed.
+                    </div>
+                </label>
+            </div>
+
+            <p class="content has-text-weight-semibold">Please select the type of form element to be used in the response to this question.</p>
+
+            <!--  TEXTAREA-->
+            <div class="field">
+                <div class="control">
+                    <label for="checktextarea" class="radio">
+                        <input id="checktextarea" class="response-type" type="radio" name="input_type" value="textarea" role="textbox" tabindex="5" {{ @data.input_type == 'textarea' ? 'checked' : '' }}>
+                        Textarea is useful when you want to allow users to enter a sizeable amount of free-form text
+                    </label>
+                </div>
+            </div>
+
+            <!--  TEXT-->
+            <include href="views/settings/formTemplates/radioButtons.htm" with="fieldId='checktext', fieldName='input_type', radioValue='text', fieldValue=@data.input_type, tabindex=7, description=@text_description" />
+            <div class="field">
+                <div class="control">
+                    <label for="checktext" class="radio">
+                        <input id="checktext" class="response-type" type="radio" name="input_type" value="text" tabindex="6" {{ @data.input_type == 'text' ? 'checked' : '' }}>
+                        Text defines a single line of text input such as a name.
+                    </label>
+                </div>
+            </div>
+
+            <!--  CHECKBOX-->
+            <div class="field">
+                <div class="control">
+                    <label for="checkbox" class="radio">
+                        <input id="checkbox" class="response-type" type="radio" name="input_type" value="checkbox" role="checkbox" tabindex="7" {{ @data.input_type == 'checkbox' ? 'checked' : '' }}>
+                        Checkboxes let users select one or more options of a limited number of choices.
+                    </label>
+                </div>
+            </div>
+
+            <div class="{{ @data.input_type != 'checkbox' ? 'is-hidden' : '' }}" id="checkbox-options">
+
+                <div class="field mt-3">
+                    <label>Comma separate the values you would like to use for this question (e.g. Item1,Item2,Item3). You can use any values.</label>
+                    <div class="control">
+                        <input class="input" type="text" name="checkbox_values" id="checkbox-values" value="{{ @data.input_type == 'checkbox' ? @data.checkbox_values : '' }}" tabindex="8">
+                    </div>
+                    <div class="has-text-danger" id="complete-checkbox-values" style="display: none; font-weight: bold">Please complete this field first.</div>
+                </div>
+
+                <div class="field my-3">
+                    <label><strong>Do you want to include a follow-up question?</strong><br> For instance if the user selects one of the values you've entered above, will you require additional information? If so, enter the value from above that you want to be the trigger to display the question. You will be able to write the question after you have submitted this form.</label>
+                    <div class="control">
+                        <input onfocus="checkValuesInput('checkbox')" class="input" type="text" name="checkbox_fu_trigger" id="checkbox-fu-trigger"
+                               <check if="{{ @data.checkbox_fu_trigger }}">
+                                   value="{{ @data.checkbox_fu_trigger }}"
+                               </check> tabindex="9">
+                    </div>
+                </div>
+            </div>
+
+            <!--  RADIO-->
+            <div class="field">
+                <div class="control">
+                    <label for="radio" class="radio">
+                        <input id="radio" class="response-type" type="radio" name="input_type" value="radio" role="radio" tabindex="10" {{ @data.input_type == 'radio' ? 'checked' : '' }}>
+                        Radio buttons let users select only one of multiple choices.
+                    </label>
+                </div>
+            </div>
+
+            <div class="{{ @data.input_type != 'radio' ? 'is-hidden' : '' }}" id="radio-options">
+
+                <div class="field">
+                    <label>Comma separate the values you would like to use for this question (e.g. yes, no OR true, false). You can use any values.</label>
+                        <div class="control">
+                            <input class="input" type="text" name="radio_values" id="radio-values" value="{{ @data.input_type == 'radio' ? @data.radio_values : '' }}" tabindex="11">
+                        </div>
+                    <div class="has-text-danger" id="complete-radio-values" style="display: none; font-weight: bold">Please complete this field first.</div>
+                </div>
+
+                <div class="field my-3">
+                    <label><strong>Do you want to include a follow-up question?</strong><br> For instance if the user selects one of the values you've entered above, will you require additional information? If so, enter the value from above that you want to be the trigger to display the question. You will be able to write the question after you have submitted this form.</label>
+                    <div class="control">
+                        <input onfocus="checkValuesInput('radio')" class="input" type="text" name="radio_fu_trigger" id="radio-fu-trigger"
+                            <check if="{{ @data.radio_fu_trigger }}">
+                                value="{{ @data.radio_fu_trigger }}"
+                            </check> tabindex="12">
+                    </div>
+                </div>
+            </div>
+            <!--  DATE-->
+            <div class="field">
+                <div class="control">
+                    <label for="checkdate" class="radio">
+                        <input id="checkdate" class="response-type" type="radio" name="input_type" value="date" role="radio" tabindex="13" {{ @data.input_type == 'date' ? 'checked' : '' }}>
+                        Date allows users to enter or select a date.
+                    </label>
+                </div>
+            </div>
+
+            <!--  NUMBER-->
+            <div class="field">
+                <div class="control">
+                    <label for="checknumber" class="radio">
+                        <input id="checknumber" class="response-type" type="radio" name="input_type" value="number" role="radio" tabindex="14" {{ @data.input_type == 'number' ? 'checked' : '' }}>
+                        Number allows users to enter a number.
+                    </label>
+                </div>
+            </div>
+
+            <!--  EMAIL-->
+            <div class="field">
+                <div class="control">
+                    <label for="checkemail" class="radio">
+                        <input id="checkemail" class="response-type" type="radio" name="input_type" value="email"  role="radio" tabindex="15" {{ @data.input_type == 'email' ? 'checked' : '' }}>
+                        Email allows users to enter an email address and ensures the proper format.
+                    </label>
+                </div>
+            </div>
+            <hr>
+            <div class="field">
+                <div class="control pt-2">
+                    <label for="scoring-module" class="checkbox">
+                        <input class="checkbox" type="hidden" name="scoring_module">
+                        <input id="scoring-module" class="response-type" type="checkbox" value="1" name="scoring_module" tabindex="16" onclick="scoringModule()" {{ @data.scoring_module == 1 ? 'checked' : '' }}>
+                        {{ @data.scoring_module == 1 ? 'Uncheck if you no longer want to use the scoring module.' : 'Check if you want to use the scoring module for judges.' }}
+<!--                        IF CHECK/UNCHECK TURNS ON/OFF THE questions_judging_forms-->
+                    </label>
+                </div>
+            </div>
+
+            <include href="/views/settings/forms/questions_judging_forms.htm" />
+
+            <div class="field is-grouped">
+                <div class="control mt-3">
+                    <button class="button is-success" tabindex="100">Submit</button>
+                </div>
+                <div class="control mt-3">
+                    <a href="/app/questions/{{ @SESSION.type }}/index" class="button is-link is-light" tabindex="101">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+

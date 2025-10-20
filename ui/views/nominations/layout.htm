@@ -1,0 +1,36 @@
+<include href="/views/header.htm" />
+
+<section class="section">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-8-desktop is-12-mobile">
+
+                <!-- logo area -->
+                <div class="mb-5">
+                    <check if="{{ @award.sponsor_logo }}">
+                        <true>
+                            <figure class="image is-inline-block" style="max-width: 220px;">
+                                <img src="/assets/logos/{{ @award.award_slug }}/{{ @award.sponsor_logo }}"
+                                     alt="{{ @award.title }} Sponsor Logo">
+                            </figure>
+                        </true>
+                        <false>
+                            <figure class="image is-inline-block" style="max-width: 220px;">
+                                <img src="/assets/logos/nominatePROLogoAndMark.jpg"
+                                     alt="NominatePRO Default Logo">
+                            </figure>
+                        </false>
+                    </check>
+                </div>
+
+                <!-- main content -->
+                <div class="box has-background-light p-5">
+                    <include href="{{ @content }}" />
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<include href="/views/footer.htm" />

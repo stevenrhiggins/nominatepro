@@ -1,0 +1,49 @@
+<div class="columns is-multiline">
+    <div class="column is-12">
+        <h1 class="is-size-4 my-3">{{ @PAGE_TITLE }}</h1>
+    </div>
+
+    <div class="column is-10 content">
+        <form action="{{ @action }}" method="POST" >
+            <input type="hidden" name="token" value="{{ @SESSION.csrf_token }}">
+            <input type="hidden" name="question_slug" value="{{ isset(@questionSlug) ? @questionSlug : '' }}">
+            <div class="field">
+                <div class="control">
+                    <label for="fu-question" class="label">{{ @enter_followup_question }}</label>
+                    <textarea class="textarea tinyform" name="fu_question" required tabindex="1" id="fu-question">
+                        <check if="{{ isset(@question.fu_question) }}">
+                            <true>
+                                {{ @question.fu_question | raw }}
+                            </true>
+                            <false>
+                            </false>
+                        </check>
+                    </textarea>
+                </div>
+            </div>
+            <p class="has-text-weight-semibold">{{ @select_form_element }}</p>
+            <!--    TEXTAREA-->
+            <include href="views/settings/formTemplates/radioButtons.htm" with="fieldId=checktextarea, fieldName=fu_input_type, 'radioValue=textarea, fieldValue={{isset(@question.fu_input_type) ? @question.fu_input_type : ''}}, tabindex=2, description={{@textarea_description}}" />
+            <include href="views/settings/formTemplates/radioButtons.htm" with="fieldId=checktextarea, fieldName=fu_input_type, 'radioValue=textarea, fieldValue={{isset(@question.fu_input_type) ? @question.fu_input_type : ''}}, tabindex=2, description={{@textarea_description}}" />
+            <!--    TEXT-->
+            <include href="views/settings/formTemplates/radioButtons.htm" with="fieldId=checktext, fieldName=fu_input_type, radioValue=text, fieldValue={{isset(@question.fu_input_type) ? @question.fu_input_type : ''}}, tabindex=3, description={{@text_description}}" />
+            <!--    DATE-->
+            <include href="views/settings/formTemplates/radioButtons.htm" with="fieldId=checkdate, fieldName=fu_input_type, fieldValue={{isset(@question.fu_input_type) ? @question.fu_input_type : ''}}, radioValue=date, tabindex=4, description={{@date_description}}" />
+
+            <!--    NUMBER-->
+            <include href="views/settings/formTemplates/radioButtons.htm" with="fieldId=checknumber, fieldName=fu_input_type, fieldValue={{isset(@question.fu_input_type) ? @question.fu_input_type : ''}}, radioValue=number, tabindex=5, description={{@number_description}}" />
+            <!--    EMAIL-->
+            <include href="views/settings/formTemplates/radioButtons.htm" with="fieldId=checkemail, fieldName=fu_input_type, fieldValue={{isset(@question.fu_input_type) ? @question.fu_input_type : ''}}, radioValue=email, tabindex=6, description={{@email_description}}" />
+            <div class="field is-grouped">
+                <div class="control mt-3">
+                    <button class="button is-success" tabindex="7">Submit</button>
+                </div>
+                <div class="control mt-3">
+                    <a href="{{ @cancel_route }}" class="button is-link is-light" tabindex="8">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+

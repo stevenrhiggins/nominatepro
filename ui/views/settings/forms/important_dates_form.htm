@@ -1,0 +1,108 @@
+<div class="column is-8">
+
+    <!-- Timezone note -->
+    <div class="notification is-light">
+        <strong>Note:</strong> All dates are Eastern <span title="Use ET if you observe daylight saving">Time</span>.
+    </div>
+
+    <!-- Nomination Dates -->
+    <div class="box">
+        <!-- NOMINATION START DATE -->
+        <div class="field">
+            <label for="nomination-start-date" class="label">Nomination Start Date <span class="has-text-danger">*</span></label>
+            <div class="control">
+                <input
+                        class="input"
+                        type="date"
+                        name="nomination_start_date"
+                        id="nomination-start-date"
+                        value="{{ @award.nomination_start_date }}"
+                        required
+                        tabindex="1"
+                >
+            </div>
+            <check if="{{ strcmp(@award.nomination_start_date,@award.nomination_end_date) > 0 }}">
+                <p class="help is-danger">The nomination start date is later than the nomination end date.</p>
+            </check>
+        </div>
+
+        <!-- NOMINATION END DATE -->
+        <div class="field">
+            <label for="nomination-end-date" class="label">Nomination End Date <span class="has-text-danger">*</span></label>
+            <div class="control">
+                <input
+                        class="input"
+                        type="date"
+                        name="nomination_end_date"
+                        id="nomination-end-date"
+                        value="{{ @award.nomination_end_date }}"
+                        required
+                        tabindex="2"
+                >
+            </div>
+            <check if="{{ strcmp(@award.nomination_end_date,@award.nomination_start_date) < 0 }}">
+                <p class="help is-danger">The nomination end date is earlier than the nomination start date. Please select a new date.</p>
+            </check>
+            <check if="{{ strcmp(@award.nomination_end_date,date('Y-m-d')) == 0 }}">
+                <p class="help is-danger">The nomination end date is earlier than today's date.</p>
+            </check>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Judging Module Intro -->
+    <p class="content is-size-6">
+        Complete this section if you choose to use our very helpful <strong>judging module</strong> to assist in your evaluations.
+        <a href="#" class="js-modal-trigger" data-target="judgingModule">Learn more</a>.
+    </p>
+
+    <!-- Judging Dates -->
+    <div class="box">
+        <!-- JUDGING START DATE -->
+        <div class="field">
+            <label for="judging-start-date" class="label">Judging Start Date</label>
+            <p class="help">
+                The judging start date must be after the nomination end date:
+                {{ date('F j, Y', strtotime(@award.nomination_end_date)) }}.
+            </p>
+            <div class="control">
+                <input
+                        class="input"
+                        type="date"
+                        name="judging_start_date"
+                        id="judging-start-date"
+                        tabindex="3"
+                        value="{{ strtotime(@award.judging_start_date) > strtotime(@award.nomination_end_date) && !empty(@award.require_judging) ? @award.judging_start_date : date('Y-m-d', strtotime(@award.nomination_end_date . ' +1 day')) }}"
+                        {{ !empty(@award.require_judging) ? 'required' : '' }}
+                >
+            </div>
+            <check if="{{ @award.judging_start_date > @award.judging_end_date }}">
+                <p class="help is-danger">The judging start date is later than the judging end date.</p>
+            </check>
+        </div>
+
+        <!-- JUDGING END DATE -->
+        <div class="field">
+            <label for="judging-end-date" class="label">Judging End Date</label>
+            <div class="control">
+                <input
+                        class="input"
+                        type="date"
+                        name="judging_end_date"
+                        id="judging-end-date"
+                        value="{{ isset(@award.judging_end_date) ? @award.judging_end_date : '' }}"
+                        tabindex="4"
+                        {{ !empty(@award.require_judging) ? 'required' : '' }}
+                >
+            </div>
+            <check if="{{ @award.judging_end_date < @award.judging_start_date }}">
+                <p class="help is-danger">The judging end date is earlier than the judging start date. Please select a new date.</p>
+            </check>
+            <check if="{{ isset(@award.judging_end_date) && (@award.judging_end_date < date('Y-m-d')) }}">
+                <p class="help is-danger">The judging end date is earlier than today.</p>
+            </check>
+        </div>
+    </div>
+
+</div>

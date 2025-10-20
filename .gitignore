@@ -1,0 +1,55 @@
+# -----------------------------
+# Core dependencies
+# -----------------------------
+/vendor/
+ /node_modules/
+
+# -----------------------------
+# Environment & local configs
+# -----------------------------
+.env
+.env.local
+.env.*
+*.env
+
+# -----------------------------
+# IDE and OS clutter
+# -----------------------------
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# -----------------------------
+# Logs and cache
+# -----------------------------
+/tmp/
+.cache/
+*.log
+
+# -----------------------------
+# Application-specific
+# -----------------------------
+/storage/cache/
+ /storage/logs/
+ /public/uploads/
+ /public/build/
+ /dist/
+
+# -----------------------------
+# Composer artifacts
+# -----------------------------
+composer.lock
+
+# -----------------------------
+# npm/yarn/pnpm artifacts
+# -----------------------------
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# -----------------------------
+# Optional: Testing and coverage
+# -----------------------------
+/coverage/
+.phpunit.result.cache

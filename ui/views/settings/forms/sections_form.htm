@@ -1,0 +1,20 @@
+<div class="columns is-multiline">
+    <div class="column is-8">
+        <h1 class="is-size-4 my-3">{{ @PAGE_TITLE }}</h1>
+    </div>
+    <div class="column is-8">
+        <form action="{{ @action }}" method="POST" >
+            <input type="hidden" name="token" value="{{ @SESSION.csrf_token }}">
+            <input type="hidden" name="award_slug" value="{{ @awardSlug }}">
+            <input type="hidden" name="original_section_name" value="{{ isset(@section) ? @section : '' }}">
+            <input type="hidden" name="cp_slug" value="{{ @SESSION.cp_slug }}">
+            <div class="field">
+                <label for="section" class="label">Section Name</label>
+                <div class="contact">
+                    <input class="input" name="section" value="{{ isset(@section) ? @section : ''}}" required tabindex="1" id="section"/>
+                </div>
+            </div>
+            <button class="button is-success" tabindex="2">Submit</button>
+        </form>
+    </div>
+</div>

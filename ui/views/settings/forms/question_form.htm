@@ -1,0 +1,311 @@
+<div class="columns is-multiline">
+    <div class="column is-8">
+        <h1 class="is-size-4 my-3">{{ @PAGE_TITLE }}</h1>
+    </div>
+    <div class="column is-8 content">
+        <p  class="content notification has-background-warning-light">Use this area to create, update or clone this question for the <strong>{{ @type }}</strong> for this nomination/award. <i class="fa-solid fa-star has-text-danger"></i> There is no need to ask for the names or email addresses of the nominators or nominees as this application automatically asks for that information. If you need to collect additional information about a nominee/nominator, check out the <strong>Contact Information Forms</strong> page listed in the menu where you can choose from an extensive list of options.</p>
+    </div>
+
+    <div class="column is-8">
+        <form action="{{ @action }}" method="POST">
+            <input type="hidden" name="token" value="{{ @SESSION.csrf_token }}">
+            <input type="hidden" name="award_slug" value="{{ @awardSlug }}">
+            <input type="hidden" name="fu_slug" value="{{ isset(@question.fu_slug) ? @question.fu_slug : '' }}">
+            <input type="hidden" name="question" value="{{ isset(@question.question) ? @question.question : '' }}" id="question">
+            <input type="hidden" name="scoring_module" value="{{ isset(@question.scoring_module) ? @question.scoring_module : '' }}">
+            <input type="hidden" name="open_question" value="{{ isset(@question.open_question) ? @question.open_question : '' }}">
+            <input type="hidden" name="numeric_question" value="{{ isset(@question.numeric_question) ? @question.numeric_question : '' }}">
+            <input type="hidden" name="response_anchors" value="{{ isset(@question.response_anchors) ? @question.response_anchors : '' }}">
+            <input type="hidden" name="question_value" value="{{ isset(@question.question_value) ? @question.question_value : '' }}">
+            <input type="hidden" name="rubric" value="{{ isset(@question.rubric) ? @question.rubric : '' }}">
+
+            <check if="{{ isset(@question.question_id) }}">
+
+                <div class="field">
+                    <div class="control">
+                        <label class="checkbox" for="check-for-clone">
+                            <input type="checkbox" id="check-for-clone" name="check_for_clone" value="1" tabindex="0">
+                            <strong>I want to clone this question.</strong>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="notification has-background-warning-light is-hidden" id="select-award-to-clone">
+                <strong>Use this section to copy/clone this question to another award</strong>
+                <ul style="list-style-type: disc; list-style-position: inside">
+                    <li><strong>To copy/clone to another award:</strong></li>
+                    <li>Select an award from the list</li>
+                    <li>Here's what will happen when you clone the question.
+                        <ul style="list-style-position: inside; list-style-type: lower-roman">
+                            <li>Any changes you make to the question will apply to the SELECTED award</li>
+                            <li>The section to which the question belongs will be copied to the SELECTED award</li>
+                            <li>If you have follow-up questions, they will also be copied to the SELECTED award</li>
+                        </ul>
+                    </li>
+                    <li>The original question on the current award remains unchanged</li>
+                </ul>
+                <ul style="list-style-type: disc; list-style-position: inside" class="mt-2">
+                    <li><strong>To update this question only:</strong></li>
+                    <li>Don't select an award from this list</li>
+                    <li>Make your changes and save</li>
+                    <li>Any changes you make will apply ONLY to the CURRENT award ({{ @award.award_name }}) </li>
+                </ul>
+                <div class="field mt-2">
+                    <div class="select">
+                        <select name="cloned_award_slug" tabindex="1" id="cloned-award-slug">
+                            <option id="hide-cloned-message" value="">Select an award to assign this question to</option>
+                            <<repeat group="{{@awards}}" value="{{@award}}">
+                                <option value="{{ @award.award_slug }}" class="clone_award">{{ @award.award_name }}</option>
+                            </repeat>
+                        </select>
+                    </div>
+                </div>
+                <p class="has-text-danger is-hidden" id="cloned-message"></p>
+            </div>
+            </check>
+            <div class="field">
+                <label class="label">Write the question</label>
+                <div class="control">
+                   <textarea class="textarea tinyform" name="question" required tabindex="1">
+                        <check if="{{ isset(@question.question) }}">
+                            <true>
+                                {{ @question.question | raw }}
+                            </true>
+                            <false>
+                            </false>
+                        </check>
+                    </textarea>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">Who is this question for?</label>
+                <div class="control">
+                    <check if="{{ isset(@type) }}">
+                        <true>
+                            <div class="select">
+                                <select name="type" id="type" tabindex="2">
+                                    <option value="{{ @type }}" selected>Current Selection - The {{ ucfirst(@type) }}</option>
+                                    <option value="nominator">The Nominator</option>
+                                    <option value="nominee">The Nominee</option>
+                                </select>
+                            </div>
+                        </true>
+                        <false>
+                            <p><i>This question will be for the {{ @SESSION.type }}.</i></p>
+                            <input type="hidden" name="type" value="{{ @SESSION.type }}" readonly>
+                        </false>
+                    </check>
+                </div>
+            </div>
+            <check if="{{ @sections }}">
+                <true>
+                    <div class="field">
+                        <label class="label">Select a Section for this Question</label>
+                        <div class="control">
+                            <div class="select">
+                                <select name="section_name" required role="listbox" tabindex="3" required>
+                                    <check if="{{ isset(@question.section_name) }}">
+                                        <option role="option" selected value="{{ @question.section_name }}">Current Selection - {{ @question.section_name }}</option>
+                                    </check>
+                                    <repeat group="{{ @sections }}" value="{{ @section }}">
+                                        <option role="option" value="{{ @section.section }}">{{ @section.section }}</option>
+                                    </repeat>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </true>
+                <false>
+                    <p class="has-text-danger">You haven't created any sections for your questions. Click the "Sections" menu item to create a section for this question.</p>
+                </false>
+            </check>
+            <!--DISPLAY QUESTION-->
+            <include href="views/settings/formTemplates/checkboxes.htm" with="fieldName=display_status, fieldValue=on, dataValue={{!empty(@question.display_status)}}, tabindex=4, description={{@display_question}}" />
+            <!--REQUIRE RESPONSE-->
+            <include href="views/settings/formTemplates/checkboxes.htm" with="fieldName=required, fieldValue=on, dataValue={{!empty(@question.required)}}, tabindex=5, description={{@require_response}}" />
+
+            <p class="has-text-weight-semibold">{{@select_form_element}}</p>
+
+            <!--    TEXTAREA-->
+            <include href="views/settings/formTemplates/radioButtons.htm" with="fieldId=checktextarea, fieldName=input_type, 'radioValue=textarea, fieldValue={{isset(@question.input_type) ? @question.input_type : ''}}, tabindex=6, description={{@textarea_description}}" />
+
+            <!--    TEXT-->
+            <include href="views/settings/formTemplates/radioButtons.htm" with="fieldId=checktext, fieldName=input_type, radioValue=text, fieldValue={{isset(@question.input_type) ? @question.input_type : ''}}, tabindex=7, description={{@text_description}}" />
+
+            <!--   CHECKBOX-->
+            <include href="views/settings/formTemplates/radioButtons.htm" with="fieldId=checkbox, fieldName=input_type, radioValue=checkbox, fieldValue={{isset(@question.input_type) ? @question.input_type : ''}}, tabindex=8, description={{@checkbox_description}}" />
+            <check if="{{!empty(@question.checkbox_values)}}">
+                <true>
+                    <div id="checkbox-options">
+                </true>
+                <false>
+                    <div class="is-hidden" id="checkbox-options">
+                </false>
+            </check>
+                <div class="field mt-3">
+                    <label>Comma separate the values you would like to use for this question (e.g. Item1,Item2,Item3).</label>
+                    <div class="control">
+                        <input class="input" name="checkbox_values" id="checkbox-values" value="{{isset(@question.checkbox_values) ? @question.checkbox_values : '' }}"  onclick="clear_trigger('checkbox')">
+                    </div>
+                    <div class="has-text-danger" id="complete-checkbox-values" style="display: none; font-weight: bold">Please complete this field first.</div>
+                </div>
+
+                <div class="field my-3">
+                    <label><strong>Do you want to include a followup question?</strong><br> For instance if the user selects one of the values you've entered above, will you require additional information? If so, enter the value from above that you want to be the trigger to display the question. You will be able to write the question after you have submitted this form.</label>
+                    <div class="control">
+                        <input onfocus="checkValuesInput('checkbox')" class="input" type="text" name="checkbox_fu_trigger" value="{{isset(@question.checkbox_fu_trigger) ? @question.checkbox_fu_trigger : '' }}"id="checkbox-fu-trigger" tabindex="9"
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <!--    RADIO-->
+            <include href="views/settings/formTemplates/radioButtons.htm" with="fieldId=radio, fieldName=input_type, radioValue=radio, fieldValue={{isset(@question.input_type) ? @question.input_type : ''}},  tabindex=9, description={{@radio_description}}" />
+            <check if="{{!empty(@question.radio_values)}}">
+                <true>
+                    <div id="radio-options">
+                </true>
+                <false>
+                    <div class="is-hidden" id="radio-options">
+                </false>
+            </check>
+                    <div class="field">
+                        <label>Comma separate the values you would like to use for this question (e.g. yes, no | true, false).</label>
+                        <div class="control">
+                            <input class="input" type="text" id="radio-values" name="radio_values" role="radio" value="{{isset(@question.radio_values) ? @question.radio_values : '' }}" onclick="clear_trigger('radio')">
+                        </div>
+                        <div class="has-text-danger" id="complete-radio-values" style="display: none; font-weight: bold">Please complete this field first.</div>
+                    </div>
+
+                    <div class="field my-3">
+                        <label><strong>Do you want to include a followup question?</strong><br> For instance if the user selects one of the values you've entered above, will you require additional information? If so, enter the value from above that you want to be the trigger to display the question. You will be able to write the question after you have submitted this form.</label>
+                        <div class="control">
+                            <input onfocus="checkValuesInput('radio')" class="input" type="text" name="radio_fu_trigger"  value="{{isset(@question.radio_fu_trigger) ? @question.radio_fu_trigger : '' }}" id="radio-fu-trigger" tabindex="12">
+                        </div>
+                    </div>
+                </div>
+
+            <!--    DATE-->
+            <include href="views/settings/formTemplates/radioButtons.htm" with="fieldId=checkdate, fieldName=input_type, fieldValue={{isset(@question.input_type) ? @question.input_type : ''}}, radioValue=date, tabindex=10, description={{@date_description}}" />
+
+            <!--    NUMBER-->
+            <include href="views/settings/formTemplates/radioButtons.htm" with="fieldId=checknumber, fieldName=input_type, fieldValue={{isset(@question.input_type) ? @question.input_type : ''}}, radioValue=number, tabindex=11, description={{@number_description}}" />
+
+            <!--    EMAIL-->
+            <include href="views/settings/formTemplates/radioButtons.htm" with="fieldId=checkemail, fieldName=input_type, fieldValue={{isset(@question.input_type) ? @question.input_type : ''}}, radioValue=email, tabindex=12, description={{@email_description}}" />
+            <hr>
+
+            <div class="field">
+                <div class="control pt-2">
+                    <label for="scoring-module" class="checkbox">
+                        <input class="checkbox" type="hidden" name="scoring_module">
+                        <input id="scoring-module" type="checkbox" value="1" name="scoring_module" tabindex="13" {{ isset(@question.scoring_module) && @question.scoring_module == 1 ? 'checked' : '' }}>
+                        Check if you want to use the scoring module for judges. You will be able to set the scoring values and the rubric for this question after you have submitted this form. You can turn this feature off and on from the questions page. See the explanation below for more information and how it can help you in your evaluation process. Click here to learn more about the <a class="js-modal-trigger" data-target="judgingModule">Judging Module</a>.
+                    </label>
+                </div>
+            </div>
+        <p class="content has-text-danger has-text-weight-semibold is-hidden" id="cloning-message">
+            You have elected to clone this question. Any changes you make to this question will apply to the award you have selected from the dropdown above.
+        </p>
+
+            </p>
+        <div class="field is-grouped">
+            <div class="control mt-3">
+                <button class="button is-success" tabindex="100">Submit</button>
+            </div>
+            <div class="control mt-3">
+                <a href="/app/{{ @awardSlug }}/questions/{{ @type }}/index" class="button is-link is-light" tabindex="101">Cancel</a>
+            </div>
+        </div>
+
+        </form>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const clonedAwardSlug = document.getElementById('cloned-award-slug');
+    const cloningMessage = document.getElementById('cloning-message');
+
+    clonedAwardSlug.addEventListener('change', function () {
+        if (clonedAwardSlug.value) {
+        cloningMessage.classList.remove('is-hidden');
+        } else {
+        cloningMessage.classList.add('is-hidden');
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const checkForClone = document.getElementById('check-for-clone');
+    const selectAwardToClone = document.getElementById('select-award-to-clone');
+    const clonedAwardSlug = document.getElementById('cloned-award-slug');
+    const cloningMessage = document.getElementById('cloning-message');
+
+    checkForClone.addEventListener('change', function () {
+        if (checkForClone.checked) {
+            selectAwardToClone.classList.remove('is-hidden');
+        } else {
+            selectAwardToClone.classList.add('is-hidden');
+            clonedAwardSlug.value = ''; // Reset the value to null
+            cloningMessage.classList.add('is-hidden'); // Hide the cloning message
+        }
+    });
+});
+
+if(document.getElementsByClassName('response-type').length > 0) {
+    const response_type = document.getElementsByClassName('response-type')
+
+    const checkbox_values = document.getElementById('checkbox-values')
+    const checkbox_fu_trigger = document.getElementById('checkbox-fu-trigger')
+
+    const radio_values = document.getElementById('radio-values')
+    const radio_fu_trigger = document.getElementById('radio-fu-trigger')
+
+    for (let i = 0; i < response_type.length; i++) {
+        response_type[i].addEventListener('click', () => {
+            if (response_type[i].value == 'checkbox') {
+                document.getElementById('checkbox-options').classList.remove('is-hidden')
+                document.getElementById('radio-options').classList.add('is-hidden')
+                checkbox_values.required = true
+                checkbox_values.placeholder = "Required"
+
+                radio_values.required = false
+                radio_values.value = null
+                radio_values.placeholder = ''
+                radio_fu_trigger.value = null
+
+            } else if (response_type[i].value == 'radio') {
+                document.getElementById('radio-options').classList.remove('is-hidden')
+                document.getElementById('checkbox-options').classList.add('is-hidden')
+                radio_values.required = true
+                radio_values.placeholder = "Required"
+
+                checkbox_values.required = false
+                checkbox_values.value = ''
+                checkbox_values.placeholder = ''
+                checkbox_fu_trigger.value = ''
+            }
+            else {
+                document.getElementById('radio-options').classList.add('is-hidden')
+                document.getElementById('checkbox-options').classList.add('is-hidden')
+                checkbox_values.required = false
+                checkbox_values.value = ''
+                checkbox_values.placeholder = ''
+                checkbox_fu_trigger.value = ''
+
+                radio_values.required = false
+                radio_values.value = ''
+                radio_values.placeholder = ''
+                radio_fu_trigger.value = ''
+            }
+        })
+    }
+}
+
+</script>
+
+
+
+
+

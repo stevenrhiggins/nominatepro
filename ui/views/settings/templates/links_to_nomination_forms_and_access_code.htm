@@ -1,0 +1,22 @@
+<div class="column is-12 pt-0">
+    <div id="panel" class="is-hidden">
+        <div class="notification pt-0 pl-0">
+            <article class="message is-danger">
+                <div class="message-body">
+                    Be sure to complete the "Essentials" and "Nomination Questions" sections before you test or distribute the link to the nomination.
+                </div>
+            </article>
+            <p class="is-size-6 content">Use the following link to give participants access to this nomination.<br>
+                <strong>Link to LIVE Nomination/Award Forms:</strong> <a href="{{ @server_name }}/app/nomination/{{ @SESSION.awardSlug }}/live/begin" target="_blank">{{ @server_name }}/app/nomination/{{ @SESSION.awardSlug }}/live/begin</a></p>
+
+            <p class="is-size-6 content">Use the following link to test or demo the nomination forms and process.<br>
+                <strong>Link to DEMO Nomination/Award Forms:</strong> <a href="{{ @server_name }}/app/nomination/{{ @SESSION.awardSlug }}/demo/begin" target="_blank">{{ @server_name }}/app/nomination/{{ @SESSION.awardSlug }}/demo/begin</a></p>
+            <!-- TODO complete the notify participants if changes have been made -->
+            <exclude>
+                <check if="{{ @SESSION.ongoing_nominations > 0 || @SESSION.completed_nominations > 0 }}">
+                    <p class="is-size-6 is-underlined"><strong><a href="#" class="js-modal-trigger" data-target="notify-of-changes">Need to notify participants of important changes you've made to this award?</a></strong></p>
+                </check>
+            </exclude>
+        </div>
+    </div>
+</div>

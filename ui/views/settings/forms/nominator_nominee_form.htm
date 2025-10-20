@@ -1,0 +1,211 @@
+<div class="column is-8 py-2">
+
+    <!-- Self-nomination -->
+    <div class="field">
+        <div class="control">
+            <label class="checkbox mb-3">
+                <input type="hidden" name="self_nominate" value="">
+                <input
+                        type="checkbox"
+                        name="self_nominate"
+                        id="self-nominate"
+                        value="1"
+                        tabindex="1"
+                        {{ @award.self_nominate==1 ? 'checked' : '' }}
+                >
+                Check if you want someone to be able to nominate themselves.
+                <i class="fa-solid fa-star has-text-danger"></i>
+                Be sure to provide questions and/or contact information for the nominee if required.
+            </label>
+        </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="has-text-centered my-4">
+        <span class="tag is-light is-medium">AND / OR</span>
+    </div>
+
+    <!-- Nominate someone -->
+    <div class="field">
+        <div class="control">
+            <label class="checkbox mb-3">
+                <input type="hidden" name="nominate_someone" value="">
+                <input
+                        type="checkbox"
+                        name="nominate_someone"
+                        id="nominate-someone"
+                        value="1"
+                        tabindex="2"
+                        {{ isset(@award.nominate_someone) && @award.nominate_someone==1 ? 'checked' : '' }}
+                >
+                Check if you want someone to be able to nominate someone else.
+            </label>
+        </div>
+        <p class="help is-danger is-hidden" id="nominate-someone-message">
+            You have chosen to allow a person to nominate themselves. By selecting this option, you agree to let them nominate someone else as well, in addition to nominating themselves.
+        </p>
+    </div>
+
+    <!-- Instructional note -->
+    <div class="notification is-warning is-light">
+        <span id="submission-information-text"></span>
+        <i class="fa-solid fa-star has-text-danger" aria-hidden="true"></i>
+        If you need more than just basic contact details from the nominee, select the checkbox below. This will inform nominees that they must submit extra information or documents for their nomination to be considered complete and ready for review.
+    </div>
+
+    <!-- Require nominee -->
+    <div class="field">
+        <div class="control">
+            <label class="checkbox mb-3">
+                <input type="hidden" name="require_nominee" value="">
+                <input
+                        type="checkbox"
+                        name="require_nominee"
+                        id="require-nominee"
+                        value="1"
+                        tabindex="3"
+                        {{ @award.require_nominee==1 ? 'checked' : '' }}
+                >
+                Check if you want the nominee to complete a submission.
+                If selected, the nominee will be notified that they must complete nomination questions and/or upload supporting documents.
+            </label>
+        </div>
+    </div>
+
+    <!-- Divider spacer -->
+    <div class="my-4"></div>
+
+    <!-- Notify nominee -->
+    <div class="field">
+        <div class="control">
+            <label class="checkbox mb-3">
+                <input type="hidden" name="notify_nominee" value="">
+                <input
+                        type="checkbox"
+                        name="notify_nominee"
+                        id="notify-nominee"
+                        value="1"
+                        tabindex="4"
+                        {{ @award.notify_nominee==1 ? 'checked' : '' }}
+                >
+                Check if you want the nominee to be notified of the nomination.
+            </label>
+        </div>
+        <p class="help is-danger is-hidden" id="nominee-notified-message">
+            The nominee will be notified of the nomination when they receive an email about it.
+        </p>
+    </div>
+
+    <!-- Nominee view nominator -->
+    <div class="field">
+        <div class="control">
+            <label class="checkbox mb-3">
+                <input type="hidden" name="nominee_view_nominator" value="">
+                <input
+                        type="checkbox"
+                        name="nominee_view_nominator"
+                        id="nominee-view-nominator"
+                        value="1"
+                        tabindex="5"
+                        {{ @award.nominee_view_nominator==1 ? 'checked' : '' }}
+                >
+                Check if you want the nominee to see all the details of their nomination,
+                including the name of the person who nominated them, when they receive an email about it.
+            </label>
+        </div>
+    </div>
+
+    <!-- Future features -->
+    <exclude>
+        <div class="has-text-centered my-4">
+            <span class="tag is-info is-light is-medium">COMING SOON</span>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <label class="checkbox mb-3">
+                    <input type="hidden" name="require_third_party" value="">
+                    <input
+                            type="checkbox"
+                            name="require_third_party"
+                            id="require-third-party"
+                            value="1"
+                            tabindex="6"
+                            {{ @award.require_third_party==1 ? 'checked' : '' }}
+                    >
+                    Check if you want other people to provide information about the nominee.
+                </label>
+            </div>
+        </div>
+
+        <div class="field">
+            <div class="control">
+                <label class="checkbox mb-3">
+                    <input type="hidden" name="anonymous_third_party" value="">
+                    <input
+                            type="checkbox"
+                            name="anonymous_third_party"
+                            id="anonymous-third-party"
+                            value="1"
+                            tabindex="7"
+                            {{ @award.anonymous_third_party==1 ? 'checked' : '' }}
+                    >
+                    Check if you want to share the comments from others with the nominee or keep them private.
+                </label>
+            </div>
+        </div>
+    </exclude>
+</div>
+
+<script>
+    function addEventListenerIfExists(el, ev, cb){ if(el){ el.addEventListener(ev, cb); } }
+
+    const checkboxes = {
+        self_nominate: document.getElementById('self-nominate'),
+        nominate_someone: document.getElementById('nominate-someone'),
+        nominate_someone_message: document.getElementById('nominate-someone-message'),
+        require_nominee: document.getElementById('require-nominee'),
+        notify_nominee: document.getElementById('notify-nominee'),
+        nominee_view_nominator: document.getElementById('nominee-view-nominator'),
+        nominee_notified_message: document.getElementById('nominee-notified-message')
+    };
+
+    function toggleNominateSomeoneMessage() {
+        const { self_nominate, nominate_someone, nominate_someone_message } = checkboxes;
+        if (self_nominate?.checked && nominate_someone?.checked) {
+            nominate_someone_message?.classList.remove('is-hidden');
+        } else {
+            nominate_someone_message?.classList.add('is-hidden');
+        }
+    }
+
+    function handleRequireNominee() {
+        const { require_nominee, notify_nominee, nominee_view_nominator, nominee_notified_message } = checkboxes;
+        if (notify_nominee) notify_nominee.checked = !!require_nominee?.checked;
+        if (nominee_view_nominator) nominee_view_nominator.checked = !require_nominee?.checked;
+        nominee_notified_message?.classList.toggle('is-hidden', !require_nominee?.checked);
+    }
+
+    function handleNotifyNominee() {
+        const { notify_nominee, nominee_view_nominator } = checkboxes;
+        if (notify_nominee?.checked && nominee_view_nominator) {
+            nominee_view_nominator.checked = false;
+        }
+    }
+
+    function handleNomineeViewNominator() {
+        const { nominee_view_nominator, notify_nominee } = checkboxes;
+        if (nominee_view_nominator?.checked && notify_nominee) {
+            notify_nominee.checked = false;
+        }
+    }
+
+    toggleNominateSomeoneMessage();
+    handleRequireNominee();
+
+    addEventListenerIfExists(checkboxes.nominate_someone, 'change', toggleNominateSomeoneMessage);
+    addEventListenerIfExists(checkboxes.self_nominate, 'change', toggleNominateSomeoneMessage);
+    addEventListenerIfExists(checkboxes.require_nominee, 'change', handleRequireNominee);
+    addEventListenerIfExists(checkboxes.notify_nominee, 'change', handleNotifyNominee);
+    addEventListenerIfExists(checkboxes.nominee_view_nominator, 'change', handleNomineeViewNominator);
+</script>

@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ @site_name }}</title>
+    <meta name="description" content="{{ @site_description }}">
+    <meta name="keywords" content="{{ @site_keywords }}">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="NominatePro">
+    <meta property="og:description" content="Modern nomination management for awards and recognition programs.">
+    <meta property="og:type" content="website">
+
+    <!-- Google Fonts: Roboto -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+
+    <style>
+        :root{ --np-accent: #4F46E5; }
+        html, body { font-family: 'Roboto', system-ui, -apple-system, Segoe UI, Helvetica, Arial, sans-serif; font-size: 16px; }
+        .hero.is-landing {
+            background: radial-gradient(1000px 400px at 20% 10%, rgba(79,70,229,.12), transparent 60%),
+            radial-gradient(800px 300px at 90% 20%, rgba(16,185,129,.10), transparent 60%);
+            overflow: hidden;
+        }
+        .logo-wrap { display:flex; align-items:center; gap:.75rem; }
+        .logo-wrap img { height:50px; }
+        .wordmark { font-weight:700; letter-spacing:.2px; }
+        .hero-illustration { max-width: 560px; width:100%; }
+        .footer { border-top: 1px solid rgba(0,0,0,.06); }
+        .is-floating {
+            box-shadow: 0 10px 25px rgba(0,0,0,.08);
+            border: 1px solid rgba(0,0,0,.06);
+            border-radius: 14px;
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<section class="section py-5">
+    <div class="container is-max-desktop">
+        <nav class="level">
+            <div class="level-left">
+                <div class="logo-wrap">
+                    <img src="{{ @ASSETS }}/nominatePROLogoAndMark.jpg" alt="NominatePro logo">
+                </div>
+            </div>
+            <div class="level-right">
+                <a href="#notify" class="button is-primary is-light">Get Notified</a>
+            </div>
+        </nav>
+    </div>
+</section>
+
+<!-- Hero -->
+<section class="hero is-landing">
+    <div class="hero-body">
+        <div class="container is-max-desktop">
+            <div class="columns is-vcentered">
+                <div class="column">
+                    <h1 class="title is-2">Nomination management, done right.</h1>
+                    <p class="subtitle is-5">NominatePro streamlines submissions, reviews, and awards—so your team can celebrate winners faster.</p>
+                    <div class="buttons mt-4">
+                        <a href="#notify" class="button is-primary">Notify me at launch</a>
+                        <a class="button is-white is-light" href="#features">Learn more</a>
+                    </div>
+                </div>
+                <div class="column has-text-centered">
+                    <img class="hero-illustration" src="{{ @ASSETS }}/hero-illustration.svg" alt="Product preview illustration">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Feature blips -->
+<exclude>
+<section id="features" class="section">
+    <div class="container is-max-desktop">
+        <div class="columns is-multiline">
+            <div class="column is-one-third">
+                <div class="box is-floating">
+                    <h3 class="title is-5">Smart Workflows</h3>
+                    <p>Custom stages for collecting nominations, scoring entries, and publishing results.</p>
+                </div>
+            </div>
+            <div class="column is-one-third">
+                <div class="box is-floating">
+                    <h3 class="title is-5">Judge-Friendly</h3>
+                    <p>Fast scoring UI, rubric-based reviews, and conflict-of-interest handling.</p>
+                </div>
+            </div>
+            <div class="column is-one-third">
+                <div class="box is-floating">
+                    <h3 class="title is-5">Analytics</h3>
+                    <p>Insights on submissions, categories, and judge activity to keep programs on track.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</exclude>
+<!-- Features -->
+<section id="features" class="section">
+    <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered mb-6">Why choose NominatePro?</h2>
+        <div class="columns is-multiline">
+
+            <div class="column is-one-third">
+                <div class="box is-floating">
+                    <h3 class="title is-5">All-in-One</h3>
+                    <p>No more juggling emails and spreadsheets. Everything from submissions to scoring lives in one secure platform.</p>
+                </div>
+            </div>
+
+            <div class="column is-one-third">
+                <div class="box is-floating">
+                    <h3 class="title is-5">Your Branding</h3>
+                    <p>Customize with your logo or sponsor branding so participants feel right at home.</p>
+                </div>
+            </div>
+
+            <div class="column is-one-third">
+                <div class="box is-floating">
+                    <h3 class="title is-5">Flexible Timelines</h3>
+                    <p>Set nomination start and end dates, automate reminders, and keep everything on schedule.</p>
+                </div>
+            </div>
+
+            <div class="column is-one-third">
+                <div class="box is-floating">
+                    <h3 class="title is-5">Judge Management</h3>
+                    <p>Add judges, assign them to categories, and monitor scoring progress in real time.</p>
+                </div>
+            </div>
+
+            <div class="column is-one-third">
+                <div class="box is-floating">
+                    <h3 class="title is-5">Custom Questions</h3>
+                    <p>Design nomination forms with your own questions, response types, and scoring rubrics.</p>
+                </div>
+            </div>
+
+            <div class="column is-one-third">
+                <div class="box is-floating">
+                    <h3 class="title is-5">File Uploads</h3>
+                    <p>Collect supporting documents directly with each nomination.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- Notify form -->
+<section id="notify" class="section">
+    <div class="container is-max-tablet">
+
+        <exclude>
+        <check if="{{ @success }}">
+            <article class="message is-success">
+                <div class="message-body">{{ @success }}</div>
+            </article>
+        </check>
+
+        <check if="{{ @errors }}">
+            <article class="message is-danger">
+                <div class="message-body">
+                    <ul style="margin-left:1.25rem;">
+                        <repeat group="{{ @errors }}" value="{{ @e }}">
+                            <li>{{ @e }}</li>
+                        </repeat>
+                    </ul>
+                </div>
+            </article>
+        </check>
+        </exclude>
+        <div class="box is-floating">
+            <h2 class="title is-4 mb-4">Get notified when we launch this fall</h2>
+            <form method="post" action="/notify" autocomplete="on">
+                <input type="hidden" name="token" value="{{ @SESSION.csrf_token }}">
+                <input type="hidden" name="t" value="{{ @issued_at }}">
+                <div style="display:none"><input type="text" name="hp"></div>
+                <div class="field">
+                    <label class="label">Company/Organization/Association</label>
+                    <div class="control has-icons-left">
+                        <input class="input" type="text" name="company" placeholder="Company/Organization/Association" required>
+                        <span class="icon is-left"><i class="fa-solid fa-building"></i></span>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Name</label>
+                    <div class="control has-icons-left">
+                        <input class="input" type="text" name="name" placeholder="Your name" required>
+                        <span class="icon is-left"><i class="fas fa-user"></i></span>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Email address</label>
+                    <div class="control has-icons-left">
+                        <input class="input" type="email" name="email" placeholder="you@example.com" required>
+                        <span class="icon is-left"><i class="fas fa-envelope"></i></span>
+                    </div>
+                </div>
+                
+                <div class="field">
+                    <label for="interest" class="label">What are you most interested in?</label>
+                    <textarea class="textarea" name="interest" id="interest"></textarea>
+                </div>
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-primary" type="submit">Notify me</button>
+                    </div>
+                    <div class="control">
+                        <a class="button is-light" href="#features">Why NominatePro?</a>
+                    </div>
+                </div>
+                <p class="is-size-7 has-text-grey">We respect your privacy. No spam, ever.</p>
+            </form>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>&copy; {{ @dateY }} NominatePro. All rights reserved.</p>
+    </div>
+</footer>
+
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js"></script>
+</body>
+</html>

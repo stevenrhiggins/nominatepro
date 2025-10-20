@@ -1,0 +1,8 @@
+<div class="field">
+    <div class="control">
+        <label for="{{ @fieldId }}" class="radio">
+            <input id="{{ @fieldId }}" class="response-type" type="radio" name="{{ @fieldName }}" value="{{ @radioValue }}" tabindex="{{ @tabindex }}"{{ @radioValue == @fieldValue ? ' checked' : '' }}>
+            {{ @description }}
+        </label>
+    </div>
+</div>

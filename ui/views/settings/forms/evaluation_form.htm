@@ -1,0 +1,36 @@
+<div class="columns">
+    <div class="column is-12 content">
+        <form action="/app/add/evaluations/{{ @SESSION.setting }}" method="POST" >
+            <input type="hidden" name="token" value="{{ @SESSION.csrf }}" readonly>
+            <div class="field">
+                <label for="criteria">Enter a question/instruction</label>
+                <div class="control">
+                    <textarea class="textarea tinyform" name="criteria" required id="criteria"></textarea>
+                </div>
+            </div>
+            <check if="{{ @SESSION.setting == 'numeric' }}">
+                <p>Select the type of scale you would like judges to use. You can choose either a Likert scale or a numeric scale.</p>
+                <div class="content">
+                    <ol>
+                        <li>The Likert scale allows respondents to specify their level of agreement or disagreement on a symmetric agree-disagree scale for a series of statements or questions. We use a 7 point scale.</li>
+                        <li>The numeric scale alllows respondents to select from the number 1 to whatever you select in the dropdown list below (e.g. 1 - 10 ) for a series of statements or questions.</li>
+                    </ol>
+                </div>
+                <div class="field">
+                    <div class="control">
+                        <div class="select">
+                            <select name="evaluation_scale" tabindex="8" id="evaluation-scale" required>
+                                <option value="">--Select Scale--</option>
+                                <option value="likert">Likert</option>
+                                <loop from="{{@i=5}}" to="{{@i<=10}}" step="{{@i++}}">
+                                    <option value="{{@i}}">Numeric 1 - {{@i}}</option>
+                                </loop>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </check>
+                <button type="submit" id="submit" class="button is-success">Submit</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,167 @@
+<div class="columns is-multiline">
+    <div class="column is-8">
+        <div class="column is-12 content">
+            <h3 class="is-size-4 mb-5">Award Setup Checklist</h3>
+            <ol class="is-size-5">
+                <li>
+                    <div class="field">
+                        <div class="control">
+                            <label class="checkbox is-size-5 content" for="create">
+                                <input type="checkbox" id="create">
+                                Create a new award (You can also clone an award if you have already created at least one award).
+                            </label>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="field">
+                        <div class="control">
+                            <label class="checkbox is-size-5 content" for="access">
+                                <input type="checkbox" id="access">
+                                Once you have created the award, you will have access to a menu that will permit you to add all the necessary components.
+                            </label>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    Complete all the categories in the General Settings section of the menu.
+                </li>
+                <li>
+
+                </li>
+                <li>
+                    <button onclick="accordion('dates')"><i id="dates_icon" class="fa-regular fa-angle-down mr-2"></i></button> General Settings:
+                    <div id="dates_panel" class="is-hidden">
+                        In this section, you can:
+                        <ul>
+                            <li>Set the start and end dates for nominations.</li>
+                            <li>Enter a welcome message.</li>
+                            <li>Provide a description of the award.</li>
+                            <li>Outline eligibility requirements.</li>
+                            <li>Specify the award or prize for the successful nominee, if applicable.</li>
+                            <li>Create a success message that participants will see upon completing a nomination.</li>
+                        </ul>
+                        <hr>
+                    </div>
+                </li>
+                <li><button onclick="accordion('nominator_nominee')"><i id="nominator_nominee_icon" class="fa-regular fa-angle-down mr-2"></i></button> Nominator/Nominee Settings:
+                    <div id="nominator_nominee_panel" class="is-hidden">
+                        This section offers several helpful options:
+                        <ul>
+                            <li>Allow users to self-nominate.</li>
+                            <li> Notify nominees about their nomination, with or without revealing the nominator's information.</li>
+                        </ul>
+                        Require nominees to submit personal information, if needed.
+                        <hr>
+                    </div>
+                </li>
+                <li><button onclick="accordion('emails')"><i id="emails_icon" class="fa-regular fa-angle-down mr-2"></i></button> Email Notifications:
+                    <div id="emails_panel" class="is-hidden">
+                        This section allows you to compose emails to:
+                        <ul>
+                            <li>Alert nominators when their nomination is finished.</li>
+                            <li> Notify nominees about their nomination or prompt them to submit personal details.</li>
+                        </ul>
+                        These emails will be sent based on the settings you've chosen in the 'Nominators/Nominees Settings' section.
+                        <hr>
+                    </div>
+                </li>
+                <li><button onclick="accordion('contact')"><i id="contact_icon" class="fa-regular fa-angle-down mr-2"></i></button> Contact Information:
+                    <div id="contact_panel" class="is-hidden">
+                        In this section, you can provide basic contact information that will be included in emails sent to nominators and nominees as a point of contact for assistance. Additionally, you have the option to use this information as the sender for all emails sent to users.
+                    </div>
+                </li>
+                <li><button onclick="accordion('files')"><i id="files_icon" class="fa-regular fa-angle-down mr-2"></i></button> File Permission Settings:
+                    <div id="files_panel" class="is-hidden">
+                        In this section, you can:
+                        <ul>
+                            <li>Set the maximum number of files that nominators and nominees can upload (if nominees are required to submit information).</li>
+                            <li>Write file upload instructions that will be visible to users when they need to upload documentation.</li>
+                        </ul>
+                        <hr>
+                    </div>
+                </li>
+                <li><button onclick="accordion('sections')"><i id="sections_icon" class="fa-regular fa-angle-down mr-2"></i></button> Sections:
+                    <div id="sections_panel" class="is-hidden">
+                        Use this area to create sections that organize questions for nominators. For example, you might create a section called 'Membership' to group questions related to membership in your organization or association.
+                    </div>
+                </li>
+                <li><button onclick="accordion('questions_old.htm')"><i id="questions_icon" class="fa-regular fa-angle-down mr-2"></i></button> Questions:
+                    <div id="questions_panel" class="is-hidden">
+                        In this area, you will:
+                        <ul>
+                            <li>Write all the questions for nominators and nominees (if you've chosen to require nominee information).</li>
+                            <li>Add an unlimited number of questions, including follow-up questions.</li>
+                        </ul>
+
+                        If you opt to use our Judging module, you can also:
+                        <ul>
+                            <li> Complete a scoring rubric for each question to assist in evaluating nominations.</li>
+                        </ul>
+                    </div>
+                </li>
+                <li><button onclick="accordion('info')"><i id="info_icon" class="fa-regular fa-angle-down mr-2"></i></button> Nominator/Nominee Information:
+                    <div id="info_panel" class="is-hidden">
+                        This application will always require nominators (and nominees) to provide the names and email addresses of those being nominated and those who are nominating. However, you may require more information. This section allows you to select from the following options to be completed by nominators.
+                        <ul>
+                            <li>Prefix and Suffix</li>
+                            <li>Business, Association, Organization etc. name</li>
+                            <li>Position or Title</li>
+                            <li>Address, including Stree, Unit/Apt, City, State/Province, Zip/Postal Code, Country</li>
+                            <li>Phone Number</li>
+                            <li>Alternate Phone Number</li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <button onclick="accordion('judging')"><i id="judging_icon" class="fa-regular fa-angle-down mr-2"></i></button> Judging Settings:
+                    <div id="judging_panel" class="is-hidden">
+                        In this section, you can:
+                        <ul>
+                            <li>Set the start and end dates for judging.</li>
+                            <li>Write the criteria necessary.</li>
+                            <li>Name the judges you want to participate.</li>
+                            <li>Write an email to use when sending invitations to judges.</li>
+                            <li>Set whether to permit blind judging.</li>
+                            <li>Set whether to permit vote changing.</li>
+                        </ul>
+                        If you have recorded the names and email addresses of judges, you can send the invitations in bulk to them.
+                        <hr>
+                    </div>
+                </li>
+                <li>
+                    <button onclick="accordion('sponsor')"><i id="sponsor_icon" class="fa-regular fa-angle-down mr-2"></i></button> Sponsor Logo:
+                    <div id="sponsor_panel" class="is-hidden">
+                        This function allows you to assign a sponsor’s logo to an award, enhancing sponsor visibility and recognition by integrating their branding into award nominations. You can:
+                        <ul>
+                            <li>Upload a logo</li>
+                            <li>Add a link to the sponsors website</li>
+                            <li>Add an acknowledgement (e.g. "This nomination is sponsored by..")</li>
+                        </ul>
+                        <hr>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<script>
+    function accordion(element)
+    {
+        var panel = document.getElementById(element+'_panel');
+        var icon = document.getElementById(element+'_icon');
+        panel.classList.toggle('is-hidden');
+        if(panel.classList.contains('is-hidden')){
+            icon.classList.remove('fa-angle-up');
+            icon.classList.add('fa-angle-down')
+        }
+        else{
+            icon.classList.remove('fa-angle-down');
+            icon.classList.add('fa-angle-up')
+        }
+    }
+
+</script>
+
+

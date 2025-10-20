@@ -1,0 +1,94 @@
+<section class="section">
+    <div class="columns is-multiline is-centered">
+    <div class="column has-text-centered">
+        <div class="tabs is-centered is-medium" id="tabs">
+          <ul>
+            <li class="is-active" data-tab="admin"><a>Administration Portal</a></li>
+            <li data-tab="settings"><a>Awards Control Panel</a></li>
+            <li data-tab="judging"><a>Judging Portal</a></li>
+          </ul>
+        </div>
+    </div>
+    </div>
+    <div class="columns is-centered">
+            <div id="tab-content" class="column is-4 content">
+                <div class="wrapper is-active" data-content="admin">
+                  <h1 class="is-size-4 has-text-centered">Login to the Administration Portal</h1>
+                  <p>Use this area to create and manage control panels. If you don't have an account, <a href="/app/join/us/index" target="_blank">click here</a> to create one</p>
+                  <form action="/login/organization/validate" method="POST">
+                      <input type="hidden" name="portal" value="admin" readonly>
+                      <div class="field">
+                          <label for="username" class="label">Usernmae</label>
+                          <div class="control has-icons-left has-icons-right">
+                              <input class="input is-medium" type="text" name="username" placeholder="Username" required>
+                              <span class="icon is-left"><i class="fas fa-user"></i></span>
+                          </div>
+                      </div>
+                      <div class="field">
+                          <div class="control has-icons-left has-icons-right">
+                              <input class="input is-medium" type="password" id="admin-password" name="password" placeholder="Password" required>
+                          </div>
+                          <input type="checkbox" class="mt-2" onclick="showPassword('admin-password','admin-password_text')"> <span id="admin-password_text">Show Password</span>
+                      </div>
+                      <div class="control has-text-right">
+                          <button class="button is-darkblue">Login</button>
+                      </div>
+                  </form>
+                    <a href="/app/reset/password/organizations/index" target="_blank">Forgot Password</a>
+                </div>
+                <div class="wrapper" data-content="settings">
+                    <h1 class="is-size-4 has-text-centered">Login to the Award Settings Portal</h1>
+                    <p>Use this are to access all the settings needed to create and manage all of your awards.</p>
+                    <form action="/login/cp/validate" method="POST">
+                        <input type="hidden" name="portal" value="settings" readonly>
+                        <div class="field">
+                            <div class="control has-icons-left has-icons-right">
+                                <input class="input is-medium" type="text" name="username" placeholder="Username" required>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control has-icons-left has-icons-right">
+                                <input class="input is-medium" type="password" id="settings-password" name="password" placeholder="Password" required>
+                            </div>
+                            <input type="checkbox" class="mt-2" onclick="showPassword('settings-password','settings-password_text')"> <span id="settings-password_text">Show Password</span>
+                        </div>
+                        <div class="control has-text-right">
+                            <button class="button is-darkblue">Login</button>
+                        </div>
+                    </form>
+                        <a href="/app/reset/password/cp/index" target="_blank">Forgot Password</a>
+                </div>
+                <div class="wrapper" data-content="judging">
+                  <h1 class="is-size-4 has-text-centered">Login to the Judging Portal</h1>
+                  <p>To access all nominations you have been invited to evaluate, please log in to your account. Once logged in, you will be able to select the award(s) you wish to evaluate and submit your appraisal(s).</p>
+                    <form action="/login/judge/validate" method="POST">
+                      <input type="hidden" name="portal" value="judging" readonly>
+                      <div class="field">
+                          <div class="control has-icons-left has-icons-right">
+                              <input class="input is-medium" type="text" name="username" placeholder="Username" required>
+                          </div>
+                      </div>
+                      <div class="field">
+                          <div class="control has-icons-left has-icons-right">
+                              <input class="input is-medium" type="password" id="judging-password" name="password" placeholder="Password" required>
+                          </div>
+                          <input type="checkbox" class="mt-2" onclick="showPassword('judging-password','judging-password_text')"> <span id="judging-password_text">Show Password</span>
+                      </div>
+                      <div class="control has-text-right">
+                          <button class="button is-darkblue">Login</button>
+                      </div>
+                  </form>
+                    <a href="/app/update/password/judges" target="_blank">Forgot Password</a>
+              </div>
+                <p class="mt-5"><a href="/app/join/us/index">Don't have an account? Join us.</a></p>
+            </div>
+      </div>
+</section>
+
+<script type="text/javascript">
+  var fields = document.querySelectorAll('input[type="password"]');
+  for (var i = 0; i < fields.length; i++) {
+    fields[i].autocomplete="on";
+  }
+</script>
+

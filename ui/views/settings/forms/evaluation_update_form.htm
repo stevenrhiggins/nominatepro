@@ -1,0 +1,52 @@
+<form action="/app/update/evaluations/{{@SESSION.setting}}" method="POST" >
+    <input type="hidden" name="evaluation_slug" value="{{@value.evaluation_slug}}" readonly>
+    <input type="hidden" name="date_edited" value="{{@value.date_edited}}" readonly>
+    <input type="hidden" name="token" value="{{ @SESSION.csrf }}" readonly>
+    <div class="field">
+        <label class="label">Enter the evaluation question/instruction</label>
+        <div class="control">
+            <textarea class="textarea tinyform" name="criteria">{{@value.criteria | raw}}</textarea>
+        </div>
+    </div>
+    <check if="{{@value.evaluation_scale}}">
+        <p>Select the type of scale you would like respondents to use. You can choose either a Likert scale or a numeric scale.</p>
+        <div class="content">
+            <ol>
+                <li>The Likert scale allows respondents to specify their level of agreement or disagreement on a symmetric agree-disagree scale for a series of statements or questions. We use a 7 point scale.</li>
+                <li>The numeric scale allows respondents to select from the number 1 to whatever you select in the dropdown list below (e.g. 1 - 10 ) for a series of statements or questions.</li>
+            </ol>
+                <true>
+                    <check if="{{@value.evaluation_scale == 'likert'}}">
+                        <true>
+                            <p>You have selected the Likert Scale</p>
+                        </true>
+                        <false>
+                            <p>You have selected a Numeric Scale from 1 to {{@value.evaluation_scale}}</p>
+                        </false>
+                    </check>
+                </true>
+        </div>
+        <div class="field">
+            <div class="control">
+                <div class="select">
+                    <select name="evaluation_scale" tabindex="8" id="evaluation-scale" required>
+                        <option value="">--Select Scale--</option>
+                            <check if="{{@value.evaluation_scale == 'likert'}}">
+                                <true>
+                                    <option value="{{ @value.evaluation_scale }}" selected>Lickert</option>
+                                </true>
+                                <false>
+                                    <option value="{{ @value.evaluation_scale }}" selected>Numeric - 0 - {{ @value.evaluation_scale }}</option>
+                                </false>
+                            </check>
+                        <option value="likert">Likert</option>
+                        <loop from="{{@i=5}}" to="{{@i<=10}}" step="{{@i++}}">
+                            <option value="{{@i}}">Numeric 1 - {{@i}}</option>
+                        </loop>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </check>
+    <button type="submit" id="submit" class="button is-success">Submit</button>
+</form>

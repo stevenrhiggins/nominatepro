@@ -1,0 +1,24 @@
+<check if="{{ isset(@award.award_slug) }}">
+    <h1 class="is-size-4 my-3" id="settings" id="essentials">{{@PAGE_TITLE}}</h1>
+        <form action="/app/{{ @SESSION.awardSlug}}/{{ @setting }}/{{ @PAGE_TITLE }}/update" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="date_edited" value="{{@award.date_edited}}">
+            <input type="hidden" name="token" value="{{ @SESSION.csrf_token }}">
+            <include href="{{'views/settings/forms/'.@form }}" />
+            <check if="{{ @setting == 'files' && @permit_blind_judging == 'on' }}">
+                <true>
+                </true>
+                <false>
+                    <div class="field is-grouped">
+                        <div class="control mt-3">
+                            <button class="button is-success" tabindex="100">Submit</button>
+                        </div>
+                        <div class="control mt-3">
+                            <a href="/app/all/index" class="button is-link is-light" tabindex="101">Cancel</a>
+                        </div>
+                    </div>
+                </false>
+            </check>
+        </form>
+    </div>
+</check>
+

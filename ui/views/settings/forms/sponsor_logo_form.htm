@@ -1,0 +1,59 @@
+<div class="column is-7" id="sponsor">
+    <check if="{{ isset(@award.sponsor_logo) }}">
+        <input type="hidden" name="current_sponsor_logo" value="{{ isset(@award.sponsor_logo) ? @award.sponsor_logo : ''  }}" readonly>
+        <p id="current_logo">Current Logo: <a href="#" aria-label="Remove logo" onclick="removeLogo('', `Are you sure you want to delete the sponsor logo, link and acknowledgement?`);">
+            <span title="You can delete the logo or replace it by completing the form." aria-hidden="true"><i class="fa-solid fa-trash"></i></span>
+        </a>
+        <figure class="image is-96x96">
+            <img src="/assets/logos/sponsors/{{ @awardSlug }}/{{ isset(@award.sponsor_logo) ? @award.sponsor_logo : '' }}" alt="logo" style="vertical-align: middle">
+        </figure>
+        </p>
+    </check>
+    <exclude>
+    <div class="field">
+        <div class="control">
+            <div class="file mt-3">
+                <label class="file-upload" for="sponsor-logo">
+                    <input class="file-input" type="file" role="button" name="sponsor_logo" tabindex="8" onchange="logo('sponsor-logo', 'file-warning')" aria-describedby="file-warning">
+                    <span class="file-cta">
+                        <span class="file-icon">
+                            <i class="fas fa-upload"></i>
+                        </span>
+                        <span class="file-label">
+                            Choose a logo
+                        </span>
+                    </span>
+                </label>
+            </div>
+        </div>
+    </div>
+    </exclude>
+    <div id="sponsor-logo" class="file has-name">
+        <label class="file-label">
+            <input class="file-input" name="sponsor_logo" type="file">
+            <span class="file-cta"><span class="file-label">Choose sponsor logo…</span></span>
+            <span class="file-name"></span>
+        </label>
+        <p class="file-warning help is-danger ml-2 mt-3" id="sponsor-warning"></p>
+    </div>
+    <p class="has-text-weight-bold mt-2" id="file-instructions">Only .jpg, .jpeg, .png, and .gif files are permitted. Files over 200KB cannot be accepted. <span class="has-text-danger is-light"></span></p>
+    <div id="filelist"></div>
+    <div class="field mt-5">
+        <label class="label" for="sponsor_name">Sponsor's Name</label>
+        <div class="control">
+            <input type="text" class="input" name="sponsor_name" id="sponsor_name" value="{{ isset(@award.sponsor_name) ? @award.sponsor_name : '' }}">
+        </div>
+    </div>
+    <div class="field mt-5">
+        <label class="label" for="sponsor_link">Link to the sponsor</label>
+        <div class="control">
+            <input type="text" class="input" name="sponsor_link" id="sponsor_link" value="{{ isset(@award.sponsor_link) ? @award.sponsor_link : '' }}">
+        </div>
+    </div>
+    <div class="field mt-5">
+        <label class="label" for="sponsor_acknowledgement">Acknowledgement (e.g. This nomination is sponsored by ....) (not required)</label>
+        <div class="control">
+            <input type="text" class="input" name="sponsor_acknowledgement" id="sponsor_acknowledgement" value="{{ isset(@award.sponsor_acknowledgement) ? @award.sponsor_acknowledgement : ''  }}">
+        </div>
+    </div>
+</div>

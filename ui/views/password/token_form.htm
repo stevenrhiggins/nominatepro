@@ -1,0 +1,21 @@
+<section class="section">
+    <div class="columns is-centered">
+        <div class="column is-4 custom-box">
+            <h2 class="is-size-3">{{@title}}</h2>
+            <p class="content is-size-5">A confirmation token has been sent to your email. Please enter this token in the form provided below.</p>
+            <include href="/views/template_parts/flash_message.htm" />
+            <form action="/app/token/verify/{{ @controller }}" method="POST">
+                <div class="field">
+                    <div class="control has-icons-left has-icons-right">
+                        <input class="input is-medium" type="text" name="token" id="token" placeholder="Token" required>
+                    </div>
+                </div>
+                <div class="control my-5">
+                    <button class="button is-success">Submit</button>
+                </div>
+            </form>
+            <a href="/app/resend/token">Resend Token</a><br><br>
+            <a href="/public">Return to Login</a>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,182 @@
+<div class="columns is-centered">
+    <div class="column is-12">
+        <h1 class="is-uppercase content is-size-4 my-3">{{ @PAGE_TITLE }}</h1>
+    </div>
+</div>
+
+<div class="columns">
+    <div class="column is-11">
+        <p class="content notification has-background-warning-light warning-border">
+            Awards can only be deleted if the <strong>nomination is turned off</strong> and <strong>no nominations have been submitted for the award</strong>.<br>
+            *Cloning an award copies only the award data provided in the "Essentials" section of the Award Settings. You can assign existing questions to another award by clicking the Edit/Clone button on the questions page.
+        </p>
+
+        <table class="table is-fullwidth data-table is-size-6 is-hoverable" id="activeAwardsTable">
+            <thead class="is-uppercase">
+            <tr>
+                <th>Award Name</th>
+                <th># Nominations</th>
+                <th>Nomination Start Date</th>
+                <th>Nomination End Date</th>
+                <th>Last Updated</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <repeat group="{{ @awards }}" value="{{ @award }}">
+                <tr id="{{ @award.award_slug }}">
+                    <td>
+                        <!-- LED status: on if end date is in the future -->
+                        <check if="{{ strtotime((string)@award.nomination_end_date) > strtotime(date('Y-m-d')) }}">
+                            <true>
+                                <div class="led green" role="status" aria-label="Award is turned on" data-tooltip="The award is turned on"></div>
+                            </true>
+                            <false>
+                                <div class="led red" role="status" aria-label="Award is turned off" data-tooltip="The award is turned off"></div>
+                            </false>
+                        </check>
+
+                        <a href="/app/{{ @award.award_slug }}/award_details/Award Details/singleAward">
+                            <check if="{{ @award.award_name }}">
+                                <true>{{ @award.award_name }}</true>
+                                <false><span class="has-text-danger"><strong>ADD AN AWARD NAME</strong></span></false>
+                            </check>
+                        </a>
+                    </td>
+
+                    <td>{{ @award.nomination_count }}</td>
+
+                    <!-- Safely format dates (avoid strtotime(null) and 1970 fallback) -->
+                    <td>
+                        {{ strtotime((string)@award.nomination_start_date)
+                        ? date('F j, Y', strtotime((string)@award.nomination_start_date))
+                        : 'N/A' }}
+                    </td>
+                    <td>
+                        {{ strtotime((string)@award.nomination_end_date)
+                        ? date('F j, Y', strtotime((string)@award.nomination_end_date))
+                        : 'N/A' }}
+                    </td>
+
+                    <td>
+                        {{ strtotime((string)@award.date_edited)
+                        ? date('M j, Y', strtotime((string)@award.date_edited))
+                        : 'N/A' }}
+                    </td>
+
+                    <td>
+                        <div class="dropdown" id="dropdownMenu{{ @award.award_slug }}">
+                            <div class="dropdown-trigger">
+                                <button
+                                        class="button"
+                                        aria-haspopup="true"
+                                        aria-controls="dropdown-menu-{{ @award.award_slug }}"
+                                        aria-expanded="false"
+                                        type="button"
+                                >
+                                    <span>...</span>
+                                </button>
+                            </div>
+
+                            <div class="dropdown-menu" id="dropdown-menu-{{ @award.award_slug }}" role="menu">
+                                <div class="dropdown-content">
+                                    <!-- Use timestamps instead of strcmp(); cast to string to avoid null deprecations -->
+                                    <check if="{{ strtotime((string)@award.nomination_end_date) > strtotime(date('Y-m-d')) }}">
+                                        <true>
+                                            <a
+                                                    class="dropdown-item"
+                                                    onclick="switchOnOff('off', '{{ @award.award_slug }}', '/app/settings/important_dates/Important%20Dates/renderForm#settings')"
+                                            >
+                                                Turn Off
+                                            </a>
+                                        </true>
+                                        <false>
+                                            <a
+                                                    class="dropdown-item"
+                                                    onclick="switchOnOff('on', '{{ @award.award_slug }}', '/app/settings/important_dates/Important%20Dates/renderForm#settings')"
+                                            >
+                                                Turn On
+                                            </a>
+                                        </false>
+                                    </check>
+
+                                    <a class="dropdown-item" href="/app/clone/{{ @award.award_slug }}/cloneAward">*Clone</a>
+
+                                    <!-- Delete allowed only if ended and no nominations -->
+                                    <check if="{{ (strtotime((string)@award.nomination_end_date) < strtotime(date('Y-m-d'))) && (@award.nomination_count == 0) }}">
+                                        <a
+                                                class="dropdown-item"
+                                                href="/app/delete/award/{{ @award.award_slug }}/renderDeleteAwardForm"
+                                                data-tooltip="Delete this award. You will have a chance to confirm your decision"
+                                        >
+                                            Delete
+                                        </a>
+                                    </check>
+
+                                    <!-- Archive allowed if ended -->
+                                    <check if="{{ strtotime((string)@award.nomination_end_date) < strtotime(date('Y-m-d')) }}">
+                                        <a
+                                                class="dropdown-item"
+                                                href="/app/archive/award/{{ @award.award_slug }}/index"
+                                                data-tooltip="Archive this award. You will have a chance to confirm your decision"
+                                        >
+                                            Archive
+                                        </a>
+                                    </check>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </repeat>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<check if="{{ @deleted_awards }}">
+    <hr>
+    <include href="views/settings/awards/deleted_awards.htm" />
+</check>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var dropdowns = Array.prototype.slice.call(document.querySelectorAll('.dropdown'), 0);
+
+        function closeDropdowns() {
+            dropdowns.forEach(function (dd) {
+                dd.classList.remove('is-active');
+                var btn = dd.querySelector('.dropdown-trigger > .button');
+                if (btn) btn.setAttribute('aria-expanded', 'false');
+            });
+        }
+
+        dropdowns.forEach(function (dd) {
+            dd.addEventListener('click', function (event) {
+                event.stopPropagation();
+
+                // close others
+                dropdowns.forEach(function (other) {
+                    if (other !== dd) {
+                        other.classList.remove('is-active');
+                        var otherBtn = other.querySelector('.dropdown-trigger > .button');
+                        if (otherBtn) otherBtn.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // toggle this one
+                dd.classList.toggle('is-active');
+                var btn = dd.querySelector('.dropdown-trigger > .button');
+                if (btn) btn.setAttribute('aria-expanded', dd.classList.contains('is-active') ? 'true' : 'false');
+            });
+        });
+
+        document.addEventListener('click', closeDropdowns);
+
+        document.addEventListener('keydown', function (event) {
+            if ((event || window.event).keyCode === 27) {
+                closeDropdowns();
+            }
+        });
+    });
+</script>

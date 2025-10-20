@@ -1,0 +1,25 @@
+<include href="views/settings/modals/welcome_hint_modal.htm" />
+<include href="views/settings/modals/description_hint_modal.htm" />
+<include href="views/settings/modals/eligibility_hint_modal.htm" />
+<include href="views/settings/modals/prize_hint_modal.htm" />
+<include href="views/settings/modals/success_message_hint_modal.htm" />
+<include href="views/settings/modals/judges_hint_modal.htm" />
+<include href="views/settings/modals/numeric_instructions_hint_modal.htm" />
+<include href="views/settings/modals/open_instructions_hint_modal.htm" />
+<include href="views/settings/modals/judges_invitation_hint_modal.htm" />
+<include href="views/settings/modals/nominator_received_nomination_hint_modal.htm" />
+<include href="views/settings/modals/nominee_self_nominated_received_nomination_hint_modal.htm" />
+<include href="views/settings/modals/nominee_submit_self_nomination_hint_modal.htm" />
+<include href="views/settings/modals/nominee_nominated_hint_modal.htm" />
+<include href="views/settings/modals/file_upload_hint_modal.htm" />
+<include href="views/settings/modals/numeric_questions_modal.htm" />
+<include href="views/settings/modals/open_questions_modal.htm" />
+<include href="views/settings/modals/likert_explanation_modal.htm" />
+<include href="views/settings/modals/rubric_hint_modal.htm" />
+<check if="{{ @awardSlug }}">
+    <include href="views/settings/modals/links_to_nominations_and_judging_modal.htm" />
+</check>
+<include href="views/settings/modals/questionnaire_hint_modal.htm" />
+<exclude>
+    <include href="views/settings/modals/notify_changes_modal.htm" />
+</exclude>

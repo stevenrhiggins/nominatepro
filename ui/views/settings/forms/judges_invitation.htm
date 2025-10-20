@@ -1,0 +1,13 @@
+<form action="/app/invite/judge/index" method="POST">
+    <input type="hidden" name="id" value="{{ @judge.judge_id }}" readonly>
+    <input type="hidden" name="judges_invitation" value="{{ @judge.judges_invitation }}" readonly>
+    <input type="hidden" name="judges_invitation_subject" value="{{ @judge.judges_invitation }}" readonly>
+    <input type="hidden" name="token" value="{{ @SESSION.csrf }}" readonly>
+    <div class="field">
+        <label for="test-email" class="content">Enter an email address below <strong>ONLY</strong> if you want to send it to someone other than {{ @judge.judge_name }}. The judge will not receive a copy of the email.</label>
+        <div class="control">
+            <input type="text" class="input" name="test_email" id="test-email">
+        </div>
+    </div>
+    <button class="button" tabindex="2">Submit</button>
+</form>

@@ -1,0 +1,223 @@
+@import url("https://fonts.googleapis.com/css?family=Lato:400,700");
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Oswald:wght@200..700&family=Raleway&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Lato:400,700");
+@import url("https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+html {
+    font-size: 14px!important;
+}
+
+.definition{
+    font-family: Courier Prime;
+}
+
+.logo{
+    font-family: Montserrat;
+    font-size: 1.2rem;
+}
+
+hr {
+    background-color: gray;
+    border: none;
+    display: block;
+    height: 2px;
+    margin: 1.5rem 0; }
+
+ul.menu-list.awards_menu li {
+    list-style: circle;
+}
+
+.awards_menu_divider {
+    border-right: 1px solid lightgrey;
+    box-shadow: rgba(60,64, 67,0.3) 0px 1px 2px 0px;
+}
+
+.menu-list li a:link {
+    color: #000 !important;
+    }
+
+.menu-list li.navbar-item a:hover {
+    color: #005282 !important;
+    text-decoration: underline !important; }
+
+.menu-list li a:active {
+    color: #005282 !important;
+     }
+
+ul.menu-list li.heading {
+    color: #000 !important;
+    font-size: 15px !important; }
+
+ul.menu-list.awards_menu li a.navbar-item {
+    color: #000 !important;
+    font-size: 13px !important;
+    list-style: circle;
+}
+
+ul.menu-list.awards_menu li a.navbar-item:hover {
+    text-decoration: underline !important; }
+
+.input_red_border {
+    border-color: red; }
+
+.custom-box {
+    padding: 40px;
+    border: 1px solid lightgrey;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px;
+    border-radius: 4px; }
+
+.right-content {
+    min-height: 90svh;
+    border-left: 1px solid lightgrey;
+    background-color: #e8eaed; }
+
+table thead tr th{
+    font-weight: lighter;
+}
+
+div:where(.swal2-container) button:where(.swal2-styled):where(.swal2-confirm) {
+    border: 0;
+    border-radius: .25em;
+    background: initial;
+    background-color: rgb(72, 199, 142);
+    color: #fff;
+    font-size: 1em;
+}
+
+.success-border {
+    border-left: 8px solid #009400
+}
+
+.warning-border {
+    border-left: 8px solid orange;
+}
+
+.danger-border {
+    border-left: 8px solid red;
+}
+
+#tab-content div.wrapper {
+    display: none;
+}
+
+#tab-content div.wrapper.is-active {
+    display: block;
+}
+
+.button.is-success{
+    background-color: #01A9DF!important;
+    color: white;
+}
+
+.notification{
+    font-size: 1.1rem!important;
+}
+
+.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .accordion:hover {
+    background-color: #ccc;
+}
+
+/* Style the accordion panel. Note: hidden by default */
+.panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+}
+
+.led {
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    box-shadow: 0 0 0px #333;
+}
+
+.green {
+    background: #05a516;
+}
+
+.red {
+    background: #F00;
+}
+
+.toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    border: none;
+    border-radius: 8px;
+    font-size: .75rem;
+    cursor: pointer;
+    color: #fff;
+}
+
+.toggle-btn.on {
+    background-color: #28a745; /* green */
+}
+
+.toggle-btn.off {
+    background-color: #dc3545; /* red */
+}
+
+ .np-tip {
+     position: absolute;
+     z-index: 9999;
+     pointer-events: none;
+     max-width: 280px;
+     padding: .5rem .625rem;
+     border-radius: 6px;
+     font-size: .875rem; /* ~Bulma size-6 */
+     line-height: 1.2;
+     opacity: 0;
+     transform: translateY(-2px);
+     transition: opacity .12s ease, transform .12s ease;
+     box-shadow: 0 6px 18px rgba(10,10,10,.15);
+     color: #fff;
+     background: hsl(0, 0%, 21%); /* default dark */
+ }
+.np-tip--visible { opacity: 1; transform: translateY(0); }
+.np-tip::after {
+    content: '';
+    position: absolute;
+    width: 0; height: 0;
+    border: 6px solid transparent;
+}
+/* arrows */
+.np-tip[data-arrow="top"]::after    { bottom:-12px; left:50%; transform:translateX(-50%); border-top-color: currentColor; }
+.np-tip[data-arrow="bottom"]::after { top:-12px;   left:50%; transform:translateX(-50%); border-bottom-color: currentColor; }
+.np-tip[data-arrow="left"]::after   { right:-12px; top:50%;  transform:translateY(-50%); border-left-color: currentColor; }
+.np-tip[data-arrow="right"]::after  { left:-12px;  top:50%;  transform:translateY(-50%); border-right-color: currentColor; }
+
+/* colors (Bulma palette approximations) */
+.np-tip--primary { background: hsl(171, 100%, 41%); color: #fff; }
+.np-tip--link    { background: hsl(217, 71%, 53%); color: #fff; }
+.np-tip--info    { background: hsl(204, 86%, 53%); color: #fff; }
+.np-tip--success { background: hsl(141, 53%, 53%); color: #fff; }
+.np-tip--warning { background: hsl(48, 100%, 67%); color: hsl(0,0%,21%); }
+.np-tip--danger  { background: hsl(348, 100%, 61%); color: #fff; }
+.np-tip--dark    { background: hsl(0, 0%, 21%); color: #fff; }
+.np-tip--black   { background: hsl(0, 0%, 4%); color: #fff; }
+.np-tip--light   { background: hsl(0, 0%, 96%); color: hsl(0,0%,21%); }
+.np-tip--white   { background: #fff; color: hsl(0,0%,21%); box-shadow: 0 6px 18px rgba(10,10,10,.2); }
+
+/* sizes */
+.np-tip--small  { font-size: .75rem;   padding: .35rem .5rem; }
+.np-tip--normal { font-size: .875rem; }
+.np-tip--medium { font-size: 1rem;     padding: .6rem .75rem; }
+.np-tip--large  { font-size: 1.125rem; padding: .7rem .85rem; }

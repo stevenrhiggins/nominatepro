@@ -1,0 +1,9 @@
+<div class="field">
+    <label class="checkbox">
+        <div class="control">
+            <input type="hidden" name="{{ @fieldName }}" value="">
+            <input class="contact" type="checkbox" name="{{ @fieldName }}" id="{{ str_replace('_', '-', @fieldName) }}" value="{{ @fieldValue }}" tabindex="{{ @tabindex }}" {{ (@dataValue == @fieldValue) ? 'checked' : '' }}>
+            {{ @description }}
+        </div>
+    </label>
+</div>

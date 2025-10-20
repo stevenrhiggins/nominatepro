@@ -1,0 +1,18 @@
+<div class="modal" id="addEvaluation">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">
+                <check if="{{ @SESSION.setting == 'numeric'}}">
+                    <true>Add a Numeric Question/Instruction</true>
+                    <false>Add an Open Ended Question/Instruction</false>
+                </check>
+            </p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <include href="views/template_parts/paste_text_modal.htm" />
+            <include href="/views/settings/forms/evaluation_form.htm" />
+        </section>
+    </div>
+</div>

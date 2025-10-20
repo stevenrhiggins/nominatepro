@@ -1,0 +1,92 @@
+<div class="columns is-multiline">
+    <div class="column is-8">
+        <h1 class="is-size-4 my-3">{{ @title }}</h1>
+    </div>
+
+<div class="column is-8 " id="scoring-module-panel">
+    <p class="is-size-6 content"><strong>Complete the following section ONLY if you intend to use the judging portal.</strong></p>
+    <form action="{{ @action }}" method="post">
+    <input type="hidden" name="questionSlug" value="{{ isset(@SESSION.questionSlug) ? @SESSION.questionSlug : '' }}"  readonly/>
+    <input type="hidden" name="type" value="{{ isset(@type) ? @type : '' }}"  readonly/>
+
+    <include href="/views/settings/forms/judges_form.htm" />
+
+    <p class="content has-text-weight-semibold is-size-5 mt-5">Questions</p>
+    <p class="content">
+        <a class="js-modal-trigger" data-target="openQuestions">Read about Open-ended based questions</a><br>
+        <a class="js-modal-trigger" data-target="numericQuestions">Read about Numeric based questions</a>
+    </p>
+    <div class="tabs" id="tabs">
+        <ul class="ml-0">
+            <li data-tab="numeric" id="numeric" class="{{ @active_tab == 'numeric' ? 'is-active' : '' }}">
+                <a>Numeric Evaluation Question</a>
+            </li>
+            <li data-tab="open"  id="open" class="{{ @active_tab == 'open' ? 'is-active' : '' }}">
+                <a>Open-ended Evaluation Question</a>
+            </li>
+        </ul>
+    </div>
+    <div id="tab-content" class="column content">
+        <div class="wrapper {{ @active_tab == 'numeric' ? 'is-active' : '' }}" data-content="numeric">
+            <include href="/views/settings/forms/numeric_evaluation_form.htm" />
+            <include href="/views/settings/forms/rubric_form.htm" />
+        </div>
+        <div class="wrapper {{ @active_tab == 'open' ? 'is-active' : '' }}" data-content="open">
+            <include href="/views/settings/forms/open_ended_evaluation_form.htm" />
+        </div>
+    </div>
+    <div class="field">
+        <div class="control">
+            <label class="label" for="question-value">Assign a value/importance to this question. This will be used when scoring the question. (see below)</label>
+            <input type="number" name="question_value" value="{{ isset(@question.question_value) ? @question.question_value : '' }}" class="input" id="question-value">
+        </div>
+    </div>
+        <p class="content has-text-weight-semibold is-size-5">Scoring</p>
+        <p>Scoring for this question will be calculated as follows.
+            <ul>
+                <li><strong>Open-Ended Question:</strong> Here, the respondent provides a free-form answer. Regardless of the answer given, the score is predetermined by the value you assign to the question. For instance, if the question's assigned value is 6, the score for any answer will be 1 x 6 = 6.</li>
+                <li><strong>Numeric Question:</strong> In this question type, the respondent selects a numeric value as their answer, usually on a scale. The overall score is calculated by taking the respondent's selected number and multiplying it by the value you assigned to the question. If a respondent's selected number is 4 and the question's assigned value is 8, the score for that answer will be 4 x 8 = 32.</li>
+            </ul>
+        </p>
+        <div class="field is-grouped">
+            <div class="control mt-3">
+                <button class="button is-success" tabindex="100">Submit</button>
+            </div>
+            <div class="control mt-3">
+                <a href="{{ @cancelRoute }}" class="button is-link is-light" tabindex="101">Cancel</a>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+
+<!--we need set the value of the hidden field 'question_type' when a tab is selected. That way we can use that to update the fields on the database-->
+<script>
+ const open_tab = document.getElementById('open')
+ const numeric_tab = document.getElementById('numeric')
+ const question_type = document.getElementById('question-type')
+ open_tab.addEventListener('click', (event) => {
+    question_type.value = 'open';
+ })
+ numeric_tab.addEventListener('click', (event) => {
+     question_type.value = 'numeric';
+ })
+
+</script>
+
+<style>
+    ::placeholder {
+        color: red!important;
+        opacity: 1!important; /* Firefox */
+    }
+
+    ::-webkit-input-placeholder { /* WebKit browsers */
+        color:    red!important;;
+        opacity: 1 !important;
+    }
+
+    ::-ms-input-placeholder { /* Edge 12 -18 */
+        color: red!important;;
+    }
+</style>
+

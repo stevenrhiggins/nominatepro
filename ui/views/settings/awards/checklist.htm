@@ -1,0 +1,259 @@
+<div class="columns is-multiline">
+    <div class="column is-12">
+        <h1 class="is-size-4 my-3">{{ @PAGE_TITLE }}</h1>
+    </div>
+
+    <div class="column is-6 content">
+        <p>Use this area to review the work you've done.</p>
+
+        <table class="table">
+            <tbody>
+            <!-- ===================== Important Dates ===================== -->
+            <tr>
+                <td colspan="2"><strong><a href="{{ @server_name }}/app/settings/important_dates/Important%20Dates/renderForm#settings">Important Dates</a></strong></td>
+            </tr>
+            <tr>
+                <td style="width:300px">Nomination Start Date (required)</td>
+                <td>{{ !empty(@award.nomination_start_date) ? @award.nomination_start_date : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>Nomination End Date (required)</td>
+                <td>{{ !empty(@award.nomination_end_date) ? @award.nomination_end_date : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>
+                    Judging Start Date  (optional)
+                    {{ !empty(@award.award_judging) && empty(@award.judging_start_date) ? '<br><span class="has-text-danger">You have entered information for judging criteria in the award details section, so you must provide a start and end date.</span>' : '' }}
+                </td>
+                <td>{{ !empty(@award.judging_start_date) ? @award.judging_start_date : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>Judging End Date  (optional)</td>
+                <td>{{ !empty(@award.judging_end_date) ? @award.judging_end_date : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr><td colspan="2"><hr></td></tr>
+
+            <!-- ===================== Award Details ===================== -->
+            <tr>
+                <td colspan="2"><strong><a href="{{ @server_name }}/app/settings/award_details/Award%20Details/renderForm#settings">Award Details (recommended)</a></strong></td>
+            </tr>
+            <tr>
+                <td>Welcome (recommended)</td>
+                <td>{{ !empty(@award.award_welcome) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>Description (recommended)</td>
+                <td>{{ !empty(@award.award_description) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>Eligibility (optional)</td>
+                <td>{{ !empty(@award.award_nominee_requirements) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>Recognitions (Award/Prize/Position) (optional)</td>
+                <td>{{ !empty(@award.award_prize) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>Questionnaire instructions (recommended)</td>
+                <td>{{ !empty(@award.award_questionnaire_message_nominators) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>Success message (recommended)</td>
+                <td>{{ !empty(@award.award_success_message) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>Judging criteria (optional)</td>
+                <td>{{ !empty(@award.award_judging) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>Show judging criteria on welcome page (optional)</td>
+                <td>{{ !empty(@award.show_judging_criteria_on_welcome) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>Permit blind judging (optional)</td>
+                <td>{{ !empty(@award.permit_blind_judging) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>Permit vote changing (optional)</td>
+                <td>{{ !empty(@award.permit_vote_changing) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr><td colspan="2"><hr></td></tr>
+
+            <!-- ===================== Nominator & Nominee Settings ===================== -->
+            <tr>
+                <td colspan="2"><strong><a href="{{ @server_name }}/app/settings/nominator_nominee/Nominator-Nominee%20Settings/renderForm#settings">Nominator and Nominee Settings</a></strong></td>
+            </tr>
+            <tr>
+                <td>Require nominator</td>
+                <td>{{ !empty(@award.require_nominator) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>Require someone else to be nominated</td>
+                <td>{{ !empty(@award.nominate_someone) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>Require nominee to complete the nomination</td>
+                <td>{{ !empty(@award.require_nominee) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>Allow users to self-nominate</td>
+                <td>{{ !empty(@award.self_nominate) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>Notify nominee of their nomination <strong>without</strong> information about nominator</td>
+                <td>{{ !empty(@award.notify_nominee) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>Notify nominee of their nomination <strong>with</strong> information about nominator</td>
+                <td>{{ !empty(@award.nominee_view_nominator) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr><td colspan="2"><hr></td></tr>
+
+            <!-- ===================== Email Notification Settings ===================== -->
+            <tr>
+                <td colspan="2"><strong><a href="{{ @server_name }}/app/settings/notifications/Notifications%20Settings/renderForm#settings">Email Notification Settings</a></strong></td>
+            </tr>
+            <tr>
+                <td>Notification to nominator of receipt of nomination (recommended)</td>
+                <td>{{ !empty(@award.nominator_summary_email) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>
+                    Notification to nominee to complete nomination (optional)
+                    {{ @award.require_nominee == 1 && empty(@award.nominator_self_nominated_summary_email) ? '<br><span class="has-text-danger">You have selected to have the nominee complete the nomination, so you must complete this field.</span>' : '' }}
+                </td>
+                <td>{{ !empty(@award.nominator_self_nominated_summary_email) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>Notification to nominee of nomination (recommended)</td>
+                <td>{{ !empty(@award.nominee_summary_email) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr><td colspan="2"><hr></td></tr>
+
+            <!-- ===================== Contact Information ===================== -->
+            <tr>
+                <td colspan="2"><strong><a href="{{ @server_name }}/app/settings/contact/Contact%20Information%20Settings/renderForm#settings">Contact Information</a></strong></td>
+            </tr>
+            <tr>
+                <td>Your contact name (recommended)</td>
+                <td>{{ !empty(@award.contact) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>Your contact email (recommended)</td>
+                <td>{{ !empty(@award.contact_email) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr><td colspan="2"><hr></td></tr>
+
+            <!-- ===================== Document Allowances & Settings ===================== -->
+            <tr>
+                <td colspan="2"><strong><a href="{{ @server_name }}/app/settings/documents/Document%20Allowances%20%26%20Instructions%20Settings/renderForm#settings">Document Allowances and Settings</a></strong></td>
+            </tr>
+            <tr>
+                <td>
+                    Maximum number of files permitted to be uploaded by nominators ({{ !empty(@award.nominator_file_instructions) && @award.nominator_maximum_number_files == 0 ? 'required' : 'optional'}})
+                    {{ !empty(@award.nominator_file_instructions) && @award.nominator_maximum_number_files == 0 ? '<br><span class="has-text-danger">You have written instructions for the nominator to upload files, so you must select the maximum number of files allowed.</span>' : '' }}
+                </td>
+                <td>{{ !empty(@award.nominator_maximum_number_files) ? @award.nominator_maximum_number_files : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>
+                    Document instructions for nominators ( {{ @award.nominator_maximum_number_files > 0 && empty(@award.nominator_file_instructions) ? 'required' : 'optional'}}))
+                    {{ @award.nominator_maximum_number_files > 0 && empty(@award.nominator_file_instructions) ? '<br><span class="has-text-danger">You have set the number of documents the nominator can upload, so you must provide some instructions.</span>' : '' }}
+                </td>
+                <td>{{ !empty(@nominator_file_instructions) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>
+                    Maximum number of files permitted to be uploaded by nominees ({{ !empty(@award.nominee_file_instructions) && @award.nominee_maximum_number_files == 0 ? 'required' : 'optional'}})
+                    {{ !empty(@award.nominee_file_instructions) && @award.nominee_maximum_number_files == 0 ? '<br><span class="has-text-danger">You have written instructions for the nominee to upload files, so you must select the maximum number of files allowed.</span>' : '' }}
+                </td>
+                <td>{{ !empty(@award.nominee_maximum_number_files) ? @award.nominee_maximum_number_files : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>
+                    Document instructions for nominees ({{ @award.nominee_maximum_number_files > 0 && empty(@award.nominee_file_instructions) ? 'required' : 'optional'}})
+                    {{ @award.nominee_maximum_number_files > 0 && empty(@award.nominee_file_instructions) ? '<br><span class="has-text-danger">You have set the number of documents the nominee can upload, so you must provide some instructions.</span>' : '' }}
+                </td>
+                <td>{{ !empty(@nominee_file_instructions) ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr><td colspan="2"><hr></td></tr>
+
+            <!-- ===================== Sections & Questions ===================== -->
+            <tr>
+                <td colspan="2"><strong>Nomination Sections/Questions</strong></td>
+            </tr>
+            <tr>
+                <td>Number of sections</td>
+                <td>{{ @metrics.number_sections }}</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="{{ @server_name }}/app/questions/nominator/questionsPage#questions">Number of nominator questions ({{ !empty(@award.nominate_someone) && @metrics.number_nominator_questions == 0 ? 'required' : 'optional'}})</a>
+                    {{ !empty(@award.nominator) && @metrics.number_nominator_questions == 0 ? '<br><span class="has-text-danger">You have selected to have the nominator complete the nomination, so you must write one or more questions for the nominee.</span>' : '' }}
+                </td>
+                <td>{{ @metrics.number_nominator_questions }}</td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="{{ @server_name }}/app/questions/nominee/questionsPage#questions">Number of nominee questions ({{ !empty(@award.require_nominee) &&  @metrics.number_nominee_questions == 0 ? 'required' : 'optional'}})</a>
+                    {{ !empty(@award.require_nominee) && @metrics.number_nominee_questions == 0 ? '<br><span class="has-text-danger">You have selected to have the nominee complete the nomination, so you must write one or more questions for the nominee.</span>' : '' }}
+                </td>
+                <td>{{ @metrics.number_nominee_questions }}</td>
+            </tr>
+            <tr><td colspan="2"><hr></td></tr>
+
+            <!-- ===================== Sponsor Logo ===================== -->
+            <tr>
+                <td colspan="2"><strong><a href="{{ @server_name }}/app/settings/sponsor_logo/Add%20Sponsor%20Logo/renderForm#settings">Sponsor Logo</a></strong></td>
+            </tr>
+            <tr>
+                <td>Logo</td>
+                <td>
+                    <check if="{{ !empty(@award.sponsor_logo) && !empty(@award.awardSlug) }}">
+                        <true>
+                            <img src="/ui/images/logos/sponsors/{{ @award.awardSlug }}/{{ @award.sponsor_logo }}" alt="Sponsor Logo" style="width: 50px; height: auto">
+                        </true>
+                        <false>
+                            <i class="fa-solid fa-xmark has-text-danger"></i>
+                        </false>
+                    </check>
+                </td>
+            </tr>
+            <tr>
+                <td>Sponsor name</td>
+                <td>{{ !empty(@award.sponsor_name) ? @award.sponsor_name : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>Sponsor link</td>
+                <td>{{ !empty(@award.sponsor_link) ? @award.sponsor_link : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr>
+                <td>Sponsor acknowledgement</td>
+                <td>{{ !empty(@award.sponsor_acknowledgement) ? @award.sponsor_acknowledgement : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <tr><td colspan="2"><hr></td></tr>
+
+            <!-- ===================== Restricted Access ===================== -->
+            <tr>
+                <td colspan="2"><strong><a href="{{ @server_name }}/app/settings/restricted_access/Restricted%20Access/renderForm#settings">Restricted Access</a></strong></td>
+            </tr>
+            <tr>
+                <td>Active</td>
+                <td>{{ @award.use_access_token == 1 ? '<i class="fa-solid fa-check has-text-success"></i>' : '<i class="fa-solid fa-xmark has-text-danger"></i>' }}</td>
+            </tr>
+            <check if="@award.use_access_token == 1">
+                <true>
+                    <tr>
+                        <td>Access token</td>
+                        <td>{{ !empty(@award.access_token) ? @award.access_token : '' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Access token instructions</td>
+                        <td>{{ !empty(@award.use_access_text) ? @award.use_access_text : 'Please enter the access token provided to you by the award administrator.' }}</td>
+                    </tr>
+                </true>
+            </check>
+            </tbody>
+        </table>
+    </div>
+</div>

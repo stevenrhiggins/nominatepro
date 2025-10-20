@@ -1,0 +1,69 @@
+<div class="column is-10">
+    <div class="field">
+        <div class="control">
+            <label class="radio" for="use_access_token_close">
+                <input
+                        type="radio"
+                        name="use_access_token"
+                        id="use_access_token_close"
+                        value="0"
+                        {{ isset(@award.use_access_token) && @award.use_access_token != 1 ? 'checked' : '' }}>
+                Anyone with the nomination web URL can access it.
+            </label>
+            <br>
+            <label class="radio" for="use_access_token_open">
+                <input
+                        type="radio"
+                        name="use_access_token"
+                        id="use_access_token_open"
+                        value="1"
+                        {{ isset(@award.use_access_token) && @award.use_access_token == 1 ? 'checked' : '' }}>
+                Require all participants to enter an access token to access the nomination.
+            </label>
+        </div>
+    </div>
+
+    <div id="access_token_form" class="is-hidden mt-4">
+        <p class="content has-text-centered">
+            <strong>
+                <span class="is-size-4">
+                    Access Token: {{ isset(@award.access_token) ? @award.access_token : '' }}
+                </span>
+            </strong>
+        </p>
+
+        <div class="field">
+            <label class="label" for="access_use_text">
+                Enter your own instruction or leave this empty to use the default message:
+                <br>
+                <i>"Please enter the access token provided to you by the award administrator."</i>
+            </label>
+            <div class="control">
+                <textarea
+                        class="textarea"
+                        name="use_access_text"
+                        id="access_use_text">{{ isset(@award.use_access_text) ? @award.use_access_text : '' }}</textarea>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const accessTokenClose = document.querySelector("#use_access_token_close");
+        const accessTokenOpen = document.querySelector("#use_access_token_open");
+        const accessTokenForm = document.querySelector("#access_token_form");
+
+        const toggleAccessForm = () => {
+            accessTokenForm.classList.toggle("is-hidden", !accessTokenOpen.checked);
+        };
+
+        // Initialize on load
+        toggleAccessForm();
+
+        // Add listeners
+        [accessTokenClose, accessTokenOpen].forEach(el =>
+            el.addEventListener("change", toggleAccessForm)
+        );
+    });
+</script>

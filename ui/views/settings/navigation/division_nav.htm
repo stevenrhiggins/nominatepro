@@ -1,0 +1,36 @@
+<div class="column is-12">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <figure>
+                <img src="/assets/nominatePROLogoAndMark.jpg" alt="Logo for NominatePro" class="ml-3" style="width: 175px; aspect-ratio: 1:1;">
+            </figure>
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="divisionAwardNav" >
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
+        </div>
+        <div id="divisionAwardNav" class="navbar-menu is-size-6 content">
+            <div class="navbar-end">
+                <div class="navbar-item has-dropdown is-hoverable box">
+                    <a class="navbar-link is-size-6">
+                        {{ @SESSION.cp_name }} <i class="fa-solid fa-user is-size-6 ml-3"></i> {{ @SESSION.cp_contact_name }}
+                    </a>
+                    <div class="navbar-dropdown is-size-6">
+                        <a href="/app/dashboard/index" class="navbar-item">Dashboard</a>
+                        <a href="/app/update/profile/renderProfileForm" class="navbar-item">
+                            Update Your Profile
+                        </a>
+                        <a href="/login/cp/index" class="navbar-item" style="color: darkred!important;">
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <hr style="margin: 0; border: 0; height: 1px; background-color: lightgray;">
+</div>
+
+

@@ -1,0 +1,289 @@
+<!-- Actions -->
+<div class="columns is-mobile" id="questions">
+    <div class="column">
+        <a
+                href="/app/{{ @awardSlug }}/questions/{{ @type }}/store"
+                class="button is-primary is-light is-responsive js-modal-trigger mt-2"
+        >
+            Add a Question
+        </a>
+    </div>
+</div>
+
+<!-- Page title -->
+<div class="columns is-centered">
+    <div class="column is-12">
+        <h1 class="subtitle is-4 is-uppercase my-3">{{ @PAGE_TITLE }}</h1>
+    </div>
+</div>
+
+<!-- Intro / help -->
+<div class="columns">
+    <div class="column is-12">
+        <div class="notification is-warning is-light">
+            <check if="{{ @type == 'nominator' }}">
+                <true>
+                    Use this section to create and edit questions that you would like the nominator to answer about the person they are nominating.
+                </true>
+                <false>
+                    You have selected to require nominees to respond to questions upon being nominated. Use this section to create and manage those questions.
+                </false>
+            </check>
+        </div>
+
+        <p class="content">
+            Want to change the order of the questions? Click a question, hold the mouse button, drag it to a new position, then release.
+        </p>
+
+        <!-- Table -->
+        <div class="table-container">
+            <table class="table is-fullwidth is-striped is-hoverable is-size-6" id="questionsTable">
+                <thead>
+                <tr class="is-uppercase">
+                    <th class="is-narrow">#</th>
+                    <th>Question</th>
+                    <repeat group="{{ @question_headers }}" value="{{ @header }}">
+                        <th class="has-text-centered">{{ @header }}</th>
+                    </repeat>
+                </tr>
+                </thead>
+
+                <tbody class="row_position" draggable="true" ondragend="sortRow('questions')">
+                <repeat group="{{ @questions }}" counter="{{ @ctr }}" value="{{ @question }}">
+                    <tr id="{{ @question.question_id }}">
+                        <!-- Order -->
+                        <td class="is-narrow has-text-grey">{{ @ctr }}</td>
+
+                        <!-- Question text (drag handle if more than one) -->
+                        <td>
+                            <check if="{{ count(@questions) > 1 }}">
+                                <true>
+                    <span
+                            class="has-text-link is-underlined"
+                            style="cursor: move"
+                            title="Drag and drop to reorder this question."
+                            aria-label="Drag to reorder"
+                    >
+                      {{ @question.question | raw }}
+                    </span>
+                                </true>
+                                <false>
+                                    {{ @question.question | raw }}
+                                </false>
+                            </check>
+                        </td>
+
+                        <!-- Section -->
+                        <td class="py-2">
+                            {{ @question.section_name }}
+                        </td>
+
+                        <!-- Input type -->
+                        <td class="has-text-centered">
+                            {{ ucfirst(@question.input_type) }}
+                        </td>
+
+                        <!-- Display on/off -->
+                        <td class="has-text-centered">
+                            <check if="{{ @question.display_status == 'on' }}">
+                                <true>
+                    <span class="tag is-success is-light">
+                      <span class="icon"><i class="fa-solid fa-check"></i></span>
+                      <span>Yes</span>
+                    </span>
+                                </true>
+                                <false>
+                    <span class="tag is-danger is-light">
+                      <span class="icon"><i class="fa-solid fa-xmark"></i></span>
+                      <span>No</span>
+                    </span>
+                                </false>
+                            </check>
+                        </td>
+
+                        <!-- Required -->
+                        <td class="has-text-centered">
+                            <check if="{{ @question.required == 'on' }}">
+                                <true>
+                    <span class="tag is-success is-light">
+                      <span class="icon"><i class="fa-solid fa-check"></i></span>
+                      <span>Yes</span>
+                    </span>
+                                </true>
+                                <false>
+                    <span class="tag is-danger is-light">
+                      <span class="icon"><i class="fa-solid fa-xmark"></i></span>
+                      <span>No</span>
+                    </span>
+                                </false>
+                            </check>
+                        </td>
+
+                        <!-- Judging module -->
+                        <td class="has-text-centered">
+                            <a
+                                    href="/app/{{ @awardSlug }}/questions/{{ @type }}/{{ @question.question_slug }}/judging"
+                                    title="{{ @question.scoring_module == 1 ? 'Edit or delete the judging module for this question' : 'Create the judging module for this question' }}"
+                            >
+                                <check if="{{ @question.scoring_module == 1 }}">
+                                    <true>
+                      <span class="tag is-success is-light">
+                        <span class="icon"><i class="fa-solid fa-check"></i></span>
+                        <span>Yes</span>
+                      </span>
+                                    </true>
+                                    <false>
+                      <span class="tag is-danger is-light">
+                        <span class="icon"><i class="fa-solid fa-xmark"></i></span>
+                        <span>No</span>
+                      </span>
+                                    </false>
+                                </check>
+                            </a>
+                        </td>
+
+                        <!-- Question value -->
+                        <td class="has-text-centered">
+                            <check if="{{ @question.question_value }}">
+                                <true>{{ @question.question_value }}</true>
+                                <false>N/A</false>
+                            </check>
+                        </td>
+
+                        <!-- Evaluation type -->
+                        <td class="has-text-centered">
+                            <check if="{{ @question.numeric_scale }}">
+                                <check if="{{ !empty(@question.response_anchors) }}">
+                                    <true>Likert Scale<br>(1 – {{ @question.numeric_scale }})</true>
+                                    <false>Numeric Scale<br>(1 – {{ @question.numeric_scale }})</false>
+                                </check>
+                            </check>
+                            <check if="{{ @question.open_question }}">
+                                Open
+                            </check>
+                            <check if="{{ empty(@question.numeric_scale) && empty(@question.open_question) }}">
+                                N/A
+                            </check>
+                        </td>
+
+                        <!-- Edit/Clone -->
+                        <td class="has-text-centered">
+                            <a
+                                    href="/app/{{ @awardSlug }}/{{ @question.question_slug }}/questions/{{ @type }}/update"
+                                    id="editQuestion"
+                                    class="button is-small"
+                            >
+                                Edit/Clone
+                            </a>
+                        </td>
+
+                        <!-- Delete -->
+                        <td class="has-text-centered">
+                            <button
+                                    type="button"
+                                    class="button is-small is-danger is-light"
+                                    onclick="confirmDelete('{{ @question.question_slug }}')"
+                            >
+                                Delete
+                            </button>
+                        </td>
+
+                        <!-- Follow-up -->
+                        <td class="has-text-centered">
+                            <check if="{{ @question.follow_up_questions !== null }}">
+                                <true>
+                                    <check if="{{ !@question.fu_slug }}">
+                                        <true>
+                                            <a
+                                                    href="/app/{{ @awardSlug }}/followup/{{ @type }}/{{ @question.question_slug }}/store"
+                                                    id="newFuQuestion"
+                                                    class="button is-small"
+                                            >
+                                                Add Follow Up Question
+                                            </a>
+                                        </true>
+                                        <false>
+                                            <check if="{{ !empty(@metrics.nomination_is_active) }}">
+                                                <true>
+                                                    <button
+                                                            data-target="fuModal_{{ @question.fu_slug }}"
+                                                            class="button is-small is-responsive js-modal-trigger"
+                                                    >
+                                                        View Follow Up Question
+                                                    </button>
+                                                </true>
+                                                <false>
+                                                    <a
+                                                            href="/app/{{ @awardSlug }}/followup/{{ @type }}/{{ @question.fu_slug }}/update"
+                                                            title="Edit the follow-up question"
+                                                            class="mr-2"
+                                                    >
+                                                        <span class="icon"><i class="fa-solid fa-pen-to-square"></i></span>
+                                                    </a>
+                                                    <button
+                                                            type="button"
+                                                            class="button is-ghost is-small has-text-danger"
+                                                            title="Delete the follow-up question only"
+                                                            onclick="confirmDeleteFuQuestion('{{ @question.fu_slug }}')"
+                                                    >
+                                                        <span class="icon"><i class="fa-solid fa-trash"></i></span>
+                                                    </button>
+                                                </false>
+                                            </check>
+                                        </false>
+                                    </check>
+                                </true>
+                                <false>
+                    <span title="{{ @question.input_type == 'radio' || @question.input_type == 'checkbox'
+                      ? 'Available if you require a follow-up question.'
+                      : 'Available for checkbox or radio responses requiring a follow-up question.' }}">
+                      <span class="icon is-medium">
+                        <i class="fa-solid fa-circle-info"></i>
+                      </span>
+                    </span>
+                                </false>
+                            </check>
+                        </td>
+                    </tr>
+                </repeat>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmDelete(slug) {
+        Swal.fire({
+            title: 'Delete this question?',
+            text: 'This will permanently delete the question.',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const baseDeleteUrl = '/app/{{ @awardSlug }}/questions/{{ @type }}/';
+                window.location.href = baseDeleteUrl + encodeURIComponent(slug) + '/delete';
+            }
+        });
+    }
+
+    function confirmDeleteFuQuestion(slug) {
+        Swal.fire({
+            title: 'Delete this follow-up question?',
+            text: 'This will permanently delete the follow-up question.',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const baseDeleteUrl = '/app/{{ @awardSlug }}/followup/{{ @type }}/';
+                window.location.href = baseDeleteUrl + encodeURIComponent(slug) + '/delete';
+            }
+        });
+    }
+</script>

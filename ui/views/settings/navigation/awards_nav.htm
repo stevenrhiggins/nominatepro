@@ -1,0 +1,26 @@
+<check if="{{ @all_awards }}">
+    <true>
+        <p class="pb-2 ml-3">
+            <a href="/app/all/index" class="button is-success is-small is-outlined" data-tooltip="View Awards"><strong>All Awards</strong>&nbsp;({{ @all_awards }})</a>
+            <a href="/app/award/activeAwards" class="button is-success is-small is-outlined"><span title="Badge top right" class="badge is-outlined">{{ @active_awards }}</span>
+                Active</a>
+            <a href="/app/award/new" class="button is-success is-small is-outlined ml-3"><strong>New Award</strong></a>
+        </p>
+    </true>
+    <false>
+        <p class="pb-2 ml-3">
+            <a href="/app/award/new" class="button is-success is-small is-outlined ml-3"><strong>New Award</strong></a>
+        </p>
+    </false>
+</check>
+<hr>
+
+
+
+
+
+
+
+
+
+

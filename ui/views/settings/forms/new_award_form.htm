@@ -1,0 +1,21 @@
+<div class="column is-6">
+        <h1 class="is-size-4 mb-3">Create a New Award</h1>
+        <form action="{{ @postRoute }}" method="POST">
+            <input type="hidden" name="token" value="{{ @SESSION.csrf }}" readonly>
+            <div class="field">
+                <label for="award-name">Enter the Name of the Award</label>
+                <div class="control">
+                    <input class="input" type="text" name="award_name" id="award-name" required >
+                </div>
+            </div>
+            <div class="field is-grouped">
+                <div class="control mt-3">
+                    <button class="button is-success">Submit</button>
+                </div>
+                    <div class="control mt-3">
+                        <a href="{{@cancel_route}}" class="button is-link is-light">Cancel</a>
+                    </div>
+            </div>
+        </form>
+        <p class="has-text-danger" id="award-error-msg"></p>
+</div>

@@ -1,0 +1,71 @@
+<!-- TODO WRITE SOMETING TO TELL USERS WHAT THIS SECTION IS FOR -->
+<div class="column is-8">
+    <check if="{{ @award.permit_blind_judging == 'on'}}">
+        <true>
+                <p class="content notification has-background-warning-light warning-border"><i class="fa-sharp fa-solid fa-star has-text-danger"></i> You have chosen to prevent judges from being able to see the names of nominees (Permit blind judging) in the "Judging Settings". Since any uploaded documents could contain that information, you are not able to allow any supporting files to be uploaded. If you wish to change that setting, click <a href="/app/settings/judges_setting/Update%20Judges%20Settings/renderForm">here</a>. </p>
+        </true>
+        <false>
+                <p class="is-uppercase content">Settings for Nominators</p>
+                <p class="has-text-weight-semibold">Set the maximum number of files permitted to be uploaded by nominators. </p>
+                <div class="field">
+                        <div class="select">
+                            <select name="nominator_maximum_number_files" tabindex="25">
+                                <option>Select</option>
+                                <option>Not Required</option>
+                                <check if="{{isset(@award.nominator_maximum_number_files)}}">
+                                    <option selected value="{{@award.nominator_maximum_number_files}}">{{@award.nominator_maximum_number_files}}</option>
+                                </check>
+                                <loop from="{{ @i= 1 }}" to="{{ @i <= 10 }}" step="{{ @i++ }}">
+                                    <option value="{{@i}}">{{@i}}</option>
+                                </loop>
+                            </select>
+                        </div>
+                <p class="help is-danger general-message is-hidden"></p>
+                </div>
+
+                <div class="field">
+                    <div class="control">
+                        <label for="nominator-file-instructions" class="label">File Upload Instructions for the Nominator
+                            <a class="js-modal-trigger" data-target="fileUploadHint"> <i class="fa-sharp fa-solid fa-square-question is-size-5"></i></a>
+                        </label>
+                        <textarea class="textarea tinyform" name="nominator_file_instructions" tabindex="26" id="nominator-file-instructions">{{isset(@award.nominator_file_instructions) ? @award.nominator_file_instructions : ''}}</textarea>
+                    </div>
+                </div>
+                <p class="help is-danger general-message is-hidden"></p>
+
+            <check if="{{ @award.require_nominee == 1 || @award.self_nominate == 1 }}">
+            <!-- NOMINEE -->
+            <p class="is-uppercase content">Settings for Nominees</p>
+
+                <p class="has-text-weight-semibold">Set the maximum number of files permitted to be uploaded by nominees</p>
+
+                <div class="field">
+                    <div class="select">
+                        <select name="nominee_maximum_number_files" tabindex="25">
+                            <option>Select</option>
+                            <option>Not Required</option>
+                            <check if="{{@award.nominee_maximum_number_files}}">
+                                <option selected value="{{@award.nominee_maximum_number_files}}">{{@award.nominee_maximum_number_files}}</option>
+                            </check>
+                            <loop from="{{ @i= 1 }}" to="{{ @i <= 10 }}" step="{{ @i++ }}">
+                                <option value="{{@i}}">{{@i}}</option>
+                            </loop>
+                        </select>
+                    </div>
+                    <p class="help is-danger general-message is-hidden"></p>
+                </div>
+
+                <div class="field">
+                    <div class="control">
+                        <label for="nominee-file-instructions" class="label">File Upload Instructions for the Nominator
+                            <a class="js-modal-trigger" data-target="fileUploadHint"> <i class="fa-sharp fa-solid fa-square-question is-size-5"></i></a>
+                        </label>
+                        <textarea class="textarea tinyform" name="nominee_file_instructions" tabindex="26" id="nominee-file-instructions">{{isset(@award.nominee_file_instructions) ? @award.nominee_file_instructions : ''}}</textarea>
+                    </div>
+                </div>
+                <p class="help is-danger general-message is-hidden"></p>
+            </check>
+        </false>
+    </check>
+</div>
+

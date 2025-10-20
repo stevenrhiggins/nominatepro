@@ -1,0 +1,58 @@
+<div class="column is-12">
+    <h1 class="is-size-5 pl-2">
+        <div class="columns is-vcentered is-multiline is-mobile">
+            <div class="column">
+            <p class="mb-2"><strong>{{@award.award_name}}</strong></p>
+                <check if="{{ isset(@award.nomination_end_date) }}">
+                    <check if="{{ @award.nomination_end_date > date('Y-m-d') }}">
+                        <true>
+                            <!-- Nomination ON -->
+                            <button
+                                    class="toggle-btn on"
+                                    aria-pressed="true"
+                                    onclick="switchOnOff('off','{{@award.award_slug}}')"
+                            >
+                                <i class="fas fa-toggle-on"></i>
+                                Turn nomination off
+                            </button>
+                        </true>
+                        <false>
+                            <!-- Nomination OFF -->
+                            <button
+                                    class="toggle-btn off"
+                                    aria-pressed="false"
+                                    onclick="switchOnOff('on','{{@award.award_slug}}')"
+                            >
+                                <i class="fas fa-toggle-off"></i>
+                                Turn nomination on
+                            </button>
+                        </false>
+                    </check>
+                </check>
+                <check if="{{ isset(@SESSION.sponsor_acknowledgement) }}">
+                    <p class="is-size-5">{{ @award.sponsor_acknowledgement }}<span class="ml-2 is-size-6"><i class="fa-solid fa-arrow-left"></i> The sponsor acknowledgement will be displayed here on the nomination module.</span></p>
+                </check>
+            </div>
+        </div>
+        <p class="my-4">
+            <a href="/app/{{ @award.award_slug }}/all/nominations" class="button is-small mr-3 {{ @metrics.all_nominations == 0 ? 'is-danger' : '' }}">
+                <span title="Badge top right" class="badge">{{ @metrics.all_nominations }}</span>
+                All Nominations
+            </a>
+            <a href="/app/{{ @award.award_slug }}/ongoing/nominations" class="button is-small mr-3 {{ @metrics.ongoing_nominations == 0 ? 'is-danger' : '' }}">
+                <span title="Badge top right" class="badge">{{ @metrics.ongoing_nominations }}</span>
+                Ongoing Nominations
+            </a>
+            <a href="/app/{{ @award.award_slug }}/completed/nominations" class="button is-small mr-3 {{ @metrics.completed_nominations == 0 ? 'is-danger' : '' }}">
+                <span title="Badge top right" class="badge">{{ @metrics.completed_nominations }}</span>
+                Completed Nominations
+            </a>
+            <a href="/app/{{ @award.award_slug }}/demo/nominations" class="button is-small {{ @metrics.demo_nominations == 0 ? 'is-danger' : '' }}">
+                <span title="Badge top right" class="badge">{{ @metrics.demo_nominations }}</span>
+                Demo Nominations
+            </a>
+        </p>
+        <!-- END OPEN AWARD PANEL -->
+    </h1>
+    <p><i class="fa-solid fa-star has-text-danger"></i> <a href="#" class="js-modal-trigger" style="color: black;text-decoration: underline" data-target="links">Click here to access links to nominations and judging modules</a></p>
+</div>

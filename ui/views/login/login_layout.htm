@@ -1,0 +1,28 @@
+<!--entire site structure-->
+<include href="views/header.htm" />
+
+<section class="section" id="test">
+    <div class="columns">
+        <div class="column mt-1 ml-3">
+            <img src="/assets/nominatePROLogoAndMark.jpg " alt="Logo for NominatePro" style="height: 60px;">
+        </div>
+    </div>
+    <div class="columns is-centered">
+        <div class="column is-4 has-text-centered">
+            <repeat group="{{ \Flash::instance()->getMessages() }}" value="{{ @msg }}">
+                <div class="notification is-{{ @msg.type ? : 'info' }} is-light text-center">
+                    <p class="text-center">{{ @msg.text | esc }}</p>
+                </div>
+            </repeat>
+        </div>
+    </div>
+    <div class="columns is-centered is-multiline" style="margin: 0 8px">
+        <div class="column" style="min-height: 80vh">
+            <include href="{{ @content }}" />
+        </div>
+    </div>
+</section>
+
+<include href="views/partials/flash_swal.htm" />
+
+<include href="views/footer.htm" />

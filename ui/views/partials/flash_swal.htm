@@ -1,0 +1,38 @@
+<!-- Bulma HTML fallback
+<check if="{{ @flash && count(@flash) }}">
+    <div style="position:fixed;top:1rem;left:50%;z-index:9999;max-width:420px;transform:translateX(-50%);">
+        <repeat group="{{ @flash }}" value="{{ @m }}">
+            <div class="notification
+                <check if="{{ strtolower(@m.type)=='error' || strtolower(@m.type)=='danger' }}"> is-danger</check>
+                <check if="{{ strtolower(@m.type)=='warning' }}"> is-warning</check>
+                <check if="{{ strtolower(@m.type)=='success' }}"> is-success</check>
+                <check if="{{ strtolower(@m.type)=='info'    }}"> is-info</check>
+            ">
+        {{ @m.text }}
+            </div>
+        </repeat>
+    </div>
+</check>
+-->
+<!-- SweetAlert toasts -->
+<check if="{{ @flash_json }}">
+    <script>
+        (function () {
+            var msgs = {{ @flash_json | raw }}; // already normalized to [{text,type}]
+            if (typeof window.Swal === 'undefined') return;
+
+            function mapIcon(t){
+                t = (t||'').toLowerCase();
+                if (t==='danger' || t==='error') return 'error';
+                if (t==='warning') return 'warning';
+                if (t==='success') return 'success';
+                return 'info';
+            }
+
+            (Array.isArray(msgs) ? msgs : []).forEach(function(m){
+                if (!m || !m.text) return;
+                Swal.fire({ icon: mapIcon(m.type), title: m.text, toast: true, position: 'top', timer: 4500, showConfirmButton: false });
+            });
+        })();
+    </script>
+</check>

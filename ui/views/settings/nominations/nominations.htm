@@ -1,0 +1,151 @@
+<div class="columns is-centered">
+    <div class="column is-12">
+        <h1 class="is-uppercase content is-size-4 my-3">{{ @PAGE_TITLE }}</h1>
+    </div>
+</div>
+
+<div class="columns">
+    <div class="column is-11">
+        <p class="content notification has-background-warning-light warning-border">
+                <check if="{{ @status == 'ongoing' }}">
+                    <true>
+                        This table shows all {{ @status }} nominations for <strong>{{ @award.award_name }}</strong> award.
+                        <i class="fa-sharp fa-solid fa-star has-text-danger" aria-hidden="true"></i>If the nomination has been started but has not been completed within <strong>2 days of today's date</strong>, you have the option of sending a reminder to the nominator that they have not completed the nomination.
+                    </true>
+                    <false>
+                        This table shows all {{ @status }} nominations for "{{ @award.award_name }}".
+                    </false>
+                </check>
+        </p>
+        <table class="table is-fullwidth data-table is-size-6" id="nominationsTable">
+            <thead class="is-uppercase">
+                <tr>
+                    <th>View</th>
+                    <th>Date Submitted</th>
+                    <th>Date Completed</th>
+                    <th>Nominator</th>
+                    <th>Nominator Email</th>
+                    <th>Nominee</th>
+                    <th>Nominee Email</th>
+                    <check if="{{ @status !== 'completed' }}">
+                        <th>Last Completed Step<br>(see Legend)</th>
+                    </check>
+                    <check if="{{ @status == 'ongoing' }}">
+                        <th>Days Since Submitted</th>
+                        <th>Delete/Remind</th>
+                        <th>Reminders Sent</th>
+                    </check>
+                </tr>
+            </thead>
+            <tbody>
+                <repeat group="{{@nominations}}" counter="{{ @days_since_submission }}" value="{{@nomination}}">
+                    <tr>
+                        <td><a href="/app/review/{{ @nomination.award_slug }}/{{ @nomination.nomination_slug }}" target="_blank" data-tooltip="View the nomination, opens in another tab"><i class="fa-light fa-magnifying-glass"></i></a></td>
+                        <td>{{ date('F j, Y', strtotime(@nomination.submitted_at)) }}</td>
+                        <td>{{ date('F j, Y', strtotime(@nomination.completed_at)) }}</td>
+                        <td>{{ @nomination.nominator_first_name }} {{ @nomination.nominator_last_name }}</td>
+                        <td>{{ @nomination.nominator_email }}</td>
+                        <td>{{ @nomination.nominee_first_name }} {{ @nomination.nominee_last_name }}</td>
+                        <td>{{ @nomination.nominee_email }}</td>
+                            <check if="{{ @status !== 'completed' }}">
+                                <td>Step {{ @nomination.step }}</td>
+                            </check>
+                            <check if="{{ @status == 'ongoing' }}">
+                                <td>{{ @nomination.days_since_submission }}</td>
+                                <td style="width: 100px" class="has-text-centered">
+                                    <a class="delete-nomination" data-slug="{{ @nomination.nomination_slug}}" data-tooltip="Delete this nomination"><i class="fa-solid fa-trash is-size-6"></i></a>
+                                    <check if="{{ @nomination.days_since_submission > 2}}">
+                                       OR
+                                        <a data-target="modal_{{@nomination.nomination_slug}}" data-tooltip="Send a reminder" class=" js-modal-trigger"><i class="fa-solid fa-alarm-clock is-size-6" ></i></a>
+                                    </check>
+                                </td>
+                                <td class="has-text-centered"><a data-target="modal_{{@nomination.nomination_slug}}" data-tooltip="View reminders" class=" js-modal-trigger is-underlined">{{ count(@nomination.reminders) }}</a></td>
+                            </check>
+                            <check if="{{ @status == 'demo' }}">
+                                <a class="delete-nomination" data-slug="{{ @nomination.nomination_slug}}" data-tooltip="Delete this nomination"><i class="fa-solid fa-trash is-size-6"></i></a>
+                                </a>
+                            </check>
+                    </tr>
+                    <check if="{{ @status == 'ongoing' }}">
+                        <include href="views/settings/modals/reminder_modal.htm" />
+                    </check>
+                </repeat>
+            </tbody>
+        </table>
+        <check if="{{ @status !== 'completed' }}">
+            <p class="mt-5"><strong>Legend:</strong> (refers to last uncompleted step in the nomination process)<br>
+                <strong>Step 1:</strong> Tell us about yourself<br>
+                <strong>Step 2:</strong> Tell us about the person you're nominating<br>
+                <strong>Step 3:</strong> Complete the questionaire<br>
+                <strong>Step 4:</strong> Upload supporting documents<br>
+                <strong>Step 5:</strong> Completed<br>
+            </p>
+        </check>
+    </div>
+</div>
+
+<script>
+    function deleteDemo(nomination_slug, award_slug) {
+        var xhttp = new XMLHttpRequest();
+
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                // After a successful request, reload the page
+                location.reload();
+            }
+        };
+
+        xhttp.open("GET", `/xhttp/${nomination_slug}/${award_slug}/delete/nomination`, true);
+        xhttp.send();
+    }
+
+        document.addEventListener('DOMContentLoaded', function () {
+        // Get all dropdowns on the page that we want to initialize
+        var $dropdowns = getAll('.dropdown');
+        // Add a click handler to each dropdown, and handle clicking outside of dropdowns
+        $dropdowns.forEach(function ($el) {
+        $el.addEventListener('click', function (event) {
+        event.stopPropagation();
+
+        // Close all dropdowns before opening the clicked one
+        $dropdowns.forEach(function ($dropdown) {
+        if ($dropdown !== $el) {
+        $dropdown.classList.remove('is-active');
+    }
+    });
+
+        $el.classList.toggle('is-active');
+    });
+    });
+
+        // Close dropdowns if something else is clicked.
+        document.addEventListener('click', function (event) {
+        closeDropdowns();
+    });
+
+        // Close dropdowns if Escape is pressed
+        document.addEventListener('keydown', function (event) {
+        var e = event || window.event;
+        if (e.keyCode === 27) {
+        closeDropdowns();
+    }
+    });
+
+        // Close all dropdowns
+        function closeDropdowns() {
+        $dropdowns.forEach(function ($el) {
+        $el.classList.remove('is-active');
+    });
+    }
+
+        // Helper function
+        function getAll(selector) {
+        return Array.prototype.slice.call(document.querySelectorAll(selector), 0);
+    }
+
+    });
+
+</script>
+
+
+

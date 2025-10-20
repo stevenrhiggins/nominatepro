@@ -1,0 +1,10 @@
+<div class="field">
+    <div class="control">
+        <label for="judges" class="label is-size-5">Judges</label>
+        <p>We use this information to determine whether someone is eligible to judge this award nomination. You will notify your judges using your preferred method and provide them with the <a href="#" class="js-modal-trigger" data-target="links">link to the judging module</a>. When they access the judging module, we will ask them to enter their email address, first name, and last name and compare it to the information you provide here.
+        <hr>
+        Enter the first, last name and email address of each person who will be judging this award nomination. Please enter each judge exactly as shown in the following example.<br><strong>John Smith<span class="has-text-danger">:</span>jsmith@email.com</strong><br>If you have multiple judges, separate each judge with a comma. <strong>John Smith:jsmith@email.com<span class="has-text-danger">,</span>Sally Jones:sally@email.com</strong>
+        </p>
+        <textarea class="textarea" name="judges" tabindex="6" id="judges">{{ isset(@judges) ? @judges : '' }}</textarea>
+    </div>
+</div>

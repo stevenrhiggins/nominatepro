@@ -1,0 +1,10 @@
+<div class="field">
+    <div class="control">
+        <label for="{{ @fieldId }}" class="label">{{ @fieldLabel }}
+            <a class="js-modal-trigger" data-target="{{ @modalTarget }}"> <i class="fa-sharp fa-solid fa-square-question is-size-5"></i></a>
+        </label>
+        <textarea class="textarea tinyform" id="{{ @fieldId }}" name="{{ @fieldName }}" tabindex="{{ @tabIndex }}">
+            {{ @fieldValue?: '' }}
+        </textarea>
+    </div>
+</div>

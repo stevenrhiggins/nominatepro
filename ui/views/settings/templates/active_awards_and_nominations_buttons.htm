@@ -1,0 +1,21 @@
+<div class="column is-12">
+    <check if="{{ isset(@SESSION.logo) }} && {{ isset(@SESSION.awardSlug) }}">
+        <div class="box has-background-white">
+            <div class="columns is-vcentered">
+                <div class="column is-2-desktop-only is-12-mobile">
+                    <figure class="mb-4">
+                        <figcaption class="has-text-weight-semibold mb-2 ml-3">Active Logo</figcaption>
+                        <a href="{{ isset(@SESSION.sponsor_link) ? @SESSION.sponsor_link : '#'}}">
+                            <img src="{{ @SESSION.logo }}" alt="{{ @SESSION.logo_alt }}" class="ml-3" style="width: 150px; aspect-ratio: {{ @SESSION.aspectRatio }}; vertical-align: center">
+                        </a>
+                    </figure>
+                    <check if="{{ isset(@SESSION.sponsor_acknowledgement) }}">
+                        <p class="is-size-5">{{ @award.sponsor_acknowledgement }}</p>
+                    </check>
+                </div>
+            </div>
+        </div>
+    </check>
+</div>
+
+

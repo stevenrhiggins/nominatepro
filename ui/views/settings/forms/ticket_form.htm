@@ -1,0 +1,75 @@
+<p class="subtitle">{{@title}}</p>
+<p class="content">Please provide as much information as possible when submitting your ticket.</p>
+<form method="POST" action="{{ 'ticket' | alias }}" enctype="multipart/form-data">
+    <!--this is the login id -->
+    <input type="hidden" name="id" value="{{ @assoc.id}}" readonly>
+    <div class="field">
+        <label class="label">Name</label>
+        <div class="control">
+            <input class="input" type="text" name="division_contact_name" required tabindex="1">
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Email</label>
+        <div class="control">
+            <input class="input" type="email" name="division_contact_email" required tabindex="2">
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Phone (not required)</label>
+        <div class="control">
+            <input class="input" type="phone" name="division_contact_phone" tabindex="3">
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Subject</label>
+        <div class="control">
+            <input class="input" type="text" name="subject" required tabindex="4">
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Department</label>
+        <div class="control">
+            <div class="select" tabindex="5">
+                <select name="department">
+                    <option>Select</option>
+                    <option value="Sales">Sales</option>
+                    <option value="Technical Support">Technical Support</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="field">
+        <label class="label">Message</label>
+        <div class="control">
+            <textarea class="textarea" name="message" tabindex="6"></textarea>
+        </div>
+    </div>
+    <p class="content has-text-weight-semibold">If you're experiencing technical issues, please copy the URL of the page where the issue is occuring and include it below.</p>
+    <div class="field">
+        <label class="label">URL</label>
+        <div class="control">
+            <input class="input" type="text" name="url" required tabindex="7">
+        </div>
+    </div>
+    <p class="content has-text-weight-semibold">Please provide a screenshot of any issues you may be experiencing.</p>
+    <div class="file mt-3">
+        <label class="file-upload">
+            <input class="file-input" type="file" role="button" id="image-file" name="screenshot" tabindex="8">
+            <span class="file-cta">
+                <span class="file-icon">
+                  <i class="fas fa-upload"></i>
+                </span>
+                <span class="file-label">
+                    Choose a file
+                </span>
+              </span>
+        </label>
+    </div>
+    <p class="has-text-weight-bold mt-2">Only .jpg, .jpeg, .png files are permitted. Please be sure that the filesize is no greater than 1 MB. <span class="has-text-danger is-light"></span>
+    <div id="filelist"></div>
+    <div class="control has-text-right">
+        <input type="submit" name="submit" class="button is-link" tabindex="9" value="Submit Ticket" role="button">
+    </div>
+</form>
+

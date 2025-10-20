@@ -1,0 +1,36 @@
+<div class="columns is-centered">
+    <div class="column is-12">
+        <h1 class="is-uppercase content is-size-4 my-3">{{ @PAGE_TITLE }}</h1>
+    </div>
+</div>
+
+<div class="columns">
+    <div class="column is-8">
+        <p class="content notification has-background-warning-light warning-border">
+            This table shows all active awards. Awards are deemed active if the <strong>nomination start date</strong> is greater than or equal to today's date and the <strong>nomination end date</strong> greater or equal to today's date.
+        </p>
+        <table class="table is-fullwidth data-table is-size-6" id="activeAwardsTable">
+            <thead class="is-uppercase">
+            <tr>
+                <th>Award Name</th>
+                <th># Nominations</th>
+                <th>Nomination Start Date</th>
+                <th>Nomination End Date</th>
+            </tr>
+            </thead>
+            <tbody>
+                <repeat group="{{@awards}}" value="{{@award}}">
+                    <tr>
+                        <td><a href="/app/settings/{{ @award.award_slug }}/award_details/Award Details/singleAward">{{ @award.award_name }}</a></td>
+                        <td>{{ @award.nomination_count }}</td>
+                        <td>{{ date('F j, Y', strtotime(@award.nomination_start_date)) }}</td>
+                        <td>{{ date('F j, Y', strtotime(@award.nomination_end_date)) }}</td>
+                    </tr>
+                </repeat>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+

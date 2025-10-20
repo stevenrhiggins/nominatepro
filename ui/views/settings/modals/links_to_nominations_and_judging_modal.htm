@@ -1,0 +1,91 @@
+<div class="modal" id="links">
+    <div class="modal-background"></div>
+        <div class="modal-content" style="width:640px!important;">
+            <div class="box">
+                <check if="{{ (@metrics.number_nominator_questions || @metrics.number_nominee_questions) && @metrics.nomination_is_active == true }}">
+                    <true>
+                        <p class="is-size-6 content">Use the following link to give participants access to this nomination.<br>
+                            <check if="{{ @award.use_access_token }}">
+                            You have elected to require users to enter an access token in order to submit a nomination. You must provide all users with this token
+                            <strong>{{ @award.access_token }}</strong><br>
+                            </check>
+                            <strong>Link to LIVE Nomination/Award Forms:</strong>
+                            <i class="fa-light fa-copy" onclick="copyToClipboard('liveLink')"></i>
+                            <a href="{{ @server_name }}/app/nomination/{{ @SESSION.awardSlug }}/live/begin" target="_blank" id="liveLink">
+                                {{ @server_name }}/app/nomination/{{ @SESSION.awardSlug }}/live/begin
+                            </a>
+                        </p>
+
+                        <p class="is-size-6 content">Use the following link to <strong>test</strong> or <strong>demo</strong> the nomination forms and process.<br>
+                            <strong>Link to DEMO Nomination/Award Forms:</strong>
+                            <i class="fa-light fa-copy" onclick="copyToClipboard('demoLink')"></i>
+                            <a href="{{ @server_name }}/app/nomination/{{ @SESSION.awardSlug }}/demo/begin" target="_blank" id="demoLink">
+                                {{ @server_name }}/app/nomination/{{ @SESSION.awardSlug }}/demo/begin
+                            </a>
+                        </p>
+
+                        <p class="is-size-6 content pb-3">If you are using our judging system, provide the link below to each person who will be judging this award.<br>
+                            <strong>Link to Judging Module:</strong>
+                            <i class="fa-light fa-copy" onclick="copyToClipboard('judgeLink')"></i>
+                            <a href="{{ @server_name }}/app/judges/{{ @SESSION.awardSlug }}/renderJudgingRegistrationForm" target="_blank" id="judgeLink">
+                                https://{{ @server_name }}/app/judges/{{ @SESSION.cp_slug }}/renderJudgingRegistrationForm"
+                            </a>
+                        </p>
+                    </true>
+                    <false>
+                        <article class="message is-danger">
+                            <div class="message-body">
+                                <check if="{{ @metrics.nomination_is_active !== true }}">
+                                    <strong>Note:</strong> The nomination is not turned on. You must turn it on before you can provide links to the nomination forms.<br><br>
+                                </check>
+                                <check if="{{ @metrics.number_nominator_questions == 0 && @metrics.number_nominee_questions == 0 }}">
+                                    <strong>Note:</strong> You have not yet recorded any questions for this award. You must do so, before you can access the links to the nomination forms.
+                                </check>
+                                <check if="{{ !empty(@SESSION.require_nominee) && @metrics.number_nominee_questions == 0}}">
+                                    <strong>Note:</strong> You require a nominee to submit a nomination, but you haven't entered any questions for a nominee. This is required in order to access the link.
+                                </check>
+                            </div>
+                        </article>
+                    </false>
+                </check>
+
+                <!-- TODO complete the notify participants if changes have been made -->
+                <exclude>
+                    <check if="{{ @SESSION.ongoing_nominations > 0 || @SESSION.completed_nominations > 0 }}">
+                        <p class="is-size-6 is-underlined"><strong><a href="#" class="js-modal-trigger" data-target="notify-of-changes">Need to notify participants of important changes you've made to this award?</a></strong></p>
+                    </check>
+                </exclude>
+            </div>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+    </div>
+</div>
+
+<script>
+    function copyToClipboard(link) {
+        try {
+            var dummy = document.createElement('input'),
+                text = document.getElementById(link).href; // Get link by id
+
+            document.body.appendChild(dummy);
+            dummy.value = text;
+            dummy.select();
+            if (document.execCommand('copy')) {
+                Swal.fire({
+                    icon: '',
+                    title: '',
+                    text: 'The link has been copied!',
+                    confirmButtonText: 'OK'
+                }).then(() => {
+                    // Close the modal with the id 'links'
+                    document.getElementById('links').classList.remove('is-active');
+                });
+            } else {
+                alert('Failed to copy the link.');
+            }
+            document.body.removeChild(dummy);
+        } catch (error) {
+            alert('An error occurred while copying the link.');
+        }
+    }
+</script>

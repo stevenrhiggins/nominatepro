@@ -1,0 +1,28 @@
+<div class="column is-12 pb-0">
+    <check if="{{ isset(@award.nomination_end_date) }}">
+        <check if="{{ @award.nomination_end_date > date('Y-m-d') }}">
+            <true>
+                <!-- Nomination ON -->
+                <button
+                        class="toggle-btn on"
+                        aria-pressed="true"
+                        onclick="switchOnOff('off','{{@award.award_slug}}')"
+                >
+                    <i class="fas fa-toggle-on"></i>
+                    Turn nomination off
+                </button>
+            </true>
+            <false>
+                <!-- Nomination OFF -->
+                <button
+                        class="toggle-btn off"
+                        aria-pressed="false"
+                        onclick="switchOnOff('on','{{@award.award_slug}}')"
+                >
+                    <i class="fas fa-toggle-off"></i>
+                    Turn nomination on
+                </button>
+            </false>
+        </check>
+    </check>
+</div>

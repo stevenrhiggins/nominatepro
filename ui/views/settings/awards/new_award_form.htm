@@ -1,0 +1,31 @@
+<div class="column is-6">
+    <h1 class="is-size-4 mb-3">{{ @PAGE_TITLE }}</h1>
+
+    <form action="{{ @postRoute }}" method="POST" accept-charset="UTF-8">
+        <input type="hidden" name="csrf_token" value="{{ @SESSION.csrf_token }}">
+
+        <div class="field">
+            <label class="label" for="award-name">Enter the Name of the Award</label>
+            <div class="control">
+                <input
+                        class="input"
+                        type="text"
+                        name="award_name"
+                        id="award-name"
+                        required
+                        aria-describedby="award-error-msg"
+                >
+            </div>
+            <p class="help is-danger" id="award-error-msg"></p>
+        </div>
+
+        <div class="field is-grouped mt-3">
+            <div class="control">
+                <button type="submit" class="button is-success">Submit</button>
+            </div>
+            <div class="control">
+                <a href="{{ @cancelRoute }}" class="button is-link is-light">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>

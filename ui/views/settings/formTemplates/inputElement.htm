@@ -1,0 +1,7 @@
+<div class="field">
+    <label class="label" for="{{ @id }}]}">{{ @label }}</label>
+    <div class="control">
+        <input class="input" type="{{ @type }}" id="{{ @id }}" name="{{ @fieldName }}" value="{{ @fieldValue }}" required tabindex="{{ @tabindex }}" {{ isset(@javascript) ? @javascript : '' }} {{ isset(@state) ? @state : '' }}>
+        {{ isset(@notification) ? @notification : '' }}
+    </div>
+</div>

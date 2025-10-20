@@ -1,0 +1,187 @@
+<p>Complete this section if you choose to use the judging module to assist you in your evaluations. Learn more.</p>
+<div class="column is-10" id="judging">
+    <input type="hidden" id="nomination-end-date" name="nomination_end_date" value="{{ @nomination_end_date }}">
+    <div class="field">
+        <div class="control">
+            <label for="judging-start-date" class="label">Judging start Date (Dates are all Eastern Standard Time.)</label>
+            <p>NOTE: The judging start date can only begin after the nomination period is over on {{ date('F j, Y', strtotime(@nomination_end_date)) }}</p>
+                <input class="input" type="date" name="judging_start_date" id="judging-start-date" tabindex="1" value="{{ date('Y-m-d', strtotime(@nomination_end_date . ' + 1 day'))}}" {{isset(@judging_required) ? 'required' : ''}}>
+            <check if="{{ @judging_start_date > @judging_end_date }}">
+                <p class="help is-danger">
+                    The judging start date is later than the judging end date.
+                </p>
+            </check>
+        </div>
+    </div>
+
+    <!--JUDGING END DATE-->
+    <div class="field">
+        <div class="control">
+            <label for="judging-end-date" class="label">Judging End Date </label>
+            <input class="input" type="date" name="judging_end_date" id="judging-end-date" value="{{ isset(@judging_end_date) ? @judging_end_date : 'Select Date' }}" required tabindex="2"  {{isset(@judging_required) ? 'required' : ''}}>
+            <check if="{{ @judging_end_date < @judging_start_date }}">
+                <p class="help is-danger">
+                    The judging end date is earler than the judging start date. Please select a new date.
+                </p>
+            </check>
+            <check if="{{ isset(@judging_end_date) && (@judging_end_date < date('Y-m-d')) }}">
+                <p class="help is-danger">
+                    The judging end date is earler than today.
+                </p>
+            </check>
+        </div>
+    </div>
+
+    <!--JUDGING CRITERIA -->
+    <div class="field">
+        <div class="control">
+            <label for="judging-criteria" class="label">Judging Criteria <a class="js-modal-trigger" data-target="judgeHint"> <i class="fa-sharp fa-solid fa-square-question is-size-5"></i></a></label>
+            <p>Use this area to explain the overall requirements and expectations you have for the judges.</p>
+            <textarea class="textarea tinyform" name="award_judging" tabindex="4" id="judging-criteria">{{isset(@award_judging) ? @award_judging : ''}}</textarea>
+        </div>
+    </div>
+
+    <div class="field">
+        <label class="checkbox">
+            <input type="hidden" name="show_judging_criteria_on_welcome" value="">
+            <input type="checkbox" class="chkbox" name="show_judging_criteria_on_welcome" id="show-judging-criteria-on-welcome" value="1" tabindex="5"  {{ isset(@show_judging_criteria_on_welcome)==1 ? 'checked' : ''}}>
+            <strong>Show Judging Criteria (above) on the Welcome page</strong>.
+        </label>
+        <p id="permit-blind-judging-message" class="help is-danger"></p>
+    </div>
+
+    <!-- PERMISSIONS -->
+    <div class="field">
+        <label class="checkbox">
+            <input type="hidden" name="permit_blind_judging" value="">
+            <input type="checkbox" class="chkbox" name="permit_blind_judging" id="permit_blind_judging" value="on" tabindex="13"  {{@permit_blind_judging=='on' ? 'checked' : ''}}>
+            <span class="tooltip-left tooltip-underline" data-tooltip="If checked, judges will NOT see the names or email addresses of the nominees. However, you will not be able to permit nominators to upload any files.">Permit blind judging</span>
+        </label>
+        <p id="permit-blind-judging-message" class="help is-danger"></p>
+    </div>
+
+    <div class="field">
+        <label class="checkbox">
+            <input type="hidden" name="permit_vote_changing" value="">
+            <input type="checkbox" class="chkbox" name="permit_vote_changing" id="permit_vote_changing" value="on" tabindex="14" {{@permit_vote_changing=='on' ? 'checked' : ''}}>
+            <span class="tooltip-left tooltip-underline" data-tooltip="If checked, judges will be able to change their votes up until judging ends.">Permit vote changing</span>
+        </label>
+    </div>
+
+    <exclude>
+    <!-- JUDGES-->
+    <div class="field">
+        <div class="control">
+            <label for="judges" class="label">Judges</label>
+             <p>Enter the first, last name and email address of each person who will be judging this nomination. Please enter each judge exactly as shown in the following example.<br><strong>John Smith:jsmith@email.com,Sally Jones:sally@email.com</strong>
+             </p>
+            <textarea class="textarea" name="judges" tabindex="6" placeholder="fname lname:email@email.com" id="judges">{{ @judges }}</textarea>
+        </div>
+    </div>
+
+    <!-- JUDGES INVITATION-->
+    <div class="field">
+        <div class="control">
+            <label for="judges-invitation" class="label">Judges Email Invitation <a class="js-modal-trigger" data-target="invitationHint"> <i class="fa-sharp fa-solid fa-square-question is-size-5"></i></a></label>
+            <p>Use this area to write an invitation to the judges informing them of their participation in the judging of this award.</p>
+            <textarea class="textarea tinyform" name="judges_invitation" tabindex="7" id="judges-invitation">{{ @judges_invitation ? @judges_invitation : ''}}</textarea>
+        </div>
+    </div>
+
+    <!-- JUDGES INVITATION EMAIL SUBJECT-->
+    <div class="field">
+        <div class="control">
+            <label for="email-subject" class="label">Invitation Subject</label>
+            <p>Provide the subject name for the invitation email sent to judges.</p>
+            <input class="input" type="text" name="judges_invitation_subject" value="{{isset(@judges_invitation_subject) ? @judges_invitation_subject : ''}}" tabindex="8" id="email-subject">
+        </div>
+    </div>
+
+
+    <!--    NO LONGER NEED THIS SINCE ALL THAT INFORMATION IS CONTAINED IN A RUBRIC-->
+        <!-- INSTRUCTIONS FOR NUMERIC QUESTIONS-->
+        <div class="field">
+            <div class="control">
+                <label for="numeric-questions-instructions" class="label">Instructions for Numeric Questions <a class="js-modal-trigger" data-target="numericHint"> <i class="fa-sharp fa-solid fa-square-question is-size-5"></i></a></label>
+                <p>Use this area to explain to judges the purpose of this section. <i class="fa-solid fa-star has-text-danger"></i> Do not complete if you are not using Numeric Questions in the evaluation. </p>
+                <textarea class="textarea tinyform" id="numeric-questions-instructiona" name="numeric_questions_instructions" tabindex="9" id="numeric-questions-instructions">{{ @numeric_questions_instructions ? @numeric_questions_instructions : null}}</textarea>
+            </div>
+        </div>
+
+        <!-- INSTRUCTIONS FOR OPEN QUESTIONS-->
+        <div class="field">
+            <div class="control">
+                <label for="open-questions-instructions" class="label">Instructions for Open Questions<a class="js-modal-trigger" data-target="openHint"> <i class="fa-sharp fa-solid fa-square-question is-size-5"></i></a></label>
+                <p>Use this area to explain to judges the purpose of this section. <i class="fa-solid fa-star has-text-danger"></i> Do not complete if you are not using Open Questions in the evaluation. </p>
+                <textarea class="textarea tinyform" name="open_questions_instructions" tabindex="10" id="open-questions-instructions">{{isset(@open_questions_instructions) ? @open_questions_instructions : null}}</textarea>
+            </div>
+        </div>
+
+    <p class="content">The following information will be included in emails sent to judges to provide them with a point of contact for assistance if necessary.  This information is not required if you prefer not to provide it. </p>
+
+    <!-- JUDGING ADMIN CONTACT INFORMATION-->
+    <div class="field">
+        <div class="control">
+            <label for="contact-admin" class="label">Contact/Admin Name</label>
+            <input class="input" type="text" name="judges_contact" value="{{isset(@judges_contact) ? @judges_contact : ''}}" tabindex="11" id="contact-admin">
+        </div>
+    </div>
+
+    <!-- JUDGING ADMIN CONTACT EMAIL INFORMATION-->
+    <div class="field">
+        <div class="control">
+            <label for="contact-admin-email" class="label">Contact/Admin Email</label>
+            <input class="input" type="text" name="judges_contact_email" value="{{isset(@judges_contact_email) ? @judges_contact_email : ''}}" tabindex="12" id="contact-admin-email">
+        </div>
+    </div>
+    </exclude>
+    <!-- PERMISSIONS -->
+    <div class="field">
+        <label class="checkbox">
+            <input type="hidden" name="permit_blind_judging" value="">
+            <input type="checkbox" class="chkbox" name="permit_blind_judging" id="permit_blind_judging" value="on" tabindex="13"  {{@permit_blind_judging=='on' ? 'checked' : ''}}>
+            <span class="tooltip-left tooltip-underline" data-tooltip="If checked, judges will NOT see the names or email addresses of the nominees. However, you will not be able to permit nominators to upload any files.">Permit blind judging</span>
+        </label>
+        <p id="permit-blind-judging-message" class="help is-danger"></p>
+    </div>
+
+    <div class="field">
+        <label class="checkbox">
+            <input type="hidden" name="permit_vote_changing" value="">
+            <input type="checkbox" class="chkbox" name="permit_vote_changing" id="permit_vote_changing" value="on" tabindex="14" {{@permit_vote_changing=='on' ? 'checked' : ''}}>
+            <span class="tooltip-left tooltip-underline" data-tooltip="If checked, judges will be able to change their votes up until judging ends.">Permit vote changing</span>
+        </label>
+    </div>
+
+</div>
+
+<exclude>
+    <script>
+        function checkStartDate()
+        {
+            const start_date = document.getElementById('judging-start-date');
+            const nomination_end_date = document.getElementById('nomination_end_date');
+            const start_date_message = document.getElementById('start-date-message');
+            const end_date = document.getElementById('judging-end-date');
+            if (new Date(start_date.value).getTime(nomination_end_date) < new Date().getTime()) {
+                start_date_message.classList.remove('is-hidden')
+                start_date_message.innerText = 'The date you\'ve selected is earlier than the nomination end date. Please fix this.';
+            }
+            if (new Date(start_date.value).getTime() > new Date(end_date.value).getTime()) {
+                start_date_message.classList.remove('is-hidden')
+                start_date_message.innerText = 'The date you\'ve selected is greater than the judging end date. Please fix this.';
+            }
+        }
+
+        function checkEndDate()
+        {
+            const start_date = document.getElementById('judging-start-date');
+            const end_date = document.getElementById('judging-end-date');
+            const end_date_message = document.getElementById('end-date-message');
+            if (new Date(end_date.value).getTime() < new Date(start_date.value).getTime()) {
+                end_date_message.classList.remove('is-hidden')
+                end_date_message.innerText = 'The date you\'ve selected is earlier than the judging start date. Please fix this.';
+            }
+        }
+    </script>
+</exclude>

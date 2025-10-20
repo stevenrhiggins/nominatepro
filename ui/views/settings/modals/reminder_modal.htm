@@ -1,0 +1,51 @@
+<div class="modal" id="modal_{{@nomination.nomination_slug}}">
+    <div class="modal-background"></div>
+    <div class="modal-card" style="width: 800px">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Send a reminder to {{ @nomination.registration_email }}.</p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body content">
+            <check if="{{ !empty(@reminders) }}">
+                <p class="has-text-danger has-text-weight-bold">REMINDERS SENT ON:</p>
+                <ol>
+                <repeat group="{{@reminders}}" value="{{@reminder}}">
+                    <li>{{ @reminder.reminder_sent }}</li>
+                </repeat>
+                </ol>
+                <hr style="background-color: lightgray; height: 1px; border: none;">
+            </check>
+            <p class="is-size-5">Click <a data-target="reminder_sample" class="js-modal-trigger">here</a> to see a sample reminder email which you can use or modify.</p>
+            <hr>
+            <form action="/app/reminder/sendReminder" method="POST">
+                <input type="hidden" name="nominator_email" value="{{ @nomination.registration_email }}" readonly>
+                <input type="hidden" name="nomination_slug" value="{{ @nomination.nomination_slug }}" readonly>
+                <div class="field">
+                    <label for="reminder-subject" class="label">Subject (change this if you wish)</label>
+                    <div class="control">
+                        <input type="text" class="input" name="reminder_subject" id="reminder-subject" value="Reminder: Complete Your Nomination Before the Deadline">
+                    </div>
+                </div>
+                <div class="field">
+                    <label for="reminder-content" class="label">Message (write your own or use our <a data-target="reminder_sample" class="js-modal-trigger">sample</a> which you can also modify)</label>
+                <p>To paste text from another source below, copy the text you want to paste, click the <img src="/ui/images/menuicon.png" alt="menu icon" style="width: 20px; height: 20px; vertical-align: middle;"> icon in the toolbar below then click the ‘Paste as Text’ icon <img src="/ui/images/pasteastexticon.png" style="width: 20px; height: 20px; vertical-align: middle;" alt=""> and paste the text. NOTE: GMAIL and some other web-based email clients strip tags (e.g. Paragraph), so your email may not look exactly as you type it here. </p>
+                    <div class="control">
+                        <textarea name="reminder_content" id="reminder-content" class="textarea tinyform">
+                        </textarea>
+                    </div>
+                </div>
+                <p class="content notification has-background-warning-light warning-border">If you would like to email yourself or someone else to test this, enter the email address in the form input field below.
+                    <strong>Leave the form input field below blank and the email will be sent to {{ @nomination.registration_email }}</strong>. </p>
+                <div class="field">
+                    <label for="test-email" class="content">Enter an email address below <strong>ONLY</strong> if you want to send it to someone other than {{ @nomination.registration_email }}.</label>
+                    <div class="control">
+                        <input type="text" class="input" name="test_email" id="test-email">
+                    </div>
+                </div>
+                <button class="button is-success" tabindex="200">Send the Reminder</button>
+            </form>
+        </section>
+    </div>
+</div>
+
+<include href="/views/settings/modals/reminder_sample.htm" id="reminder_sample" />

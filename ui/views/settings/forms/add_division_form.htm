@@ -1,0 +1,51 @@
+<form method="POST" action="{{  'add_division' | alias }}">
+    <div class="field">
+      <label class="label">Chapter/Division Name</label>
+      <div class="control">
+        <input class="input" type="text" name="division_name" value="{{isset(@division_name) ? @division_name : ''}}" required tabindex="1">
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Contact Name</label>
+      <div class="control">
+        <input class="input" type="text" name="division_contact_name" value="{{isset(@division_contact_name) ? @division_contact_name : ''}}" required tabindex="2">
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Contact Email</label>
+      <div class="control">
+        <input class="input" type="email" name="division_contact_email" value="{{isset(@division_contact_email) ? @division_contact_email : ''}}" required tabindex="3">
+      </div>
+    </div>
+    <div class="field">
+      <label class="label">Contact Phone</label>
+      <div class="control">
+        <input class="input" type="text" name="division_contact_phone" value="{{isset(@division_contact_phone) ? @division_contact_phone : ''}}" required tabindex="4">
+      </div>
+    </div>
+  <div class="field">
+    <label class="label">Username</label>
+    <div class="control">
+      <input class="input" type="text" name="username" value="{{isset(@username) ? @username : ''}}" required tabindex="5" placeholder="Do NOT use an email address">
+    </div>
+    <p class="help is-danger">Do NOT use an email address</p>
+  </div>
+    <div class="field">
+      <label class="label">Password</label>
+      <div class="control">
+        <input class="input" type="password" name="password" {{@action == "update" ? "" : "required"
+        }} tabindex="6">
+      </div>
+      <p class="help is-danger">Password must be at least 8 characters long and include uppercase and lowercase characters a number and a special character</p>
+    </div>
+    <div class="field">
+      <label class="label">Confirm Password</label>
+      <div class="control">
+        <input class="input" type="password" name="confirm_password" {{@action == "update" ? "" : "required"
+        }} tabindex="7">
+      </div>
+    </div>
+    <div class="control has-text-right">
+      <button class="button is-link" tabindex="7">Submit</button>
+    </div>
+</form>

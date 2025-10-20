@@ -1,0 +1,290 @@
+<div class="field">
+    <label class="label">Award Category (not required for you, but helpful to us)</label>
+    <div class="select">
+        <select name="award_category" id="award-category">
+            <option value="">Please select the category that best describes your profession/industry</option>
+            <check if="{{ isset(@award_category) }}">
+                <option selected value="{{ @award_category }}">Current Category: {{ @award_category }}</option>
+            </check>
+            <option class="has-text-weight-semibold">PROFESSIONAL & INDUSTRY AWARDS</option>
+            <optgroup label="Excellence Awards">
+                <option value="Industry specific achievements">Industry-specific achievements</option>
+                <option value="Professional milestone recognition">Professional milestone recognition</option>
+                <option value="Best practices awards">Best practices awards</option>
+                <option value="Innovation awards">Innovation awards</option>
+                <option value="Leadership recognition">Leadership recognition</option>
+                <option value="Lifetime achievement">Lifetime achievement</option>
+            </optgroup>
+
+            <optgroup label="Competition-Based Awards">
+                <option value="Product awards">Product awards</option>
+                <option value="Service excellence">Service excellence</option>
+                <option value="Innovation challenges">Innovation challenges</option>
+                <option value="Design competitions">Design competitions</option>
+                <option value="Technology awards">Technology awards</option>
+                <option value="Best-in-class recognition">Best-in-class recognition</option>
+            </optgroup>
+
+            <optgroup label="Individual Recognition">
+                <option value="Rising star awards">Rising star awards</option>
+                <option value="Industry leader awards">Industry leader awards</option>
+                <option value="Career achievement">Career achievement</option>
+                <option value="Professional excellence">Professional excellence</option>
+                <option value="Mentor recognition">Mentor recognition</option>
+                <option value="Subject matter expertise">Subject matter expertise</option>
+            </optgroup>
+
+            <option class="has-text-weight-semibold mt-4">ACADEMIC & EDUCATION</option>
+            <optgroup label="Research Programs">
+                <option value="Grant applications">Grant applications</option>
+                <option value="Research proposals">Research proposals</option>
+                <option value="Fellowship submissions">Fellowship submissions</option>
+                <option value="Academic papers">Academic papers</option>
+                <option value="Scientific studies">Scientific studies</option>
+                <option value="Innovation projects">Innovation projects</option>
+            </optgroup>
+
+            <optgroup label="Educational Recognition">
+                <option value="Teaching excellence">Teaching excellence</option>
+                <option value="Student achievement">Student achievement</option>
+                <option value="Educational innovation">Educational innovation</option>
+                <option value="Faculty awards">Faculty awards</option>
+                <option value="Department recognition">Department recognition</option>
+                <option value="Program excellence">Program excellence</option>
+            </optgroup>
+
+            <optgroup label="Scholarships">
+                <option value="Merit-based awards">Merit-based awards</option>
+                <option value="Need-based grants">Need-based grants</option>
+                <option value="Special achievement">Special achievement</option>
+                <option value="Field-specific scholarships">Field-specific scholarships</option>
+                <option value="Research funding">Research funding</option>
+                <option value="Educational support">Educational support</option>
+            </optgroup>
+
+            <option class="has-text-weight-semibold mt-4">ORGANIZATIONAL GOVERNANCE</option>
+            <optgroup label="Board Management">
+                <option value="Board nominations">Board nominations</option>
+                <option value="Committee appointments">Committee appointments</option>
+                <option value="Leadership selections">Leadership selections</option>
+                <option value="Officer elections">Officer elections</option>
+                <option value="Advisory positions">Advisory positions</option>
+                <option value="Volunteer leadership">Volunteer leadership</option>
+            </optgroup>
+
+            <optgroup label="Member Recognition">
+                <option value="Chapter awards">Chapter awards</option>
+                <option value="Volunteer recognition">Volunteer recognition</option>
+                <option value="Service awards">Service awards</option>
+                <option value="Member achievement">Member achievement</option>
+                <option value="Participation excellence">Participation excellence</option>
+                <option value="Leadership development">Leadership development</option>
+            </optgroup>
+
+            <optgroup label="Organizational Excellence">
+                <option value="Best practices">Best practices</option>
+                <option value="Innovation awards">Innovation awards</option>
+                <option value="Chapter achievements">Chapter achievements</option>
+                <option value="Program recognition">Program recognition</option>
+                <option value="Operational excellence">Operational excellence</option>
+                <option value="Strategic initiatives">Strategic initiatives</option>
+            </optgroup>
+
+            <option class="has-text-weight-semibold mt-4">EVENTS & CONFERENCES</option>
+            <optgroup label="Speaker Management">
+                <option value="Session proposals">Session proposals</option>
+                <option value="Panel submissions">Panel submissions</option>
+                <option value="Workshop applications">Workshop applications</option>
+                <option value="Keynote selections">Keynote selections</option>
+                <option value="Presentation pitches">Presentation pitches</option>
+                <option value="Expert nominations">Expert nominations</option>
+            </optgroup>
+
+            <optgroup label="Event Recognition">
+                <option value="Exhibitor awards">Exhibitor awards</option>
+                <option value="Booth recognition">Booth recognition</option>
+                <option value="Innovation showcase">Innovation showcase</option>
+                <option value="Product launches">Product launches</option>
+                <option value="Best presentation">Best presentation</option>
+                <option value="Attendee achievements">Attendee achievements</option>
+            </optgroup>
+
+            <optgroup label="Conference Programs">
+                <option value="Abstract submissions">Abstract submissions</option>
+                <option value="Poster presentations">Poster presentations</option>
+                <option value="Research showcases">Research showcases</option>
+                <option value="Innovation demonstrations">Innovation demonstrations</option>
+                <option value="Technical presentations">Technical presentations</option>
+                <option value="Industry insights">Industry insights</option>
+            </optgroup>
+
+            <option class="has-text-weight-semibold mt-4">GRANTS & FUNDING</option>
+            <optgroup label="Grant Programs">
+                <option value="Project funding">Project funding</option>
+                <option value="Program support">Program support</option>
+                <option value="Initiative grants">Initiative grants</option>
+                <option value="Research funding">Research funding</option>
+                <option value="Development grants">Development grants</option>
+                <option value="Innovation support">Innovation support</option>
+            </optgroup>
+
+            <optgroup label="Charitable Giving">
+                <option value="Foundation grants">Foundation grants</option>
+                <option value="Community support">Community support</option>
+                <option value="Program funding">Program funding</option>
+                <option value="Project sponsorship">Project sponsorship</option>
+                <option value="Initiative backing">Initiative backing</option>
+                <option value="Development support">Development support</option>
+            </optgroup>
+
+            <optgroup label="Corporate Giving">
+                <option value="CSR initiatives">CSR initiatives</option>
+                <option value="Community programs">Community programs</option>
+                <option value="Social impact">Social impact</option>
+                <option value="Environmental projects">Environmental projects</option>
+                <option value="Education support">Education support</option>
+                <option value="Health initiatives">Health initiatives</option>
+            </optgroup>
+
+            <option class="has-text-weight-semibold mt-4">CERTIFICATION & ACCREDITATION</option>
+            <optgroup label="Professional Certification">
+                <option value="Industry certifications">Industry certifications</option>
+                <option value="Professional credentials">Professional credentials</option>
+                <option value="Specialty qualifications">Specialty qualifications</option>
+                <option value="Technical certifications">Technical certifications</option>
+                <option value="Skills validation">Skills validation</option>
+                <option value="Expertise recognition">Expertise recognition</option>
+            </optgroup>
+
+            <optgroup label="Program Accreditation">
+                <option value="Course accreditation">Course accreditation</option>
+                <option value="Program certification">Program certification</option>
+                <option value="Quality assurance">Quality assurance</option>
+                <option value="Standards compliance">Standards compliance</option>
+                <option value="Best practices validation">Best practices validation</option>
+                <option value="Excellence verification">Excellence verification</option>
+            </optgroup>
+
+            <optgroup label="Organizational Recognition">
+                <option value="Quality standards">Quality standards</option>
+                <option value="Excellence programs">Excellence programs</option>
+                <option value="Industry standards">Industry standards</option>
+                <option value="Best practices">Best practices</option>
+                <option value="Performance metrics">Performance metrics</option>
+                <option value="Operational excellence">Operational excellence</option>
+            </optgroup>
+
+            <option class="has-text-weight-semibold mt-4">MEDIA & CREATIVE</option>
+            <optgroup label="Creative Awards">
+                <option value="Design excellence">Design excellence</option>
+                <option value="Advertising awards">Advertising awards</option>
+                <option value="Marketing recognition">Marketing recognition</option>
+                <option value="Brand achievement">Brand achievement</option>
+                <option value="Digital innovation">Digital innovation</option>
+                <option value="Creative excellence">Creative excellence</option>
+            </optgroup>
+
+            <optgroup label="Media Recognition">
+                <option value="Journalism awards">Journalism awards</option>
+                <option value="Broadcasting excellence">Broadcasting excellence</option>
+                <option value="Publication awards">Publication awards</option>
+                <option value="Content creation">Content creation</option>
+                <option value="Digital media">Digital media</option>
+                <option value="Production excellence">Production excellence</option>
+            </optgroup>
+
+            <optgroup label="Arts & Culture">
+                <option value="Artistic achievement">Artistic achievement</option>
+                <option value="Cultural recognition">Cultural recognition</option>
+                <option value="Performance awards">Performance awards</option>
+                <option value="Exhibition selections">Exhibition selections</option>
+                <option value="Gallery submissions">Gallery submissions</option>
+                <option value="Creative excellence">Creative excellence</option>
+            </optgroup>
+
+            <option class="has-text-weight-semibold mt-4">COMMUNITY & SOCIAL IMPACT</option>
+            <optgroup label="Community Service">
+                <option value="Volunteer recognition">Volunteer recognition</option>
+                <option value="Service awards">Service awards</option>
+                <option value="Community impact">Community impact</option>
+                <option value="Social contribution">Social contribution</option>
+                <option value="Public service">Public service</option>
+                <option value="Civic engagement">Civic engagement</option>
+            </optgroup>
+
+            <optgroup label="Social Impact">
+                <option value="Change maker awards">Change maker awards</option>
+                <option value="Innovation recognition">Innovation recognition</option>
+                <option value="Impact measurement">Impact measurement</option>
+                <option value="Program success">Program success</option>
+                <option value="Initiative results">Initiative results</option>
+                <option value="Community benefit">Community benefit</option>
+            </optgroup>
+
+            <optgroup label="Environmental & Sustainability">
+                <option value="Green initiatives">Green initiatives</option>
+                <option value="Sustainability programs">Sustainability programs</option>
+                <option value="Environmental impact">Environmental impact</option>
+                <option value="Conservation efforts">Conservation efforts</option>
+                <option value="Climate action">Climate action</option>
+                <option value="Ecological preservation">Ecological preservation</option>
+            </optgroup>
+
+            <option class="has-text-weight-semibold mt-4">SPECIALIZED PROGRAMS</option>
+            <optgroup label="Technical Excellence">
+                <option value="Engineering awards">Engineering awards</option>
+                <option value="Scientific achievement">Scientific achievement</option>
+                <option value="Technical innovation">Technical innovation</option>
+                <option value="Research excellence">Research excellence</option>
+                <option value="Development recognition">Development recognition</option>
+                <option value="Innovation awards">Innovation awards</option>
+            </optgroup>
+
+            <optgroup label="Industry Innovation">
+                <option value="Product development">Product development</option>
+                <option value="Process improvement">Process improvement</option>
+                <option value="Technology advancement">Technology advancement</option>
+                <option value="System innovation">System innovation</option>
+                <option value="Method improvement">Method improvement</option>
+                <option value="Technical excellence">Technical excellence</option>
+            </optgroup>
+
+            <optgroup label="Professional Development">
+                <option value="Career advancement">Career advancement</option>
+                <option value="Skills recognition">Skills recognition</option>
+                <option value="Leadership development">Leadership development</option>
+                <option value="Professional growth">Professional growth</option>
+                <option value="Expertise building">Expertise building</option>
+                <option value="Knowledge advancement">Knowledge advancement</option>
+            </optgroup>
+
+            <option class="has-text-weight-semibold mt-4">COMPLIANCE & STANDARDS</option>
+            <optgroup label="Regulatory Excellence">
+                <option value="Compliance achievement">Compliance achievement</option>
+                <option value="Standards adherence">Standards adherence</option>
+                <option value="Quality assurance">Quality assurance</option>
+                <option value="Safety recognition">Safety recognition</option>
+                <option value="Risk management">Risk management</option>
+                <option value="Policy implementation">Policy implementation</option>
+            </optgroup>
+
+            <optgroup label="Industry Standards">
+                <option value="Best practices">Best practices</option>
+                <option value="Operational excellence">Operational excellence</option>
+                <option value="Quality measures">Quality measures</option>
+                <option value="Performance standards">Performance standards</option>
+                <option value="Process improvement">Process improvement</option>
+                <option value="System optimization">System optimization</option>
+            </optgroup>
+
+            <optgroup label="Safety & Security">
+                <option value="Safety achievement">Safety achievement</option>
+                <option value="Security excellence">Security excellence</option>
+                <option value="Risk mitigation">Risk mitigation</option>
+                <option value="Protection measures">Protection measures</option>
+                <option value="Emergency response">Emergency response</option>
+                <option value="Crisis management">Crisis management</option>
+            </optgroup>
+        </select>
+    </div>
+</div>

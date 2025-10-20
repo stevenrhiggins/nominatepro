@@ -1,0 +1,24 @@
+<!--entire site structure-->
+<include href="views/header.htm" />
+
+<include href="{{ @menu }}" />
+
+<div class="columns">
+    <div class="column is-6 is-offset-3">
+        <F3:repeat group="{{ \Flash::instance()->getMessages() }}" value="{{ @msg }}">
+            <div class="notification is-{{ @msg.status }} {{ @msg.status }}-border is-light text-center">
+                <p class="has-text-centered is-bold">{{ @msg.text | esc }}</p>
+            </div>
+        </F3:repeat>
+    </div>
+</div>
+
+<div class="container">
+    <div class="columns is-centered is-multiline" style="margin: 0 8px">
+        <div class="column is-12">
+            <include href="{{ @content }}" />
+        </div>
+    </div>
+</div>
+
+<include href="views/footer.htm" />

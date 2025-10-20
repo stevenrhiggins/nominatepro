@@ -1,0 +1,41 @@
+<div class="columns">
+    <div class="column is-8">
+        <h1 class="is-uppercase is-size-4 my-3">{{ @title }} {{ @award_name }}</h1>
+        <div class="content">
+            <p class="notification has-background-warning-light warning-border">Please review the following information before you archive this award.
+                <strong><i class="fa-solid fa-skull-crossbones has-text-danger"></i> Once you submit this form, all data related to this award will be archived and will only be available again if it is restored. The award will not be available for judging if it has not already been judged. We will provide you with a list of archived awards and instructions on how to restore them.</strong></p>
+            <p><strong>Nomination Start Date:</strong> {{ date('F j, Y', strtotime(@nomination_start_date)) }}</p>
+            <p><strong>Nomination End Date:</strong> {{ date('F j, Y', strtotime(@nomination_end_date)) }}</p>
+            <p><strong>Nominations Submitted:</strong> {{ @submitted.submitted }}</p>
+            <p><strong>Nominations Completed:</strong> {{ @completed.completed }}</p>
+        </div>
+    </div>
+</div>
+<div class="columns">
+    <div class="column is-4">
+        <form action="/app/archive/archive" method="POST">
+            <input type="hidden" name="award_slug" value="{{ @award_slug }}" readonly>
+            <input type="hidden" name="award_name" value="{{ @award['award_name'] }}" readonly>
+            <div class="field">
+                <div class="control">
+                    <label for="person-archiving" class="label">Please provide your name for the record.</label>
+                    <input type="text" class="input" name="person_archiving" id="person-archiving" tabindex="1" required>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <label for="person-archiving-email" class="label">Please provide your email address for the record.</label>
+                    <input type="text" class="input" name="person_archiving_email" id="person-archiving-email" tabindex="2" required>
+                </div>
+            </div>
+            <div class="field is-grouped">
+                <div class="control mt-3">
+                    <button class="button is-success" tabindex="100">Archive this award</button>
+                </div>
+                <div class="control mt-3">
+                    <a href="/app/all/{{ @SESSION.cp_slug }}/view" class="button is-link is-light" tabindex="101">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

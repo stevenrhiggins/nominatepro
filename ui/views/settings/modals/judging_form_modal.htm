@@ -1,0 +1,16 @@
+<div class="modal" id="judging_form_{{ @question.question_slug }}">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">
+                Judging Form
+            </p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <include href="/views/settings/forms/questions_judging_forms.htm" />
+        <section class="modal-card-foot">
+            <button class="button is-success js-save-judging-form">Save</button>
+            <button class="button js-close-modal">Close</button>
+        </section>
+    </div>
+</div>

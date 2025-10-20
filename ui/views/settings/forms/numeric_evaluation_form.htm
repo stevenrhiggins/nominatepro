@@ -1,0 +1,62 @@
+<div class="field">
+    <label for="numeric-question">Enter a question/instruction for judges which can be responded to with a numeric response.</label>
+    <div class="control">
+        <textarea class="textarea tinyform" name="numeric_question" id="numeric-question">{{ isset(@question.numeric_question) ? @question.numeric_question : '' }}</textarea>
+    </div>
+</div>
+
+<p>Select the scale you would like judges to use in their evaluation.</p>
+<div class="field">
+    <div class="control">
+        <div class="select">
+            <select name="numeric_scale" tabindex="8" id="numeric-scale" role="listbox">
+                <option value="">--Select Scale--</option>
+                <check if="{{ isset(@question.numeric_scale) }}">
+                    <option value="{{ @question.numeric_scale }}" selected>Selected 1 - {{ @question.numeric_scale }}</option>
+                </check>
+                <loop from="{{ @i=2 }}" to="{{ @i<=12 }}" step="{{ @i++ }}">
+                    <option value="{{ @i }}">1 - {{ @i }}</option>
+                </loop>
+            </select>
+        </div>
+    </div>
+</div>
+
+<check if="{{ isset(@responseAnchors) }}">
+    <div id="current-response-anchors-div">
+    <p><strong>Here are your current response anchors.</strong> You can update them, or if you want to change the scale, simply select new scale from the above dropdown.. NOTE: If you change the scale you will have to re-enter your response anchors or if you choose not to enter them judges will see the scale you select without the response anchors.</p>
+        <repeat group="{{ @responseAnchors }}" value="{{ @response }}" counter="{{ @ctr }}">
+            <div class="field">
+                <div class="control">
+                    <label for="current-response-anchors-input"></label>
+                    <input type="text" class="input" name="currentResponseAnchors[{{ @ctr }}]" id="current-response-anchors-input" value="{{ @response }}">
+                </div>
+            </div>
+        </repeat>
+    </div>
+</check>
+
+<div id="input-container" class="is-hidden">
+    <check if="{{ isset(@responseAnchors) }}">
+        <true>
+            <p id="response-anchors-two" class="notification has-background-warning-light warning-border mt-5">
+                <strong>You have already recorded response anchors for this question. If you complete the form below, the new
+                    response anchors will replace the current ones.</strong>
+            </p>
+        </true>
+        <false>
+            <p id="response-anchors-one">
+                You have the option of completing this form with 'response anchors' for the selected scale. This will convert the scale into a Likert Scale, which uses response anchors to aid in evaluating responses, providing judges with additional guidance when assessing nominations. Here are some <a href="https://www.marquette.edu/student-affairs/assessment-likert-scales.php" target="_blank">examples</a> of response anchors you can use.
+            </p>
+        </false>
+    </check>
+    <div class="field">
+        <div class="control">
+            <input type="hidden" class="checkbox" name="use_likert">
+            <input type="checkbox" class="checkbox" name="use_likert" value="1" id="use-likert">
+            <label for="use-likert">Check if you want to use the Likert Scale. If you don't choose to use the Likert Scale, judges will see the Numeric Scale you have selected above.</label>
+        </div>
+    </div>
+</div>
+
+<div id="scale-container"></div>

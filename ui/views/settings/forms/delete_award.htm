@@ -1,0 +1,53 @@
+<div class="columns">
+    <div class="column is-8">
+        <h1 class="is-uppercase is-size-4 my-3">{{ @title }} {{ @award.award_name }}</h1>
+        <div class="content">
+            <p class="notification has-background-danger-light danger-border"><strong><span class="is-uppercase"> You are about to delete this award!</span>
+                 Once you submit this form, all data (nominations, questions, sections, answers etc) related to this award will be permanently deleted from the database and will not be recoverable.
+<!--                <a href="/app/award/archive_form">You may want to consider archiving this award instead.</a></strong>-->
+            </p>
+            <p><strong>Nomination Start Date:</strong> {{ date('F j, Y', strtotime(@award.nomination_start_date)) }}</p>
+            <p><strong>Nomination End Date:</strong> {{ date('F j, Y', strtotime(@award.nomination_end_date)) }}</p>
+            <p><strong>Nominations Submitted:</strong> {{ @submitted.submitted }}</p>
+            <p><strong>Nominations Completed:</strong> {{ @completed.completed }}</p>
+        </div>
+    </div>
+</div>
+<div class="columns">
+    <div class="column is-4">
+        <form action="{{ @postRoute }}" method="POST">
+            <input type="hidden" name="action" value="deleted" readonly>
+            <input type="hidden" name="award_slug" value="{{ @award.award_slug }}" readonly>
+            <input type="hidden" name="award_name" value="{{ @award.award_name }}" readonly>
+            <div class="field">
+                <div class="control">
+                    <label for="user" class="label">Please provide your name for the record.</label>
+                    <input type="text" class="input" name="user" id="user" tabindex="1" required>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <label for="user-email" class="label">Please provide your email address for the record.</label>
+                    <input type="text" class="input" name="user_email" id="user-email" tabindex="2" required>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <label class="checkbox">
+                        <input type="checkbox" name="legal" value="1" required>
+                        By submitting this form, I, on behalf of myself and any employees, agents, representatives, successors, and assigns of the <i>{{ @SESSION.cp_name }}</i>, hereby irrevocably agree to fully indemnify, defend, and hold harmless
+                        <i>nominatePRO Inc.</i>, its officers, directors, employees, agents, and affiliates from and against any and all claims, demands, losses, damages, liabilities, costs, and expenses (including reasonable attorneys' fees and court costs) arising out of or related to: (i) the deletion of this award and any associated data, content, or materials; (ii) any loss, corruption, or inability to recover such data; and (iii) any consequential, indirect, or incidental damages resulting therefrom. I acknowledge that this deletion is permanent and irreversible, and I assume all risks associated with this action.
+                    </label>
+                </div>
+            </div>
+            <div class="field is-grouped">
+                <div class="control mt-3">
+                    <button class="button is-danger" tabindex="100">Delete this award</button>
+                </div>
+                <div class="control mt-3">
+                    <a href="/app/all/{{ @SESSION.cp_slug }}/view" class="button is-link is-light" tabindex="101">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

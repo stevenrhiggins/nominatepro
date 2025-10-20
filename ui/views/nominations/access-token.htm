@@ -1,0 +1,39 @@
+<section class="section">
+    <div class="container">
+        <div class="column is-8 is-offset-2">
+            <h1 class="subtitle">Enter Access Token</h1>
+
+            <p class="content notification has-background-warning-light warning-border">
+                This award requires an access token to continue the nomination.
+            </p>
+
+            <check if="{{ @errors && count(@errors) }}">
+                <div class="notification is-danger">
+                    <repeat group="{{ @errors }}" value="{{ @err }}">
+                        <p>{{ @err }}</p>
+                    </repeat>
+                </div>
+            </check>
+
+            <form method="post" action="">
+                <input type="hidden" name="token" value="{{ @SESSION.csrf_token }}">
+                <div class="field">
+                    <label class="label" for="access_token">Access Token</label>
+                    <div class="control">
+                        <input class="input" type="text" id="access_token" name="access_token"
+                               placeholder="Enter the access token" autocomplete="one-time-code" required>
+                    </div>
+                </div>
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-primary" type="submit">Continue</button>
+                    </div>
+                    <div class="control">
+                        <a class="button is-light" href="/awards/{{ @award.award_slug }}">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

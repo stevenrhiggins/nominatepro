@@ -1,0 +1,25 @@
+<div class="modal" id="reminder_sample">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Sample reminder email</p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body content">
+                <div id="htmlContent">
+                    <p>I hope this email finds you well. I am writing to remind you that you have started a nomination process for <strong>{{ @award_name }}</strong> but have not yet completed it.</p>
+                    <p>The deadline of <strong>{{ date('F j, Y', strtotime(@nomination_end_date)) }}</strong> for nominations is approaching, and we would hate for your submission to be missed. Please take a moment to log in and finalize your nomination.</p>
+                    <p>Here is the <a href="https://nominatepro.com/app/nomination/begin" target="_blank">link</a> to access your nomination.</p>
+                        <check if="{{ @SESSION.use_access_token }}">
+                            Here is the access token you will need to submit your nomination: <br>
+                            <strong>{{ @SESSION.access_token }}</strong><br>
+                        </check>
+                    <p></p>
+                    <p>If you have any questions or need assistance, please do not hesitate to contact us.</p>
+                    <p>Thank you for your time and consideration.</p>
+                    <p>Best regards</p>
+                    <p>[Your name etc]</p>
+                </div>
+        </section>
+    </div>
+</div>

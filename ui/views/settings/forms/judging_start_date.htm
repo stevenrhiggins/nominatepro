@@ -1,0 +1,18 @@
+<form method="POST" action="{{ 'update_judging_dates' | alias }}" id="judging">
+    <input type="hidden" name="award_slug" value="{{@PARAMS.award_slug}}" readonly>
+    <input type="hidden" name="type" value="{{@PARAMS.type}}" readonly>
+    <input type="hidden" name="token" value="{{ @SESSION.csrf }}" readonly>
+    <div class="field pb-5 px-5">
+        <label class="label">Judging Start Date</label>
+        <div class="control">
+            <input class="input" type="date" name="judging_start_date" value="{{isset(@data.judging_start_date) ? @data.judging_start_date : 'Select Date'}}" required tabindex="1">
+        </div>
+    </div>
+    <div class="field px-5">
+        <label class="label">Judging End Date</label>
+        <div class="control">
+            <input class="input" type="date" name="judging_end_date" value="{{isset(@data.judging_end_date) ? @data.judging_end_date : 'Select Date'}}" required tabindex="2">
+        </div>
+    </div>
+        <button class="button is-link is-pulled-right" tabindex="3">Change the Dates</button>
+</form>

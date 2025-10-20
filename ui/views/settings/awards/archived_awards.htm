@@ -1,0 +1,27 @@
+
+<!--THIS FUNCTION IS CURRENTLY NOT BEING USED-->
+<div class="columns">
+    <div class="column is-11">
+        <h1 class="is-size-5 has-text-weight-semibold">Archived Awards</h1>
+        <table class="table is-fullwidth data-table is-size-6 is-hoverable" id="archivedAwardsTable">
+            <thead class="is-uppercase">
+            <tr>
+                <th>Award Name</th>
+                <th>Archived By</th>
+                <th>Date Archived</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <repeat group="{{@archived_awards}}" value="{{@archived}}">
+                <tr>
+                    <td>{{ @archived.award_name }}</td>
+                    <td>{{ @archived.person_archiving }} - {{ @archived.person_archiving_email }}</td>
+                    <td>{{ @archived.date_archived }}</td>
+                    <td><a href="/app/archive/{{ @archived.award_slug }}/restore">Restore</a></td>
+                </tr>
+            </repeat>
+            </tbody>
+        </table>
+    </div>
+</div>

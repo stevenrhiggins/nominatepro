@@ -1,0 +1,36 @@
+<div class="modal" id="modal_{{@judge.judge_id}}">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Invite {{@judge.judge_name}} to be a judge</p>
+            <button class="delete" aria-label="close"></button>
+        </header>
+        <section class="modal-card-body">
+            <p class="content notification has-background-warning-light warning-border">Use this form to invite <strong>{{@judge.judge_name}}
+                at {{@judge.judge_email}}</strong> to particate in evaluating submissions for this award</p>
+            <p class="content">The following email will be sent to {{@judge.judge_name}}. You can change the content of the email in the "Judges Settings".</p>
+            <p>If you would like to email yourself or someone else to test this, enter the email address in the form below. If you leave the form blank the email will be sent to {{@judge.judge_name}}.</p>
+
+            <hr>
+            <check if="{{ @judge.judges_invitation }}">
+                <true>
+                    <div class="notification is-success is-light success border content">
+                        <p class="content">Dear {{@judge.judge_name}}</p>
+                        <p class="content">{{@judge.judges_invitation | raw}}</p>
+                        <p>Use the link below to access your voting dashboard and login using the username/password below.</p>
+                        <p>
+                            <a href="#"><i>[link to dashboard] (provided by the application)</i></a>
+                        </p>
+                    </div>
+                    <hr>
+                    <include href="views/settings/forms/judges_invitation.htm" />
+                </true>
+                <false>
+                    <div class="notification is-danger is-light danger-border content">
+                        It appears you haven't written an invitation yet. Please open the Judging Settings form and write your invitation.
+                    </div>
+                </false>
+            </check>
+        </section>
+    </div>
+</div>

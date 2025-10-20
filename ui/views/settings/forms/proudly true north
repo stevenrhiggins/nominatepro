@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proudly True North</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.0/css/bulma.min.css">
+</head>
+<body>
+  <section class="hero is-dark">
+    <div class="hero-body has-text-centered">
+      <h1 class="title is-2">Proudly True North</h1>
+      <h2 class="subtitle is-5">North of You, Not Under You</h2>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="title is-3 has-text-centered">T-Shirts</h2>
+      <div class="columns is-multiline">
+        <div class="column is-one-quarter" >
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-4by5">
+                <img src="file_0000000073ac61f88d6028da80fdc2f6.png" alt="Black North T-Shirt">
+              </figure>
+            </div>
+            <div class="card-content has-text-centered">
+              <p class="title is-5">Black T-Shirt</p>
+              <p>$29.99 CAD</p>
+              <div class="select is-fullwidth mt-2">
+                <select>
+                  <option>Select Size</option>
+                  <option>S</option>
+                  <option>M</option>
+                  <option>L</option>
+                </select>
+              </div>
+              <button class="button is-dark is-fullwidth mt-2">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-one-quarter">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-4by5">
+                <img src="file_00000000e018622f942d010650cd7dba.png" alt="Gray North T-Shirt">
+              </figure>
+            </div>
+            <div class="card-content has-text-centered">
+              <p class="title is-5">Gray T-Shirt</p>
+              <p>$29.99 CAD</p>
+              <div class="select is-fullwidth mt-2">
+                <select>
+                  <option>Select Size</option>
+                  <option>S</option>
+                  <option>M</option>
+                  <option>L</option>
+                </select>
+              </div>
+              <button class="button is-dark is-fullwidth mt-2">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section has-background-light">
+    <div class="container">
+      <h2 class="title is-3 has-text-centered">Hats</h2>
+      <div class="columns is-multiline">
+        <div class="column is-one-quarter">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-1by1">
+                <img src="file_00000000280c6243880f81fa925b50e9.png" alt="Black Angry Maple Hat">
+              </figure>
+            </div>
+            <div class="card-content has-text-centered">
+              <p class="title is-5">Black Angry Maple Hat</p>
+              <p>$24.99 CAD</p>
+              <button class="button is-dark is-fullwidth mt-2">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="column is-one-quarter">
+          <div class="card">
+            <div class="card-image">
+              <figure class="image is-1by1">
+                <img src="file_00000000538061f5a5817b52ee9c3d22.png" alt="Red North Hat">
+              </figure>
+            </div>
+            <div class="card-content has-text-centered">
+              <p class="title is-5">Red North Hat</p>
+              <p>$24.99 CAD</p>
+              <button class="button is-dark is-fullwidth mt-2">Add to Cart</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer has-background-dark has-text-white-ter">
+    <div class="content has-text-centered">
+      <p>&copy; 2025 Proudly True North. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

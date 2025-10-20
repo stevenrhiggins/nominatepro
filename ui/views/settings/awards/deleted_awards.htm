@@ -1,0 +1,23 @@
+<div class="columns">
+    <div class="column is-11">
+        <h1 class="is-size-5 has-text-weight-semibold">Deleted Awards</h1>
+        <table class="table is-fullwidth data-table is-size-6 is-hoverable" id="deletedAwardsTable">
+            <thead class="is-uppercase">
+            <tr>
+                <th>Award Name</th>
+                <th>Deleted By</th>
+                <th>Date Deleted</th>
+            </tr>
+            </thead>
+            <tbody>
+            <repeat group="{{ @deleted_awards }}" value="{{ @deleted }}">
+                <tr>
+                    <td>{{ @deleted.award_name }}</td>
+                    <td>{{ @deleted.user }} - {{ @deleted.user_email }}</td>
+                    <td>{{ @deleted.date_deleted }}</td>
+                </tr>
+            </repeat>
+            </tbody>
+        </table>
+    </div>
+</div>

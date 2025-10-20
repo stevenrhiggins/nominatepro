@@ -1,0 +1,139 @@
+<div class="column pt-5">
+        <p class="has-text-weight-semibold is-size-5 pb-2 has-text-centered">Award Settings</p>
+    <p><a href="/app/{{ @award.award_slug }}/checklist/index" class="button is-small mb-2 is-success">Award Checklist</a></p>
+    <div id="menu">
+<!--        ESSENTIAL SETTINGS-->
+        <span class="has-text-weight-semibold"><i class="fa-solid fa-gear has-text-weight-semibold is-size-6"></i> Essentials <span class="has-text-danger">(required)</span></span>
+                <p class="is-size-7">This section includes a number of vital functions and information necessary to successfully set up your nomination.</p>
+        <ul class="menu-list awards_menu" style="margin-left: 10px">
+            <li>
+                <a href="/app/{{ @SESSION.awardSlug }}/important_dates/Important Dates/singleAward" class="navbar-item {{ @setting=='important_dates' ? 'is-underlined' : ''}}"> Important Dates</a>
+                {{ empty(@award.nomination_start_date) ? '<span class="tag is-danger is-light">Please Enter dates</span>' : '' }}
+            </li>
+            <li>
+                <a href="/app/{{ @SESSION.awardSlug }}/award_details/Award Details/singleAward" class="navbar-item {{  @setting=='award_details' ? 'is-underlined' : ''}}"> Award Details</a>
+            </li>
+            <exclude>
+            <li>
+                <a href="/app/{{ @SESSION.awardSlug }}/general_settings/General Settings/singleAward" class="navbar-item {{  @setting=='general_settings' ? 'is-underlined' : ''}}"> General Settings</a>
+            </li>
+            </exclude>
+            <li>
+                <a href="/app/{{ @SESSION.awardSlug }}/nominator_nominee/Nominator-Nominee Settings/singleAward" class="navbar-item {{ @setting=='nominator_nominee' ? 'is-underlined' : ''}}">Nominator/Nominee Settings</a>
+            </li>
+            <li>
+                <a href="/app/{{ @SESSION.awardSlug }}/notifications/Email Notifications Settings/singleAward" class="navbar-item {{ @setting=='notifications' ? 'is-underlined' : ''}}">Email Notification Settings</a>
+            </li>
+            <li>
+                <a href="/app/{{ @SESSION.awardSlug }}/contact/Contact Information Settings/singleAward" class="navbar-item {{ @setting=='contact' ? 'is-underlined' : ''}}">Contact Information</a>
+            </li>
+            <li>
+                <a href="/app/{{ @SESSION.awardSlug }}/documents/Document Allowances & Instructions Settings/singleAward" class="navbar-item {{ @setting=='documents' ? 'is-underlined' : ''}}" >Document Allowances & Instructions Settings</a>
+            </li>
+        </ul>
+        <hr>
+<!--        NOMINATION QUESTIONS-->
+        <span class="has-text-weight-semibold is-size-6"><i class="fa-solid fa-square-question"></i> Nomination Questions <span class="has-text-danger">(required)</span></span>
+        <p class="is-size-7">Use this section to write your questions and/or instructions to nominators and nominees.</p>
+        <ul class="menu-list awards_menu" style="margin-left: 10px">
+            <li id="metrics.number_nominator_questions">
+                <a href="/app/{{ @SESSION.awardSlug }}/sections#sections" class="navbar-item {{ @setting=='sections' ? 'is-underlined' : ''}}" >Sections (required) ({{ @metrics.number_sections }})</a>
+            </li>
+            <li>
+                <a href="/app/{{ @SESSION.awardSlug }}/questions/nominator/index" class="navbar-item {{ @setting=='nominator' ? 'is-underlined' : ''}}"><span data-tooltip="Select to add/edit questions you wish to ask of nominators." style="text-decoration: dashed">For Nominators (required) ({{ @metrics.number_nominator_questions }})</span></a>
+            </li>
+            <check if="{{ @award.require_nominee == 1 || @award.self_nominate == 1 }}">
+                <true>
+                    <li id="metrics.number_nominee_questions">
+                        <a href="/app/{{ @SESSION.awardSlug }}/questions/nominee/index" class="navbar-item {{ @setting=='nominee' ? 'is-underlined' : ''}}"><span data-tooltip="Select to add/edit questions you wish to ask of nominees." style="text-decoration: dashed">For Nominees {{ @award.require_nominee == 1 ? '(required)' : '' }} ({{ @metrics.number_nominee_questions }})</span></a></a>
+                    </li>
+                </true>
+            </check>
+        </ul>
+        <hr>
+<!--        CONTACT INFORMATION-->
+        <span class="has-text-weight-semibold"><i class="fa-solid fa-address-card"></i> Contact Information Forms (optional) </span>
+                <p class="is-size-7">This section provides a number of standard questions about the nominator/nominee in addition to essential questions such as email, name etc.</p>
+
+         <ul class="menu-list awards_menu" style="margin-left: 10px">
+            <li>
+                <a href="/app/{{ @SESSION.awardSlug }}/contact/nominator/Contact Information Forms/index" class="navbar-item {{ @setting=='nominator' ? 'is-underlined' : ''}}" >
+                    <span data-tooltip="Complete if you require additional contact information about the nominator.">For  Nominators</span>
+                </a>
+            </li>
+            <li>
+                <a href="/app/{{ @SESSION.awardSlug }}/contact/nominee/Contact Information Forms/index" class="navbar-item {{ @setting=='nominee' ? 'is-underlined' : ''}}">
+                    <span  data-tooltip="Complete if you require additional contact information about the nominee." style="text-decoration: dashed">For Nominees</span>
+                </a>
+            </li>
+        </ul>
+        <hr>
+
+<exclude>
+<!--        JUDGING TOOLS-->
+        <span class="has-text-weight-semibold"><i class="fa-solid fa-gavel"></i> Judging Tools</span>
+                <p class="is-size-7">Use this section only if you are planning on using our judging module. You can set the judging start and end dates , provide a general explanation of what is expected of judges, and manage settings for blind judging and vote changing.</p>
+            <ul class="menu-list awards_menu" style="margin-left: 10px">
+                <li>
+                    <a href="/app/{{ @SESSION.awardSlug }}/judges_setting/Update Judges Settings/singleAward" class="navbar-item {{ @setting=='judges_setting' ? 'is-underlined' : ''}}">Judging Settings</a>
+                </li>
+            </ul>
+            <hr>
+        <!--            JUDGES-->
+        <check if="{{ isset(@judges) }}">
+            <span class="has-text-weight-semibold"><i class="fa-solid fa-people-group"></i> Judges</span>
+            <p class="is-size-7">After the nomination period ends, use this section to invite the judges you've picked.<br><strong>Nomination End Date: {{@nomination_end_date}}</strong></p>
+            <ol class="menu-list awards_menu" style="margin-left: 10px">
+                <repeat group="{{ @judges }}" value="{{ @judge }}">
+                    <li>{{ @judge.judge_name }}<br>
+                        <check if="{{isset(@judge.invitation_date)}}">
+                            <check if="{{strtotime(@nomination_end_date) < time()}}">
+                                <check if="{{!@judge.invitation_date}}">
+                                    <true>
+                                        <a data-target="modal_{{@judge.judge_id}}" class="js-modal-trigger"><i class="fa-solid fa-envelope has-text-info"></i></a>
+                                    </true>
+                                    <false>
+                                        <span><i class="fa-solid fa-check has-text-success"></i> {{@judge.invitation_accepted_date}}</span>
+                                    </false>
+                                </check>
+                            </check>
+                            <include href="views/settings/modals/judges_invitation_modal.htm" />
+                        </check>
+                    </li>
+                </repeat>
+            </ol>
+            <check if="{{strtotime(@nomination_end_date) < time()}}">
+                <p class="is-size-6 mt-2">
+                    Legend:
+                    <br><i class="fa-solid fa-envelope has-text-info"></i> Send Invitation
+                    <br><i class="fa-solid fa-check has-text-success"></i> Invitation was accepted
+                </p>
+            </check>
+        </check>
+        <hr>
+</exclude>
+
+        <!--        SPONSOR LOGO-->
+        <check if="{{ isset(@award.sponsor_logo) }}">
+            <img src="/ui/images/logos/sponsors/{{ @SESSION.awardSlug}}/{{ @award.sponsor_logo }}" alt="" style="width: 30%; height: auto"><br>
+        </check>
+        <span class="has-text-weight-semibold"><i class="fa-solid fa-user"></i> Sponsor Logo (optional)</span>
+        <p class="is-size-7">This function allows you to assign a sponsor’s logo to an award. It's designed to enhance sponsors visibility and recognition by integrating their branding into an award. </p>
+        <ul class="menu-list awards_menu" style="margin-left: 10px">
+            <li>
+                <a href="/app/{{ @SESSION.awardSlug }}/sponsor_logo/Add%20Sponsor%20Logo/singleAward" class="navbar-item {{ @setting=='sponsor' ? 'is-underlined' : ''}}">{{ @award.sponsor_logo ? 'Change' : 'Add a' }} sponsor logo</a>
+            </li>
+        </ul>
+        <hr>
+
+        <span class="has-text-weight-semibold"><i class="fa-solid fa-user"></i>Restricted Access (optional)</span>
+        <p class="is-size-7">This function allows you to control who has access to the nomination forms. </p>
+        <ul class="menu-list awards_menu" style="margin-left: 10px">
+            <li>
+                <a href="/app/{{ @SESSION.awardSlug }}/access_token/Restricted Access Option/singleAward" class="navbar-item {{ @setting=='access_token' ? 'is-underlined' : ''}}" >Restricted Access Option</a>
+            </li>
+        </ul>
+        <hr>
+
+    </div>
+</div>

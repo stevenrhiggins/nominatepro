@@ -1,0 +1,131 @@
+<div class="column is-6">
+    <h1 class="is-size-3 mb-3">{{@title}}</h1>
+    <form method="POST" action="{{ @postRoute }}" enctype="multipart/form-data">
+        <input type="hidden" name="date_edited" value="{{ @control_panel.date_edited }}" readonly>
+        <input type="hidden" name="token" value="{{ @SESSION.csrf }}" readonly>
+<!--        Control Panel Name -->
+        <include href="views/settings/formTemplates/inputElement.htm"
+                 with="
+                    id=division-name,
+                    label=Control Panel Name (only your administrator can change the control panel name),
+                    type=text,
+                    fieldName=cp_name,
+                    fieldValue={{ @control_panel.cp_name }},
+                    tabindex=1,
+                    javascript='',
+                    state=disabled,
+                    notification=<p class='has-text-danger' id='division-name-error'></p>
+                " />
+<!--        Contact Name -->
+        <include href="views/settings/formTemplates/inputElement.htm"
+                 with="
+                    id=division-contact-name,
+                    label=Contact Name,
+                    type=text,
+                    fieldName=cp_contact_name,
+                    fieldValue={{ @control_panel.cp_contact_name }},
+                    tabindex=2,
+                    javascript='',
+                    state=required,
+                    notification=''
+                " />
+<!--        Contact Email -->
+        <include href="views/settings/formTemplates/inputElement.htm"
+                 with="
+                    id=division-contact-email,
+                    label=Contact Email,
+                    type=email,
+                    fieldName=cp_contact_email,
+                    fieldValue={{ @control_panel.cp_contact_email }},
+                    tabindex=3,
+                    javascript='',
+                    state=required,
+                    notification=''
+                " />
+    <!--        Contact Phone  -->
+        <include href="views/settings/formTemplates/inputElement.htm"
+                 with="
+                    id=division-contact-phone,
+                    label=Contact Phone,
+                    type=phone,
+                    fieldName=cp_contact_phone,
+                    fieldValue={{ @control_panel.cp_contact_phone }},
+                    tabindex=4,
+                    javascript=onblur=formatPhoneNumber('division-contact-phone'),
+                    state=required,
+                    notification=''
+                " />
+<!--        Username -->
+        <include href="views/settings/formTemplates/inputElement.htm"
+                 with="
+                    id=username,
+                    label=Username (NOT an email address),
+                    type=text,
+                    fieldName=username,
+                    fieldValue={{ @control_panel.username }},
+                    tabindex=6,
+                    javascript=onblur="checkUsername('username', 'username-error')",
+                    state=required,
+                    notification=<p class='has-text-danger' id='username-error'></p>
+                " />
+        <p class="notification is-warning is-light warning-border my-2">Password must be at least 12 characters long and include uppercase and lowercase characters, a number and at least one special character (@$!%*?&#)</p>
+        <div class="field">
+            <label class="label" for="password">Password (complete only if you want to change your password)</label>
+            <div class="control">
+                <input class="input" type="password" name="password" id="password" placeholder="Password" autocomplete="new-password" onblur="checkPasswordStrength('password', 'password-strength-error')" tabindex="6">
+                <input type="checkbox" class="mt-1" onclick="showPassword('password','show-password-text', '')">  <span id="show-password-text">Show Password</span>
+            </div>
+            <p class="has-text-danger" id="password-strength-error"></p>
+        </div>
+        <div class="field">
+            <label class="label" for="confirm-password">Confirm Password (complete only if you want to change your password)</label>
+            <div class="control">
+                <input class="input" type="password" name="confirm_password" id="confirm-password" placeholder="Confirm Password" autocomplete="new-password" onblur="comparePasswords('password', 'confirm-password', 'password-compare-error')" tabindex="7">
+
+                <input type="checkbox" class="mt-1" onclick="showPassword('confirm-password', '', 'confirm-password-text')"> <span id="confirm-password-text">Show Password</span>
+            </div>
+            <p class="has-text-danger" id="password-compare-error"></p>
+        </div>
+        <check if="{{ @control_panel.cp_logo }}">
+            <input type="hidden" name="current_cp_logo" value="{{ @control_panel.cp_logo }}" readonly>
+            <p>Current Logo:
+                <a href="#" onclick="removeLogo('{{ @control_panel.cp_slug }}', 'Are you sure you want to remove the logo?')">
+                    <span data-tooltip="You can delete the logo or replace it by selecting a new logo."><i class="fa-solid fa-trash"></i></span>
+                </a>
+                <figure class="image is-96x96">
+                    <img src="/ui/images/logos/control_panel/{{ @control_panel.cp_slug }}/{{ @control_panel.cp_logo }}" alt="logo" style="vertical-align: middle">
+                </figure>
+            </p>
+        </check>
+        <div class="field">
+            <div class="control">
+                <label for="cp-logo" class="label">Upload Logo</label>
+                <p class="content">If you wish, you can upload your own logo. If you do, users will see your logo while they complete a nomination.</p>
+                <div class="file mt-3">
+                    <label class="file-upload">
+                        <input class="file-input" type="file" role="button" name="cp_logo" id="cp-logo" tabindex="8" onchange="logo('cp_logo', 'file-warning')">
+                        <span class="file-cta">
+                          <span class="file-icon">
+                            <i class="fas fa-upload"></i>
+                          </span>
+                          <span class="file-label">
+                              Choose a logo
+                          </span>
+                      </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <p class="has-text-danger" id="file-warning"></p>
+        <p class="has-text-weight-bold mt-2">Only .jpg, .jpeg, .png, and .gif files are permitted. Please be sure that the filesize is no greater than 200KB. <span class="has-text-danger is-light"></span>
+        <div id="filelist"></div>
+        <div class="field is-grouped">
+            <div class="control mt-3">
+                <button class="button is-success">Submit</button>
+            </div>
+            <div class="control mt-3">
+                <a href="/app/dashboard/index" class="button is-link is-light">Cancel</a>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,64 @@
+<section class="section">
+    <div class="container">
+        <div class="columns is-centered">
+            <div class="column is-8">
+
+                <h1 class="subtitle has-text-weight-semibold is-4">Registration</h1>
+
+                <div class="content">
+                    <ul>
+                        <li>
+                            If this <strong>is your first visit</strong>, enter your email address below and we'll get you started.
+                            <strong>Please note</strong>, we will track your progress through the nomination. If you can’t finish in one sitting, we’ll return you to where you left off.
+                        </li>
+                        <li>
+                            If this <strong>is not your first visit</strong>, we’ve recorded your progress. Enter your email address below and we’ll take you back to where you left off.
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Notices -->
+                <check if="{{ isset(@notice) }}">
+                    <div class="notification is-success" role="status" aria-live="polite">{{ @notice }}</div>
+                </check>
+
+                <check if="{{ isset(@errors) }}">
+                    <div class="notification is-danger" role="alert" aria-live="assertive">
+                        <repeat group="{{ @errors }}" value="{{ @err }}"><p>{{ @err }}</p></repeat>
+                    </div>
+                </check>
+
+                <!-- Form -->
+                <form method="post" action="">
+                    <input type="hidden" name="csrf_token" value="{{ @SESSION.csrf_token }}">
+
+                    <div class="field">
+                        <label class="label" for="email">Email address</label>
+                        <div class="control">
+                            <input
+                                    class="input"
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    required
+                                    autocomplete="email"
+                                    inputmode="email"
+                                    spellcheck="false"
+                                    placeholder="you@example.com"
+                                    autofocus
+                            >
+                        </div>
+                        <p class="help">We’ll email you a secure link to continue.</p>
+                    </div>
+
+                    <div class="field is-grouped is-grouped-right">
+                        <div class="control">
+                            <button class="button is-primary" type="submit">Send me the link</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>

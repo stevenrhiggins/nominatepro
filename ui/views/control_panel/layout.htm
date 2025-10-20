@@ -1,0 +1,23 @@
+<include href="/views/header.htm" />
+
+<section class="section">
+    <div class="columns">
+        <div class="column">
+            <img src="/assets/nominatePROLogoAndMark.jpg" alt="Logo for NominatePRO" style="height: 60px!important;">
+        </div>
+    </div>
+    <div class="columns is-centered is-multiline">
+        <div class="column is-half" style="min-height: 80vh">
+            <div class="has-text-centered my-5">
+                <F3:repeat group="{{ \Flash::instance()->getMessages() }}" value="{{ @msg }}">
+                    <div class="notification is-{{ @msg.status }} is-light text-center">
+                        <p class="text-center">{{ @msg.text | esc }}</p>
+                    </div>
+                </F3:repeat>
+            </div>
+            <include href="{{ @content }}" />
+        </div>
+    </div>
+</section>
+
+<include href="/views/footer.htm" />

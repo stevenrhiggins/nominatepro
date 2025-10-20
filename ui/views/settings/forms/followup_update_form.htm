@@ -1,0 +1,44 @@
+<div class="columns is-multiline">
+    <div class="column is-12">
+        <h1 class="is-size-4 my-3">{{@title}}</h1>
+    </div>
+
+    <div class="column is-10">
+        <p  class="content notification is-warning is-light warning-border">Use this area to update the followup question.</p>
+    </div>
+
+    <div class="column is-10 content">
+
+        <form action="{{ @postRoute }}" method="POST" >
+            <input type="hidden" name="token" value="{{ @SESSION.csrf }}" readonly>
+            <input type="hidden" name="date_edited" value="{{@data.date_edited}}" readonly>
+                <div class="field">
+                    <div class="control">
+                        <label for="fu-question" class="label">{{@enter_question}}</label>
+                        <textarea class="textarea tinyform" name="fu_question" required tabindex="1" id="fu-question">{{ @data.fu_question | raw }}</textarea>
+                    </div>
+                </div>
+                <p class="has-text-weight-semibold">{{@select_form_element}}</p>
+                <repeat group="{{@fields}}" value="{{@field}}">
+                    <div class="field">
+                        <div class="control">
+                            <label for="{{ @field.id }}" class="radio">
+                                <input id="{{ @field.id }}" class="fu_question_input" type="radio" name="fu_input_type" value="{{ @field.value }}" tabindex="{{ @field.value }}" {{ @data.fu_input_type == @field.value ? 'checked' : '' }}>
+                                {{@field.description}}
+                            </label>
+                        </div>
+                    </div>
+                </repeat>
+                <div class="field is-grouped">
+                    <div class="control mt-3">
+                        <button class="button is-success">Submit</button>
+                    </div>
+                    <div class="control mt-3">
+                        <a href="{{ @cancel_route }}" class="button is-link is-light">Cancel</a>
+                    </div>
+                </div>
+        </form>
+    </div>
+</div>
+
+

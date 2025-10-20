@@ -1,0 +1,107 @@
+<div class="columns" id="sections">
+    <div class="column is-8">
+        <a href="/app/{{ @awardSlug }}/sections/store" class="button is-responsiveis-pulled-left mt-2 mr-2">Add a Section</a>
+    </div>
+</div>
+
+<div class="columns">
+    <div class="column is-7">
+        <h1 class="is-size-4 my-3">{{@PAGE_TITLE}}</h1>
+    </div>
+</div>
+
+<div class="columns">
+    <div class="column is-8">
+        <p class="notification is-warning is-light warning-border">
+            Use this area to create and update sections for the questions you will ask nominators and nominees for this award. For instance, you can include a <strong>Membership</strong> section where you ask questions about the persons membership. There are no limits to the number of sections you can add.
+        </p>
+    </div>
+</div>
+<div class="columns">
+    <div class="column is-7 content">
+<p>Want to change the order of the sections? Just click on the section you want to move, hold the mouse button down, drag it to where you want it to be, and then let go of the mouse button.</p>
+        <table class="table is-fullwidth data-table is-size-6" id="sectionsTable">
+            <thead class="is-uppercase">
+                 <tr>
+                     <th style="width:10px"></th>
+                    <th style="width: 20%">Section Title</th>
+                    <th style="width: 80%"># Questions in Section</th>
+                    <th class="has-text-centered">Edit</th>
+                    <th class="has-text-centered">Delete</th>
+                 </tr>
+            </thead>
+            <check if="{{ @sections }}">
+                <true>
+                    <tbody class="row_position" draggable="true" ondragend="sortRow('sections')">
+                        <repeat group="{{ @sections }}" counter="{{@ctr}}" value="{{ @section }}">
+                            <tr id="{{ @section.id }}">
+                                <td style="width:10px" class="has-text-centered">{{ @ctr }}</td>
+                                <td>
+                                    <check if="{{ count(@sections) > 1 }}">
+                                        <true>
+                                            <span class="tooltip-right tooltip-underline" data-tooltip="Drag and drop to sort the order that sections will be displayed in the nomination forms." style="cursor: move"><u>{{ @section.section }}</u></span>
+                                        </true>
+                                        <false>
+                                            {{ @section.section }}
+                                        </false>
+                                    </check>
+                                </td>
+                                <td>
+                                    {{ @section.question_count }}
+                                </td>
+                                <td class="has-text-centered">
+                                    <a href="/app/{{ @awardSlug }}/{{ @section.section_slug }}/sections/update" class="button is-small">{{ !empty(@metrics.nomination_is_active) ? 'disabled' : ''}}Edit</a>
+                                </td>
+                                <td class="has-text-centered">
+                                <check if="{{ empty(@section.question_count) || @section.question_count == 0 }}">
+                                        <true>
+                                            <button type="button" class="button is-small is-danger" onclick="confirmDelete('{{ @section.section_slug }}')" {{ !empty(@metrics.nomination_is_active) ? 'disabled' : ''}}>
+                                                Delete
+                                            </button>
+                                        </true>
+                                        <false>
+                                            N/A
+                                        </false>
+                                    </check>
+                                </td>
+                            </tr>
+                        </repeat>
+                    </tbody>
+                </true>
+                <false>
+                    <tbody>
+                        <tr>
+                            <td colspan="4">You haven't created any sections yet.</td>
+                        </tr>
+                    </repeat>
+                    </tbody>
+                </false>
+            </check>
+        </table>
+    </div>
+</div>
+
+<script>
+    function goToPage(sectionSlug) {
+        let url = `/app/${sectionSlug}/update`;
+        window.location.href = url;
+    }
+
+    function confirmDelete(slug) {
+        Swal.fire({
+            title: 'Are you sure you want to delete this section?',
+            text: "This will permanently delete the section.",
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete it',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const baseDeleteUrl = '/app/{{ @awardSlug }}/';
+                window.location.href = baseDeleteUrl + encodeURIComponent(slug) + '/sections/delete';
+            }
+        });
+    }
+
+</script>

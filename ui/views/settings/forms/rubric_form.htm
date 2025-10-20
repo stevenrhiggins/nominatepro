@@ -1,0 +1,9 @@
+<p class="mt-5 content has-text-weight-semibold is-size-5">Scoring Rubric</p>
+<p>A scoring rubric is a tool which is visible to judges and used to evaluate and assess responses based on predefined criteria and standards. It provides a clear and consistent framework for evaluating specific aspects of a submission, helping to ensure fairness, reliability, and validity in the assessment process.</p>
+<div class="field">
+    <label for="rubric-form">Write a rubric to assist judges in their evaulations of this nomination. <a class="js-modal-trigger" data-target="rubric"> <i class="fa-solid fa-lightbulb-on" aria-hidden="true"></i></a></label>
+    <div class="control">
+        <textarea class="textarea tinyform" name="rubric" id="rubric-form">{{ isset(@question.rubric) ? @question.rubric : '' }}</textarea>
+    </div>
+</div>
+

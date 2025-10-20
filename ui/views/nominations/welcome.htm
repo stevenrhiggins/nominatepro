@@ -1,0 +1,46 @@
+<div class="content is-size-5">
+    <check if="{{ @award.nomination_end_date < date('Y-m-d') }}">
+        <div class="notification is-warning is-light">The nomination for this award ended on {{ date('F j, Y', strtotime(@award.nomination_end_date)) }}</div>
+    </check>
+    <check if="{{ @award.nomination_start_date > date('Y-m-d') }}">
+        <div class="notification is-warning is-light">The nomination for this award is not available until {{ date('F j, Y', strtotime(@award.nomination_start_date)) }}</div>
+    </check>
+    <check if="{{ isset(@award.award_welcome) }}">
+        {{@award.award_welcome | raw}}
+    </check>
+    <check if="{{ isset(@award.award_description) }}">
+        {{@award.award_description | raw}}
+    </check>
+    <check if="{{ isset(@award.award_mission) }}">
+        {{@award.award_mission | raw}}
+    </check>
+    <check if="{{ isset(@award.award_nominee_requirements) }}">
+        {{@award.award_nominee_requirements | raw}}
+    </check>
+    <check if="{{ isset(@award.award_judging) && isset(@award.show_judging_criteria_on_welcome)==1 }}">
+        {{@award.award_judging | raw}}
+    </check>
+    <check if="{{ isset(@award.award_prize) }}">
+        {{@award.award_prize | raw}}
+    </check>
+    <hr>
+</div>
+<check if="{{ strtotime(@award.nomination_end_date) > strtotime(date('Y-m-d')) }}">
+    <true>
+        <div class="buttons is-centered mt-5">
+            <a href="/app/nomination/{{ @award.award_slug }}/live/register"
+               class="button is-primary is-medium">
+                Continue
+            </a>
+        </div>
+    </true>
+    <false>
+        <div class="notification is-warning is-light mt-5">
+            <strong>Nominations are currently closed.</strong><br>
+        </div>
+    </false>
+</check>
+
+
+
+
