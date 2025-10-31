@@ -1,0 +1,92 @@
+<?php
+/**
+ * The template for fellows page
+ *
+ * @package ippa
+ */
+
+
+$years = $wpdb->get_results("SELECT DISTINCT post_meta.meta_value
+FROM wp_48z45czgga_postmeta AS post_meta
+INNER JOIN wp_48z45czgga_posts AS post
+ON post_meta.post_id = post.ID
+WHERE post_meta.meta_key = 'fellowship_year'
+AND post.post_status = 'publish'
+ORDER BY post_meta.meta_value DESC");
+
+
+//$years = $wpdb->get_results("SELECT DISTINCT `meta_value` FROM `wp_48z45czgga_postmeta` WHERE `meta_key` = 'fellowship_year' AND `fellowship_year`!='2025' ORDER BY `meta_value` DESC LIMIT 50");
+$segment = explode('/', parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH));
+if(substr($segment[2], -4, 2) !== '20'){
+wp_redirect( '/about-ippa/ippa-fellows-'.$years[0]->meta_value );
+}
+$year = substr($segment[2], -4);
+$args = get_data_by_year($year, 'fellows', 'fellowship_year');
+$fellows = new WP_Query( $args );
+
+
+get_header();
+?>
+<div class="columns">
+    <div class="column is-12">
+        <p>The International Positive Psychology Association (IPPA) confers the title of Fellow on certain IPPA members who have contributed most significantly to the development of the Association and advancement of knowledge in their specific area of discipline, either through research or practice within the field of positive psychology.  The names of IPPA Fellows are highlighted below.</p>
+    </div>
+</div>
+<div class="tabs is-boxed">
+    <ul>
+        <?php //links to years
+  	foreach ($years as $post) {
+  		$active = $post->meta_value == $year ? 'class="is-active"' : '';?>
+        <li <?php echo $active?>><a href="/about-ippa/ippa-fellows-<?php echo $post->meta_value?>" <?php echo $active?>><?php echo $post->meta_value?></a></li>
+        <?php }?>
+    </ul>
+</div>
+
+
+<div class="columns">
+    <div class="column is-12 fellows-content-tab content-tab">
+
+        <?php
+			 while($fellows->have_posts()) {
+        $fellows->the_post();
+        $id = get_the_ID();
+        $photo = get_field('image', the_field('id'));	?>
+        <div class="box fellows-box">
+            <article class="media">
+                <div class="media-left">
+                    <figure class="image">
+                        <img src="<?php echo $photo['url']?>" alt="<?php echo $photo['alt']?>" style="width: 200px; aspect-ratio: 1 / 1; object-fit: contain;">
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <span class="has-text-weight-bold"><?php the_field('name')?></span>
+                            <br>
+                            <?php the_field('institution')?>
+                        </p>
+                        <section class="accordions">
+                            <article class="accordion content">
+                                <div class="accordion-header toggle">
+                                    <p onclick="toggleMore(<?php echo $id?>)">
+                                        <?php the_field('excerpt'); ?>
+                                        <span class="has-text-weight-medium ml-1 is-underlined" id="toggle_<?php echo $id?>">More</span>
+                                    </p>
+                                </div>
+                                <div class="accordion-body">
+                                    <div class="accordion-content">
+                                        <?php the_field('bio')?>
+                                    </div>
+                                </div>
+                            </article>
+                        </section>
+                    </div>
+                </div>
+            </article>
+        </div>
+        <?php
+		}
+	?>
+    </div>
+</div>
+

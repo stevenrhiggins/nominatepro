@@ -4,14 +4,13 @@ declare(strict_types=1);
 namespace App\Support;
 
 use Base;
-use App\Contracts\RendererInterface;
 use App\Http\CsrfGuard;
 
-final class renderHtml implements RendererInterface
+final class renderHtml
 {
     public function __construct(private Base $f3) {}
 
-    public function render(string $view, string $layout, array $hive = []): void
+    public function render(string $view, string $layout = null, array $hive = []): void
     {
         // Optional toggles (default: on)
         $withCsrf = $hive['_withCsrf'] ?? true;

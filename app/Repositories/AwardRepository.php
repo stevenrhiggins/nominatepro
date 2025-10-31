@@ -149,9 +149,7 @@ final class AwardRepository implements AwardRepositoryInterface
     public function createUpdateNominatorNomineeContactQuery(string $awardSlug, string $type, array $data): ?int
     {
         $m = new Mapper($this->db(), 'nominators_nominees_forms');
-
         $isUpdate = filter_var($data['update'] ?? false, FILTER_VALIDATE_BOOLEAN);
-
         if ($isUpdate && !empty($data['id'])) {
             $m->load(['id = ?', (int)$data['id']]);
         } elseif ($isUpdate) {
@@ -163,11 +161,10 @@ final class AwardRepository implements AwardRepositoryInterface
         }
 
         $m->copyfrom($data);
-
         $m->award_slug         = $awardSlug;
         $m->nominator_nominee  = $type;
-
         $now = date('Y-m-d H:i:s');
+
         if ($m->dry()) {
             // insert
             $m->date_created = $now;
@@ -180,6 +177,30 @@ final class AwardRepository implements AwardRepositoryInterface
 
         $id = isset($m->id) ? (int)$m->id : null;
         return $id ?: null;
+    }
+
+    public function getMetricsForAward(string $awardSlug): array
+    {
+        $metrics = [
+            'number_nominator_questions' => $this->countQuestionsByType($awardSlug, 'nominator'),
+            'number_nominee_questions'   => $this->countQuestionsByType($awardSlug, 'nominee'),
+            'number_sections'            => $this->countSectionsByAwardSlug($awardSlug),
+            'all_nominations'            => $this->countNominationsByStatus($awardSlug, 'all'),
+            'ongoing_nominations'        => $this->countNominationsByStatus($awardSlug, 'ongoing'),
+            'completed_nominations'      => $this->countNominationsByStatus($awardSlug, 'completed'),
+            'demo_nominations'           => $this->countNominationsByStatus($awardSlug, 'demo'),
+            'all_awards'                 => $this->countByCpSlug($this->f3->get('SESSION.cp_slug')),
+        ];
+
+        $today = date('Y-m-d');
+        $dates = $this->awards->fetchNominationDatesBySlug($awardSlug);
+        $metrics['nomination_is_active'] = false;
+
+        if ($dates && !empty($dates['nomination_start_date']) && !empty($dates['nomination_end_date'])) {
+            $metrics['nomination_is_active'] =
+                ($dates['nomination_start_date'] <= $today && $dates['nomination_end_date'] >= $today);
+        }
+        return $metrics;
     }
 
     public function fetchActiveAwardsByCpSlug(string $cpSlug): array
@@ -355,7 +376,6 @@ final class AwardRepository implements AwardRepositoryInterface
         $m = $this->mapper();
         $m->load(['award_slug = ?', $awardSlug]);
         if ($m->dry()) return false;
-
         $data = array_intersect_key($data, array_flip(array_merge($allowed, ['date_edited'])));
         if (empty($data)) {
             // Nothing to change; consider this a no-op success or return false
@@ -363,6 +383,27 @@ final class AwardRepository implements AwardRepositoryInterface
         }
         $m->copyFrom($data);
         $this->save($m);
+        return true;
+    }
+
+    public function validateAccessTokenQuery(string $awardSlug, string $accessToken): void
+    {
+        // TODO: Implement validateAccessTokenQuery() method.
+    }
+
+    public function validateRegistrationTokenQuery(string $awardSlug, string $code, string $email): bool
+    {
+        $token = $this->mapper();
+        $token->load([
+            'email=? AND award_slug=? AND token=?',
+            $email,
+            $awardSlug,
+            $code
+        ]);
+
+        if ($token->dry()) {
+            return false;
+        }
         return true;
     }
 }

@@ -1,4 +1,4 @@
-<include href="/views/header.htm" />
+<include href="header.htm" />
 
 <section class="section">
     <div class="container">
@@ -11,7 +11,7 @@
                         <true>
                             <figure class="image is-inline-block" style="max-width: 220px;">
                                 <img src="/assets/logos/{{ @award.award_slug }}/{{ @award.sponsor_logo }}"
-                                     alt="{{ @award.title }} Sponsor Logo">
+                                     alt="{{ @award.sponsor_name }} Sponsor Logo">
                             </figure>
                         </true>
                         <false>
@@ -25,7 +25,7 @@
 
                 <!-- main content -->
                 <div class="box has-background-light p-5">
-                    <include href="{{ @content }}" />
+                   <include href="{{ @content }}" />
                 </div>
 
             </div>
@@ -33,4 +33,4 @@
     </div>
 </section>
 
-<include href="/views/footer.htm" />
+<include href="footer.htm" />

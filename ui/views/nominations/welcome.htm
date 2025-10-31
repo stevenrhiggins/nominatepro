@@ -1,46 +1,99 @@
-<div class="content is-size-5">
-    <check if="{{ @award.nomination_end_date < date('Y-m-d') }}">
-        <div class="notification is-warning is-light">The nomination for this award ended on {{ date('F j, Y', strtotime(@award.nomination_end_date)) }}</div>
-    </check>
-    <check if="{{ @award.nomination_start_date > date('Y-m-d') }}">
-        <div class="notification is-warning is-light">The nomination for this award is not available until {{ date('F j, Y', strtotime(@award.nomination_start_date)) }}</div>
-    </check>
-    <check if="{{ isset(@award.award_welcome) }}">
-        {{@award.award_welcome | raw}}
-    </check>
-    <check if="{{ isset(@award.award_description) }}">
-        {{@award.award_description | raw}}
-    </check>
-    <check if="{{ isset(@award.award_mission) }}">
-        {{@award.award_mission | raw}}
-    </check>
-    <check if="{{ isset(@award.award_nominee_requirements) }}">
-        {{@award.award_nominee_requirements | raw}}
-    </check>
-    <check if="{{ isset(@award.award_judging) && isset(@award.show_judging_criteria_on_welcome)==1 }}">
-        {{@award.award_judging | raw}}
-    </check>
-    <check if="{{ isset(@award.award_prize) }}">
-        {{@award.award_prize | raw}}
-    </check>
-    <hr>
-</div>
-<check if="{{ strtotime(@award.nomination_end_date) > strtotime(date('Y-m-d')) }}">
-    <true>
-        <div class="buttons is-centered mt-5">
-            <a href="/app/nomination/{{ @award.award_slug }}/live/register"
-               class="button is-primary is-medium">
-                Continue
-            </a>
+<!-- Welcome / Overview -->
+<section class="section py-5">
+    <div class="container is-max-desktop">
+
+        <!-- Award header -->
+        <div class="has-text-centered mb-5">
+            <check if="{{ @award.sponsor_logo }}">
+                <figure class="image is-inline-block mb-3" style="max-width: 160px;">
+                    <img src="/assets/logos/{{ @award.award_slug }}/{{ @award.sponsor_logo }}"
+                         alt="{{ @award.sponsor_name }} logo"
+                         style="border-radius: 8px; object-fit: contain;">
+                </figure>
+            </check>
+
+            <h1 class="is-size-4 has-text-weight-medium mb-2" style="letter-spacing:0.3px;">
+                {{ @award.award_name }}
+            </h1>
+            <p class="has-text-grey is-size-6">
+                {{ @award.organization_name ?? '' }}
+            </p>
         </div>
-    </true>
-    <false>
-        <div class="notification is-warning is-light mt-5">
-            <strong>Nominations are currently closed.</strong><br>
+
+        <!-- Nomination status -->
+        <check if="{{ @award.nomination_end_date < date('Y-m-d') }}">
+            <div class="notification is-warning is-light has-text-centered">
+                Nominations closed on
+                <strong>{{ date('F j, Y', strtotime(@award.nomination_end_date)) }}</strong>.
+            </div>
+        </check>
+
+        <check if="{{ @award.nomination_start_date > date('Y-m-d') }}">
+            <div class="notification is-info is-light has-text-centered">
+                Nominations open on
+                <strong>{{ date('F j, Y', strtotime(@award.nomination_start_date)) }}</strong>.
+            </div>
+        </check>
+
+        <!-- Award content -->
+        <div class="content is-size-6 mt-5" style="line-height:1.7;">
+            <check if="{{ isset(@award.award_welcome) }}">
+                <div class="mb-5">{{ @award.award_welcome | raw }}</div>
+            </check>
+
+            <check if="{{ isset(@award.award_description) }}">
+                <div class="mb-5">
+                    <h2 class="is-size-5 has-text-weight-semibold has-text-grey-dark mb-2">About the Award</h2>
+                    {{ @award.award_description | raw }}
+                </div>
+            </check>
+
+            <check if="{{ isset(@award.award_mission) }}">
+                <div class="mb-5">
+                    <h2 class="is-size-5 has-text-weight-semibold has-text-grey-dark mb-2">Mission</h2>
+                    {{ @award.award_mission | raw }}
+                </div>
+            </check>
+
+            <check if="{{ isset(@award.award_nominee_requirements) }}">
+                <div class="mb-5">
+                    <h2 class="is-size-5 has-text-weight-semibold has-text-grey-dark mb-2">Eligibility</h2>
+                    {{ @award.award_nominee_requirements | raw }}
+                </div>
+            </check>
+
+            <check if="{{ isset(@award.award_judging) && isset(@award.show_judging_criteria_on_welcome)==1 }}">
+                <div class="mb-5">
+                    <h2 class="is-size-5 has-text-weight-semibold has-text-grey-dark mb-2">Judging Criteria</h2>
+                    {{ @award.award_judging | raw }}
+                </div>
+            </check>
+
+            <check if="{{ isset(@award.award_prize) }}">
+                <div class="mb-5">
+                    <h2 class="is-size-5 has-text-weight-semibold has-text-grey-dark mb-2">Prizes</h2>
+                    {{ @award.award_prize | raw }}
+                </div>
+            </check>
         </div>
-    </false>
-</check>
 
+        <hr class="my-5">
 
-
-
+        <!-- CTA -->
+        <check if="{{ strtotime(@award.nomination_end_date) > strtotime(date('Y-m-d')) }}">
+            <true>
+                <div class="has-text-centered mt-4">
+                    <a href="{{ @server }}/app/nomination/{{ @award.award_slug }}/live/registration"
+                       class="button is-primary is-medium px-5">
+                        Continue to Nomination
+                    </a>
+                </div>
+            </true>
+            <false>
+                <div class="notification is-warning is-light has-text-centered mt-5">
+                    <strong>Nominations are currently closed.</strong>
+                </div>
+            </false>
+        </check>
+    </div>
+</section>

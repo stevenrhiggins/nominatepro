@@ -2,33 +2,33 @@
     <p class="content notification has-background-warning-light warning-border">Complete this section to write the emails that will be sent to nominators and nominees when a nomination is completed.  <i class="fa-sharp fa-solid fa-star has-text-danger"></i> NOTE: GMAIL and some other web-based email clients strip HTML tags (e.g. Paragraph), so your email may not look exactly as you type it here. </p>
 
 <!-- NOTIFICATION TO NOMINATOR-->
-    <include href="views/settings/formTemplates/emailSettingsNotificationComponent.htm" with="additionalClasses='has-background-warning-light warning-border', notificationText='This email is to inform the nominator that their nomination has been received. We\'ll provide all the necessary details regarding the nomination.'" />
-    <include href="views/settings/formTemplates/emailSettingsTextareaComponent.htm" with="fieldId='nominator-summary-email', fieldName='nominator_summary_email', fieldLabel='Notification to the Nominator', modalTarget='nominatorEmailHint', tabIndex=1, fieldValue={{@award.nominator_summary_email}}" />
+    <include href="settings/formTemplates/emailSettingsNotificationComponent.htm" with="additionalClasses='has-background-warning-light warning-border', notificationText='This email is to inform the nominator that their nomination has been received. We\'ll provide all the necessary details regarding the nomination.'" />
+    <include href="settings/formTemplates/emailSettingsTextareaComponent.htm" with="fieldId='nominator-summary-email', fieldName='nominator_summary_email', fieldLabel='Notification to the Nominator', modalTarget='nominatorEmailHint', tabIndex=1, fieldValue={{@award.nominator_summary_email}}" />
 
 <!-- NOTIFICATION TO NOMINATOR ABOUT SELF NOMINATION-->
     <check if="{{ @award.self_nominate }}">
-        <include href="views/settings/formTemplates/emailSettingsNotificationComponent.htm" with="additionalClasses='has-background-warning-light warning-border', notificationText='You have chosed to allow users (nominators) to nominate themselves. This email is to inform the nominator that their self nomination has been received. We\'ll provide all the necessary details regarding the nomination.'" />
-        <include href="views/settings/formTemplates/emailSettingsTextareaComponent.htm" with="fieldId='nominator-self-nominated-summary-email', fieldName='nominator_self_nominated_summary_email', fieldLabel='Notification to the Self Nominated Nominator', modalTarget='nominatorSelfNominatedEmailHint', tabIndex=2, fieldValue={{@award.nominator_self_nominated_summary_email}}" />
+        <include href="settings/formTemplates/emailSettingsNotificationComponent.htm" with="additionalClasses='has-background-warning-light warning-border', notificationText='You have chosed to allow users (nominators) to nominate themselves. This email is to inform the nominator that their self nomination has been received. We\'ll provide all the necessary details regarding the nomination.'" />
+        <include href="settings/formTemplates/emailSettingsTextareaComponent.htm" with="fieldId='nominator-self-nominated-summary-email', fieldName='nominator_self_nominated_summary_email', fieldLabel='Notification to the Self Nominated Nominator', modalTarget='nominatorSelfNominatedEmailHint', tabIndex=2, fieldValue={{@award.nominator_self_nominated_summary_email}}" />
     </check>
 
 <!-- NOTIFICATION TO NOMINEE-->
     <check if="{{!@award.require_nominee}}">
         <check if="{{ @award.nominee_view_nominator }} && {{ !@award.notify_nominee }}">
             <true>
-                <include href="views/settings/formTemplates/emailSettingsNotificationComponent.htm" with="additionalClasses='has-background-warning-light warning-border', notificationText='You have chosen to notify the nominee when they have been nominated in the Nominator/Nominee settings section and to reveal the name of the person who nominated them. This email will notify the nominee that they have been nominated. We\'ll look after providing all the necessary details regarding the nomination.'" />
+                <include href="settings/formTemplates/emailSettingsNotificationComponent.htm" with="additionalClasses='has-background-warning-light warning-border', notificationText='You have chosen to notify the nominee when they have been nominated in the Nominator/Nominee settings section and to reveal the name of the person who nominated them. This email will notify the nominee that they have been nominated. We\'ll look after providing all the necessary details regarding the nomination.'" />
 
             </true>
             <false>
-                <include href="views/settings/formTemplates/emailSettingsNotificationComponent.htm" with="additionalClasses='has-background-warning-light warning-border', notificationText='This email will inform the nominee that they have been nominated. We\'ll provide all the necessary details regarding the nomination.'" />
+                <include href="settings/formTemplates/emailSettingsNotificationComponent.htm" with="additionalClasses='has-background-warning-light warning-border', notificationText='This email will inform the nominee that they have been nominated. We\'ll provide all the necessary details regarding the nomination.'" />
             </false>
         </check>
-        <include href="views/settings/formTemplates/emailSettingsTextareaComponent.htm" with="fieldId='nominee-summary-email', fieldName='nominee_summary_email', fieldLabel='Notification to the Nominee', modalTarget='nomineeNominatedHint', tabIndex=2, fieldValue={{@award.nominee_summary_email}}" />
+        <include href="settings/formTemplates/emailSettingsTextareaComponent.htm" with="fieldId='nominee-summary-email', fieldName='nominee_summary_email', fieldLabel='Notification to the Nominee', modalTarget='nomineeNominatedHint', tabIndex=2, fieldValue={{@award.nominee_summary_email}}" />
     </check>
 
 <!--    NOTIFICATION TO NOMINEE TO SELF NOMINATE    -->
     <check if="{{@award.require_nominee}}">
-        <include href="views/settings/formTemplates/emailSettingsNotificationComponent.htm" with="additionalClasses='has-background-warning-light warning-border', notificationText='You have chosen to require nominees to submit information about themselves in the Nominator/Nominee setting section. The email should mention that the nominee has been nominated and must provide information about themself. This application will provide information regarding the nomination category as well as a link to the nomination.'" />
-        <include href="views/settings/formTemplates/emailSettingsTextareaComponent.htm" with="fieldId='nominee-required-email', fieldName='nominator_self_nominated_summary_email', fieldLabel='Notification to Nominee to Self Nominate', modalTarget='nominatorSelfNominatedEmailHint', tabIndex=3, fieldValue={{@award.nominator_self_nominated_summary_email}}" />
+        <include href="settings/formTemplates/emailSettingsNotificationComponent.htm" with="additionalClasses='has-background-warning-light warning-border', notificationText='You have chosen to require nominees to submit information about themselves in the Nominator/Nominee setting section. The email should mention that the nominee has been nominated and must provide information about themself. This application will provide information regarding the nomination category as well as a link to the nomination.'" />
+        <include href="settings/formTemplates/emailSettingsTextareaComponent.htm" with="fieldId='nominee-required-email', fieldName='nominator_self_nominated_summary_email', fieldLabel='Notification to Nominee to Self Nominate', modalTarget='nominatorSelfNominatedEmailHint', tabIndex=3, fieldValue={{@award.nominator_self_nominated_summary_email}}" />
     </check>
 
 </div>

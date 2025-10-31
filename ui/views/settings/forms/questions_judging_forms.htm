@@ -9,7 +9,7 @@
     <input type="hidden" name="questionSlug" value="{{ isset(@SESSION.questionSlug) ? @SESSION.questionSlug : '' }}"  readonly/>
     <input type="hidden" name="type" value="{{ isset(@type) ? @type : '' }}"  readonly/>
 
-    <include href="/views/settings/forms/judges_form.htm" />
+    <include href="settings/forms/judges_form.htm" />
 
     <p class="content has-text-weight-semibold is-size-5 mt-5">Questions</p>
     <p class="content">
@@ -28,11 +28,11 @@
     </div>
     <div id="tab-content" class="column content">
         <div class="wrapper {{ @active_tab == 'numeric' ? 'is-active' : '' }}" data-content="numeric">
-            <include href="/views/settings/forms/numeric_evaluation_form.htm" />
-            <include href="/views/settings/forms/rubric_form.htm" />
+            <include href="settings/forms/numeric_evaluation_form.htm" />
+            <include href="settings/forms/rubric_form.htm" />
         </div>
         <div class="wrapper {{ @active_tab == 'open' ? 'is-active' : '' }}" data-content="open">
-            <include href="/views/settings/forms/open_ended_evaluation_form.htm" />
+            <include href="settings/forms/open_ended_evaluation_form.htm" />
         </div>
     </div>
     <div class="field">

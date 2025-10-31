@@ -3,7 +3,7 @@
         <form action="/app/{{ @SESSION.awardSlug}}/{{ @setting }}/{{ @PAGE_TITLE }}/update" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="date_edited" value="{{@award.date_edited}}">
             <input type="hidden" name="token" value="{{ @SESSION.csrf_token }}">
-            <include href="{{'views/settings/forms/'.@form }}" />
+            <include href="{{'settings/forms/'.@form }}" />
             <check if="{{ @setting == 'files' && @permit_blind_judging == 'on' }}">
                 <true>
                 </true>

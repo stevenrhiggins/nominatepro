@@ -12,6 +12,7 @@ use App\Services\DashboardService;
 use App\Services\SessionManager;
 use App\Support\renderHtml;
 use Base;
+use Template;
 
 class DashboardController
 {
@@ -19,15 +20,14 @@ class DashboardController
     private AuthService $auth;
     private SessionInterface $session;      // contract
     private ControlPanelService $cpService;
-    private RendererInterface $renderer;    // contract
+    private renderHtml $renderer;    // contract
     private DashboardService $dashboardService;
 
     public function __construct(Base $f3, array $args = [], $alias = null)
     {
         $this->f3        = $f3;
-        $usersRepo   = new UserRepository($this->f3);
-        $this->renderer  = new renderHtml($f3);      // implements RendererInterface
-        $this->session   = new SessionManager($f3);  // implements SessionInterface
+        $this->session   = new SessionManager($f3);
+        $usersRepo   =      new UserRepository($f3);
         $this->auth      = new AuthService($f3, $usersRepo);
         $this->cpService = new ControlPanelService($f3);
         $this->dashboardService = new DashboardService($f3);
@@ -56,12 +56,8 @@ class DashboardController
         $metrics = $this->dashboardService->getAwardMetricsForCpSlug($cpSlug);
         $this->f3->set('all_awards',  $metrics['total']  ?? 0);
         $this->f3->set('active_awards', $metrics['active'] ?? 0);
-
-        $this->renderer->render(
-            'views/control_panel/dashboard.htm',
-            'views/settings/layout.htm',
-            [
-            'PAGE_TITLE' => 'Dashboard',
-        ]);
+        $this->f3->set('PAGE_TITLE', 'Dashboard');
+        $this->f3->set('content', 'control_panel/dashboard.htm');
+        echo Template::instance()->render('settings/layout.htm');
     }
 }

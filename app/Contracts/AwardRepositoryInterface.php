@@ -70,6 +70,7 @@ interface AwardRepositoryInterface
     public function updateNominationDates(string $awardSlug, string $startDate, string $endDate): void;
 
     public function validateAccessTokenQuery(string $awardSlug, string $accessToken): void;
+    public function validateRegistrationTokenQuery(string $awardSlug, string $code, string $email): bool;
 
     // ------------------------ Persistence ------------------------
 

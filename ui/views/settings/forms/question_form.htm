@@ -120,20 +120,20 @@
                 </false>
             </check>
             <!--DISPLAY QUESTION-->
-            <include href="views/settings/formTemplates/checkboxes.htm" with="fieldName=display_status, fieldValue=on, dataValue={{!empty(@question.display_status)}}, tabindex=4, description={{@display_question}}" />
+            <include href="settings/formTemplates/checkboxes.htm" with="fieldName=display_status, fieldValue=on, dataValue={{!empty(@question.display_status)}}, tabindex=4, description={{@display_question}}" />
             <!--REQUIRE RESPONSE-->
-            <include href="views/settings/formTemplates/checkboxes.htm" with="fieldName=required, fieldValue=on, dataValue={{!empty(@question.required)}}, tabindex=5, description={{@require_response}}" />
+            <include href="settings/formTemplates/checkboxes.htm" with="fieldName=required, fieldValue=on, dataValue={{!empty(@question.required)}}, tabindex=5, description={{@require_response}}" />
 
             <p class="has-text-weight-semibold">{{@select_form_element}}</p>
 
             <!--    TEXTAREA-->
-            <include href="views/settings/formTemplates/radioButtons.htm" with="fieldId=checktextarea, fieldName=input_type, 'radioValue=textarea, fieldValue={{isset(@question.input_type) ? @question.input_type : ''}}, tabindex=6, description={{@textarea_description}}" />
+            <include href="settings/formTemplates/radioButtons.htm" with="fieldId=checktextarea, fieldName=input_type, 'radioValue=textarea, fieldValue={{isset(@question.input_type) ? @question.input_type : ''}}, tabindex=6, description={{@textarea_description}}" />
 
             <!--    TEXT-->
-            <include href="views/settings/formTemplates/radioButtons.htm" with="fieldId=checktext, fieldName=input_type, radioValue=text, fieldValue={{isset(@question.input_type) ? @question.input_type : ''}}, tabindex=7, description={{@text_description}}" />
+            <include href="settings/formTemplates/radioButtons.htm" with="fieldId=checktext, fieldName=input_type, radioValue=text, fieldValue={{isset(@question.input_type) ? @question.input_type : ''}}, tabindex=7, description={{@text_description}}" />
 
             <!--   CHECKBOX-->
-            <include href="views/settings/formTemplates/radioButtons.htm" with="fieldId=checkbox, fieldName=input_type, radioValue=checkbox, fieldValue={{isset(@question.input_type) ? @question.input_type : ''}}, tabindex=8, description={{@checkbox_description}}" />
+            <include href="settings/formTemplates/radioButtons.htm" with="fieldId=checkbox, fieldName=input_type, radioValue=checkbox, fieldValue={{isset(@question.input_type) ? @question.input_type : ''}}, tabindex=8, description={{@checkbox_description}}" />
             <check if="{{!empty(@question.checkbox_values)}}">
                 <true>
                     <div id="checkbox-options">
@@ -160,7 +160,7 @@
             </div>
 
             <!--    RADIO-->
-            <include href="views/settings/formTemplates/radioButtons.htm" with="fieldId=radio, fieldName=input_type, radioValue=radio, fieldValue={{isset(@question.input_type) ? @question.input_type : ''}},  tabindex=9, description={{@radio_description}}" />
+            <include href="settings/formTemplates/radioButtons.htm" with="fieldId=radio, fieldName=input_type, radioValue=radio, fieldValue={{isset(@question.input_type) ? @question.input_type : ''}},  tabindex=9, description={{@radio_description}}" />
             <check if="{{!empty(@question.radio_values)}}">
                 <true>
                     <div id="radio-options">
@@ -186,13 +186,13 @@
                 </div>
 
             <!--    DATE-->
-            <include href="views/settings/formTemplates/radioButtons.htm" with="fieldId=checkdate, fieldName=input_type, fieldValue={{isset(@question.input_type) ? @question.input_type : ''}}, radioValue=date, tabindex=10, description={{@date_description}}" />
+            <include href="settings/formTemplates/radioButtons.htm" with="fieldId=checkdate, fieldName=input_type, fieldValue={{isset(@question.input_type) ? @question.input_type : ''}}, radioValue=date, tabindex=10, description={{@date_description}}" />
 
             <!--    NUMBER-->
-            <include href="views/settings/formTemplates/radioButtons.htm" with="fieldId=checknumber, fieldName=input_type, fieldValue={{isset(@question.input_type) ? @question.input_type : ''}}, radioValue=number, tabindex=11, description={{@number_description}}" />
+            <include href="settings/formTemplates/radioButtons.htm" with="fieldId=checknumber, fieldName=input_type, fieldValue={{isset(@question.input_type) ? @question.input_type : ''}}, radioValue=number, tabindex=11, description={{@number_description}}" />
 
             <!--    EMAIL-->
-            <include href="views/settings/formTemplates/radioButtons.htm" with="fieldId=checkemail, fieldName=input_type, fieldValue={{isset(@question.input_type) ? @question.input_type : ''}}, radioValue=email, tabindex=12, description={{@email_description}}" />
+            <include href="settings/formTemplates/radioButtons.htm" with="fieldId=checkemail, fieldName=input_type, fieldValue={{isset(@question.input_type) ? @question.input_type : ''}}, radioValue=email, tabindex=12, description={{@email_description}}" />
             <hr>
 
             <div class="field">

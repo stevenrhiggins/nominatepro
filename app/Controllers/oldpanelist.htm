@@ -1,0 +1,79 @@
+<?php
+/**
+ * Template part for displaying the event panelists
+ *
+ * @package ippa
+ */
+
+// Bail if nothing to show
+if ( empty($panelists) || !is_iterable($panelists) ) {
+    return;
+}
+?>
+
+<div class="column is-9 is-offset-3">
+    <p class="is-size-5 has-text-weight-bold" style="border-bottom: 1px solid black; padding-bottom: 1rem">Panelists</p>
+    <?php foreach ($panelists as $panelist):
+	echo $panelist->biography;
+    // ACF image field may return array|false; guard it
+    $photo   = get_field('image', $panelist->ID);
+    $img_url = is_array($photo) && !empty($photo['url']) ? esc_url($photo['url']) : '';
+    $id      = (int) $panelist->ID;
+
+    // Safely prepare fields
+    $name    = isset($panelist->name) ? esc_html($panelist->name) : '';
+    $title   = !empty($panelist->title)   ? esc_html($panelist->title)   : '';
+    $company = !empty($panelist->company) ? esc_html($panelist->company) : '';
+    $email   = !empty($panelist->email)   ? sanitize_email($panelist->email) : '';
+    $website = !empty($panelist->website) ? esc_url($panelist->website)  : '';
+    $excerpt = !empty($panelist->excerpt) ? wp_kses_post($panelist->excerpt) : '';
+    $bio     = !empty($panelist->biography) ? wp_kses_post($panelist->biography) : '';
+    ?>
+    <div class="box fellows-box">
+        <article class="media">
+            <div class="media-content">
+                <div class="content">
+                    <?php if ($img_url): ?>
+                    <div class="media-left" style="float: left;">
+                        <figure class="image margins">
+                            <img src="<?= $img_url ?>" alt=""  style="width: 200px; aspect-ratio: 1 / 1; object-fit: cover; float: left; padding-right: 20px">
+                        </figure>
+                    </div>
+                    <?php endif; ?>
+
+                    <p>
+                        <span class="has-text-weight-bold"><?= $name ?></span>
+                        <?php if ($title):   ?><br><?= $title ?><?php endif; ?>
+                        <?php if ($company): ?><br><?= $company ?><?php endif; ?>
+                        <?php if ($email):   ?><br><a href="mailto:<?= esc_attr($email) ?>"><?= esc_html($email) ?></a><?php endif; ?>
+                        <?php if ($website): ?><br><a href="<?= $website ?>" target="_blank" rel="noopener"><?= esc_html($website) ?></a><?php endif; ?>
+                    </p>
+                </div>
+                <div style="margin-top:30px">
+                    <p class='content has-text-black'>
+                        <?php if ($excerpt): ?><br><?= $excerpt ?><?php endif; ?>
+                    </p>
+                    <?php if ($bio): ?><br><?= $bio ?><?php endif; ?>
+
+
+                    <!--                         <section class="accordions">
+                                                <article class="accordion">
+                                                    <div class="accordion-header toggle">
+                                                        <p onclick="toggleMore(<?= $id ?>)">
+                                                            <?= $excerpt ?>
+                                                            <span class="has-text-weight-medium ml-1 is-underlined more-link"
+                                                                  aria-label="click here to learn more about <?= esc_attr($name) ?>"
+                                                                  id="toggle_<?= $id ?>">More</span>
+                                                        </p>
+                                                    </div>
+                                                    <div class="accordion-body">
+                                                            <?= $bio ?>
+                                                    </div>
+                                                </article>
+                                            </section> -->
+                </div>
+            </div>
+        </article>
+    </div>
+    <?php endforeach; ?>
+</div>

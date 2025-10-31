@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
-use App\Contracts\RendererInterface;
 use App\Contracts\SessionInterface;
 use App\Http\CsrfGuard;
 use App\Repositories\UserRepository;
@@ -21,16 +20,19 @@ class LoginController
     private AuthService $auth;
     private SessionInterface $session;      // contract
     private ControlPanelService $cpService;
-    private RendererInterface $renderer;    // contract
+    private renderHtml $renderer;    // contract
 
     // F3-friendly signature; instantiate concretes that IMPLEMENT the contracts
     public function __construct(Base $f3, array $args = [], $alias = null)
     {
         $this->f3        = $f3;
-        $usersRepo   = new UserRepository($this->f3);
-        $this->renderer  = new renderHtml($f3);      // implements RendererInterface
-        $this->session   = new SessionManager($f3);  // implements SessionInterface
-        $this->auth = new AuthService($f3, $usersRepo);
+        $users = new UserRepository($f3);
+        $this->auth = new AuthService($f3, $users);
+
+        $this->renderer  = new renderHtml($f3);
+        $this->session   = new SessionManager($f3);
+        $users = new UserRepository($f3);
+        $this->auth  = new AuthService($f3, $users);
         $this->cpService = new ControlPanelService($f3);
     }
 
@@ -41,13 +43,13 @@ class LoginController
         $controller = $params['controller'] ?? 'organization';
         $view = $this->viewFor($controller);
         CsrfGuard::issueToken($f3);
-        $this->renderer->render($view, 'views/login/login_layout.htm', ['login' => true]);
+        $this->renderer->render($view, 'login/login_layout.htm', ['login' => true]);
         $this->session->unset('message');
     }
 
     public function resetPassword(Base $f3, array $params): void
     {
-        $this->renderer->render($view, 'views/login/login_layout.htm', ['login' => true]);
+        $this->renderer->render($view, 'login/login_layout.htm', ['login' => true]);
         $this->session->unset('message');
     }
 
@@ -67,7 +69,7 @@ class LoginController
         $result = $this->auth->validateCredentials($post['username'], $post['password'], $controller);
         if (!$result->ok) {
             Flash::instance()->addMessage('It looks like either the username or password is incorrect.', 'danger');
-            $this->renderer->render('views/login/cp_login.htm', 'views/login/login_layout.htm');
+            $this->renderer->render('login/cp_login.htm', 'login/login_layout.htm');
             //$f3->reroute('/login/'.$controller.'/index');
         }
 
@@ -102,10 +104,10 @@ class LoginController
     private function viewFor(string $controller): string
     {
         return match ($controller) {
-            'cp'           => 'views/login/cp_login.htm',
-            'organization' => 'views/login/organization_login.htm',
-            'judges'       => 'views/login/judges_login.htm',
-            default        => 'views/login/organization_login.htm',
+            'cp'           => 'login/cp_login.htm',
+            'organization' => 'login/organization_login.htm',
+            'judges'       => 'login/judges_login.htm',
+            default        => 'login/organization_login.htm',
         };
     }
 

@@ -148,8 +148,8 @@ final class AwardsService
 
         $today = date('Y-m-d');
         $dates = $this->awards->fetchNominationDatesBySlug($awardSlug);
-
         $metrics['nomination_is_active'] = false;
+
         if ($dates && !empty($dates['nomination_start_date']) && !empty($dates['nomination_end_date'])) {
             $metrics['nomination_is_active'] =
                 ($dates['nomination_start_date'] <= $today && $dates['nomination_end_date'] >= $today);
@@ -276,8 +276,13 @@ final class AwardsService
         $this->awards->save($award);
     }
 
-    public function validateAccessToken($awardSlug, $submitted)
+    public function validateAccessToken($awardSlug, $submitted): void
     {
+        $this->awards->validateAccessTokenQuery($awardSlug, $submitted);
+    }
 
+    public function validateRegisrationToken($awardSlug, $token, $email): void
+    {
+        $this->awards->validateRegistrationTokenQuery($awardSlug, $token, $email);
     }
 }

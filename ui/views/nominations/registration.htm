@@ -1,64 +1,44 @@
-<section class="section">
-    <div class="container">
-        <div class="columns is-centered">
-            <div class="column is-8">
+<section class="section py-5">
+    <div class="container is-max-desktop is-5">
+        <h1 class="title is-4 has-text-weight-semibold mb-4">Please Register</h1>
+        <p class="subtitle is-5 has-text-grey mb-5">Enter your email to receive a verification code.</p>
+        <ul style="list-style: disc; margin-left: 1.5em;">
+            <li>If this is your <strong>first visit</strong>, enter your email address below, and we'll get you started.</li>
+            <li>We track your progress, so that if you are unable to the complete your nomination in one sitting just enter your email address below, and we'll return you to where you left off.</li>
+        </ul>
 
-                <h1 class="subtitle has-text-weight-semibold is-4">Registration</h1>
+        <check if="{{ isset(@notice) }}">
+            <div class="notification is-info is-light">{{ @notice }}</div>
+        </check>
 
-                <div class="content">
-                    <ul>
-                        <li>
-                            If this <strong>is your first visit</strong>, enter your email address below and we'll get you started.
-                            <strong>Please note</strong>, we will track your progress through the nomination. If you can’t finish in one sitting, we’ll return you to where you left off.
-                        </li>
-                        <li>
-                            If this <strong>is not your first visit</strong>, we’ve recorded your progress. Enter your email address below and we’ll take you back to where you left off.
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Notices -->
-                <check if="{{ isset(@notice) }}">
-                    <div class="notification is-success" role="status" aria-live="polite">{{ @notice }}</div>
-                </check>
-
-                <check if="{{ isset(@errors) }}">
-                    <div class="notification is-danger" role="alert" aria-live="assertive">
-                        <repeat group="{{ @errors }}" value="{{ @err }}"><p>{{ @err }}</p></repeat>
-                    </div>
-                </check>
-
-                <!-- Form -->
-                <form method="post" action="">
-                    <input type="hidden" name="csrf_token" value="{{ @SESSION.csrf_token }}">
-
-                    <div class="field">
-                        <label class="label" for="email">Email address</label>
-                        <div class="control">
-                            <input
-                                    class="input"
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                    required
-                                    autocomplete="email"
-                                    inputmode="email"
-                                    spellcheck="false"
-                                    placeholder="you@example.com"
-                                    autofocus
-                            >
-                        </div>
-                        <p class="help">We’ll email you a secure link to continue.</p>
-                    </div>
-
-                    <div class="field is-grouped is-grouped-right">
-                        <div class="control">
-                            <button class="button is-primary" type="submit">Send me the link</button>
-                        </div>
-                    </div>
-                </form>
-
+        <check if="{{ isset(@errors) }}">
+            <div class="notification is-danger is-light">
+                <repeat group="{{ @errors }}" value="{{ @e }}">{{ @e }}<br></repeat>
             </div>
-        </div>
+        </check>
+
+        <form action="/app/nomination/{{ @award.award_slug }}/{{ @action }}/registration" method="post" novalidate>
+            <input type="hidden" name="csrf_token" value="{{ @SESSION.csrf_token }}">
+            <div class="field">
+                <label class="label">Email</label>
+                <div class="control has-icons-left">
+                    <input class="input"
+                           type="email"
+                           name="email"
+                           value=""
+                           placeholder="you@example.com"
+                           required>
+                    <span class="icon is-small is-left"><i class="fas fa-envelope" aria-hidden="true"></i></span>
+                </div>
+                <p class="help">We’ll email you a 6-digit code to continue.</p>
+            </div>
+
+            <div class="field mt-5">
+                <button class="button is-primary" type="submit">
+                    <span class="icon"><i class="fas fa-paper-plane"></i></span>
+                    <span>Send code</span>
+                </button>
+            </div>
+        </form>
     </div>
 </section>

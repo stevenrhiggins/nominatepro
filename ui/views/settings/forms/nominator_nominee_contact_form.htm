@@ -8,13 +8,13 @@
             <input type="hidden" name="update" value="{{ isset(@update) }}">
             <div class="column is-12 content">
                 <!-- PREFIX -->
-            <include href="views/settings/formTemplates/checkboxes.htm" with="
+            <include href="settings/formTemplates/checkboxes.htm" with="
                 fieldName=prefix,
                 fieldValue=1,
                 dataValue={{ isset(@data.prefix) && @data.prefix == 1 }},
                 tabindex=1,
                 description=Check to ask for a prefix" />
-                        <include href="views/settings/formTemplates/checkboxes.htm" with="
+                        <include href="settings/formTemplates/checkboxes.htm" with="
                 fieldName=prefix_required,
                 fieldValue=1,
                 dataValue={{ isset(@data.prefix_required) && @data.prefix_required == 1 }},
@@ -23,13 +23,13 @@
                 <hr>
 
             <!-- SUFFIX -->
-            <include href="views/settings/formTemplates/checkboxes.htm" with="
+            <include href="settings/formTemplates/checkboxes.htm" with="
                 fieldName=suffix,
                 fieldValue=1,
                 dataValue={{ isset(@data.suffix) && @data.suffix == 1 }},
                 tabindex=3,
                 description=Check to ask for a suffix" />
-                        <include href="views/settings/formTemplates/checkboxes.htm" with="
+                        <include href="settings/formTemplates/checkboxes.htm" with="
                 fieldName=suffix_required,
                 fieldValue=1,
                 dataValue={{ isset(@data.suffix_required) && @data.suffix_required == 1 }},
@@ -38,13 +38,13 @@
                 <hr>
 
             <!-- BUSINESS NAME -->
-            <include href="views/settings/formTemplates/checkboxes.htm" with="
+            <include href="settings/formTemplates/checkboxes.htm" with="
                 fieldName=business_name,
                 fieldValue=1,
                 dataValue={{ isset(@data.business_name) && @data.business_name == 1 }},
                 tabindex=5,
                 description='Check to ask for a business | association | organization | etc. name'" />
-                <include href="views/settings/formTemplates/checkboxes.htm" with="
+                <include href="settings/formTemplates/checkboxes.htm" with="
                 fieldName=business_name_required,
                 fieldValue=1,
                 dataValue={{ isset(@data.business_name_required) && @data.business_name_required == 1 }},
@@ -53,13 +53,13 @@
                 <hr>
 
             <!-- TITLE -->
-            <include href="views/settings/formTemplates/checkboxes.htm" with="
+            <include href="settings/formTemplates/checkboxes.htm" with="
                 fieldName=title,
                 fieldValue=1,
                 dataValue={{ isset(@data.title) && @data.title == 1 }},
                 tabindex=7,
                 description=Check to ask for a position or title" />
-            <include href="views/settings/formTemplates/checkboxes.htm" with="
+            <include href="settings/formTemplates/checkboxes.htm" with="
                 fieldName=title_required,
                 fieldValue=1,
                 dataValue={{ isset(@data.title_required) && @data.title_required == 1 }},
@@ -68,13 +68,13 @@
                 <hr>
 
             <!-- ADDRESS -->
-            <include href="views/settings/formTemplates/checkboxes.htm" with="
+            <include href="settings/formTemplates/checkboxes.htm" with="
                 fieldName=address,
                 fieldValue=1,
                 dataValue={{ isset(@data.address) && @data.address == 1 }},
                 tabindex=9,
                 description=Check to ask for the full address" />
-            <include href="views/settings/formTemplates/checkboxes.htm" with="
+            <include href="settings/formTemplates/checkboxes.htm" with="
                     fieldName=address_required,
                     fieldValue=1,
                     dataValue={{ isset(@data.address_required) && @data.address_required == 1 }},
@@ -83,13 +83,13 @@
                 <hr>
 
                 <!-- PHONE -->
-                <include href="views/settings/formTemplates/checkboxes.htm" with="
+                <include href="settings/formTemplates/checkboxes.htm" with="
                     fieldName=phone,
                     fieldValue=1,
                     dataValue={{ isset(@data.phone) && @data.phone == 1 }},
                     tabindex=11,
                     description=Check to ask for a phone number" />
-                <include href="views/settings/formTemplates/checkboxes.htm" with="
+                <include href="settings/formTemplates/checkboxes.htm" with="
                     fieldName=phone_required,
                     fieldValue=1,
                     dataValue={{ isset(@data.phone_required) && @data.phone_required == 1 }},
@@ -98,13 +98,13 @@
                 <hr>
 
                 <!-- ALTERNATE PHONE -->
-                <include href="views/settings/formTemplates/checkboxes.htm" with="
+                <include href="settings/formTemplates/checkboxes.htm" with="
                     fieldName=alternate,
                     fieldValue=1,
                     dataValue={{ isset(@data.alternate) && @data.alternate == 1 }},
                     tabindex=13,
                     description=Check to ask for an alternate phone number" />
-                <include href="views/settings/formTemplates/checkboxes.htm" with="
+                <include href="settings/formTemplates/checkboxes.htm" with="
                     fieldName=alternate_required,
                     fieldValue=1,
                     dataValue={{ isset(@data.alternate_required) && @data.alternate_required == 1 }},
@@ -113,7 +113,7 @@
 
                 <check if="{{ @nominator_nominee == 'nominator' }}">
                     <hr>
-                    <include href="views/settings/formTemplates/checkboxes.htm" with="
+                    <include href="settings/formTemplates/checkboxes.htm" with="
                         fieldName=relationship,
                         fieldValue=1,
                         dataValue={{ isset(@data.relationship) && @data.relationship == 1 }},
@@ -130,7 +130,7 @@
                         </div>
                     </div>
 
-                    <include href="views/settings/formTemplates/checkboxes.htm" with="
+                    <include href="settings/formTemplates/checkboxes.htm" with="
                         fieldName=relationship_required,
                         fieldValue=1,
                         dataValue={{ isset(@data.relationship_required) && @data.relationship_required == 1 }},

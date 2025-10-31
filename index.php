@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+date_default_timezone_set('America/Toronto');
+
 $DEBUG = getenv('APP_DEBUG') === '1';
 ini_set('display_errors', $DEBUG ? '1' : '0');
 error_reporting($DEBUG ? E_ALL : 0);
@@ -61,11 +63,15 @@ try {
         $f3->get('DB_PORT') ?: '3306',
         $f3->get('DB_NAME')
     );
+
     $f3->set('DB', new \DB\SQL($dsn, $f3->get('DB_USERNAME'), $f3->get('DB_PASSWORD'), [
-        \PDO::ATTR_ERRMODE           => \PDO::ERRMODE_EXCEPTION,
-        \PDO::ATTR_EMULATE_PREPARES  => false,
-        \PDO::ATTR_STRINGIFY_FETCHES => false,
+        \PDO::ATTR_ERRMODE              => \PDO::ERRMODE_EXCEPTION,
+        \PDO::ATTR_EMULATE_PREPARES     => false,
+        \PDO::ATTR_STRINGIFY_FETCHES    => false,
+        \PDO::MYSQL_ATTR_INIT_COMMAND   => "SET time_zone='America/New_York'", // <-- key line
     ]));
+
+    $f3->get('DB')->exec("SET time_zone = 'America/New_York'");
 } catch (\Throwable $e) {
     if ($DEBUG) {
         header('Content-Type: text/plain; charset=UTF-8');
@@ -78,6 +84,7 @@ try {
     exit;
 }
 
+
 /* Cache: memcache with safe folder fallback */
 try { $f3->set('CACHE', 'memcache=localhost'); }
 catch (\Throwable $e) {
@@ -86,21 +93,11 @@ catch (\Throwable $e) {
     $f3->set('CACHE', 'folder='.$dir.'/');
 }
 
-/* Timezone */
-date_default_timezone_set('America/New_York');
-
 /* Optional: also load your existing route files if present */
 foreach ([
-             '/config/auth_routes.ini',
-             '/config/reset_password_routes.ini',
-             '/config/registration_routes.ini',
-             '/config/nomination_routes.ini',
-             '/config/organization_routes.ini',
-             '/config/tickets_routes.ini',
-             '/config/xhttp_routes.ini',
-             '/config/settings_routes.ini',
-             '/config/administration_routes.ini',
-             '/config/judging_routes.ini',
+             '/config/routes.admin.ini',
+             '/config/routes.nomination.ini',
+             '/config/routes.settings.ini',
          ] as $rel) {
     $file = $ROOT.$rel;
     if (is_file($file)) $f3->config($file);

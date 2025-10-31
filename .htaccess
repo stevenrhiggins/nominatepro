@@ -29,9 +29,50 @@ RewriteEngine On
 #RewriteRule .* index.php [L,QSA]
 #RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
 
+#THIS IS THE ORIGINAL
+#RewriteEngine On
+#RewriteBase /
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+#RewriteRule ^ index.php [QSA,L]
+
 RewriteEngine On
-RewriteBase /
+
+### SETTINGS
+# when hitting https://settings.nominatepro.com/ (empty path)
+RewriteCond %{HTTP_HOST} ^settings\.nominatepro\.com$ [NC]
+RewriteRule ^$ index.settings.php [L]
+
+# for any other path that isn't a real file/dir, route to settings index
+RewriteCond %{HTTP_HOST} ^settings\.nominatepro\.com$ [NC]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^ index.php [QSA,L]
+RewriteRule ^(?!index\.settings\.php$).*$ index.settings.php [L]
+
+### NOMINATIONS
+RewriteCond %{HTTP_HOST} ^nominations\.nominatepro\.com$ [NC]
+RewriteRule ^$ index.nominations.php [L]
+
+RewriteCond %{HTTP_HOST} ^nominations\.nominatepro\.com$ [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(?!index\.nominations\.php$).*$ index.nominations.php [L]
+
+### ADMIN
+RewriteCond %{HTTP_HOST} ^admin\.nominatepro\.com$ [NC]
+RewriteRule ^$ index.admin.php [L]
+
+RewriteCond %{HTTP_HOST} ^admin\.nominatepro\.com$ [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(?!index\.admin\.php$).*$ index.admin.php [L]
+
+### DEFAULT (root domain or anything else)
+# serve existing files/folders
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+# otherwise fall back to your original index.php
+RewriteRule ^.*$ index.php [L]
+
 

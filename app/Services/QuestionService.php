@@ -76,7 +76,7 @@ class QuestionService
 
     public function deleteQuestion (string $questionSlug): int
     {
-        return $this->repo->delete($questionSlug);
+        return $this->repo->deleteQuestion($questionSlug);
     }
 
     public function deleteSection (string $sectionSlug): int

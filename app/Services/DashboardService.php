@@ -13,10 +13,10 @@ final class DashboardService
 
     public function __construct(
         private Base $f3,
-        ?AwardRepositoryInterface $awards = null   // allow DI or fallback
+        AwardRepositoryInterface $awards = null   // allow DI or fallback
     ) {
         // Fallback to concrete repo if none injected
-        $this->awards = $awards ?? new AwardRepository($this->f3);
+        $this->awards = $awards ?? new AwardRepository($f3);
     }
 
     public function getAwardMetricsForCpSlug(?string $cpSlug): array

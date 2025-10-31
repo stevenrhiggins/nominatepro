@@ -21,7 +21,7 @@
             <tbody>
                 <repeat group="{{@awards}}" value="{{@award}}">
                     <tr>
-                        <td><a href="/app/settings/{{ @award.award_slug }}/award_details/Award Details/singleAward">{{ @award.award_name }}</a></td>
+                        <td><a href="/app/{{ @award.award_slug }}/award_details/Award Details/singleAward">{{ @award.award_name }}</a></td>
                         <td>{{ @award.nomination_count }}</td>
                         <td>{{ date('F j, Y', strtotime(@award.nomination_start_date)) }}</td>
                         <td>{{ date('F j, Y', strtotime(@award.nomination_end_date)) }}</td>

@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace App\Services\Auth;
 
-use Base;
+
 use App\Contracts\UserRepositoryInterface;
+use Base;
 
 class AuthResult
 {

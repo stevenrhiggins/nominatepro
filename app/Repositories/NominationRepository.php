@@ -21,6 +21,12 @@ class NominationRepository
         return $rows ? $rows[0] : null;
     }
 
+    public function slugExists(string $slug): bool
+    {
+        $row = $this->db->exec('SELECT 1 FROM nominations WHERE slug=? LIMIT 1', [$slug]);
+        return !empty($row);
+    }
+
     public function findLatestCompletedByAwardAndEmail(string $awardSlug, string $email): ?array
     {
         $rows = $this->db->exec(

@@ -205,14 +205,6 @@
                                         <false>
                                             <check if="{{ !empty(@metrics.nomination_is_active) }}">
                                                 <true>
-                                                    <button
-                                                            data-target="fuModal_{{ @question.fu_slug }}"
-                                                            class="button is-small is-responsive js-modal-trigger"
-                                                    >
-                                                        View Follow Up Question
-                                                    </button>
-                                                </true>
-                                                <false>
                                                     <a
                                                             href="/app/{{ @awardSlug }}/followup/{{ @type }}/{{ @question.fu_slug }}/update"
                                                             title="Edit the follow-up question"
@@ -228,19 +220,19 @@
                                                     >
                                                         <span class="icon"><i class="fa-solid fa-trash"></i></span>
                                                     </button>
-                                                </false>
+                                                </true>
                                             </check>
                                         </false>
                                     </check>
                                 </true>
                                 <false>
-                    <span title="{{ @question.input_type == 'radio' || @question.input_type == 'checkbox'
-                      ? 'Available if you require a follow-up question.'
-                      : 'Available for checkbox or radio responses requiring a follow-up question.' }}">
-                      <span class="icon is-medium">
-                        <i class="fa-solid fa-circle-info"></i>
-                      </span>
-                    </span>
+                                    <span title="{{ @question.input_type == 'radio' || @question.input_type == 'checkbox'
+                                      ? 'Available if you require a follow-up question.'
+                                      : 'Available for checkbox or radio responses requiring a follow-up question.' }}">
+                                      <span class="icon is-medium">
+                                        <i class="fa-solid fa-circle-info"></i>
+                                      </span>
+                                    </span>
                                 </false>
                             </check>
                         </td>

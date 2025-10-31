@@ -1,0 +1,195 @@
+<section class="section py-5">
+    <div class="container is-max-desktop">
+        <h1 class="title is-4 has-text-weight-semibold mb-4">Verify your email</h1>
+        <p class="subtitle is-5 has-text-grey mb-5">
+            Enter the verification code below.</strong>.
+        </p>
+
+        <check if="{{ isset(@notice) }}">
+            <div class="notification is-info is-light">{{ @notice }}</div>
+        </check>
+
+        <check if="{{ isset(@errors) }}">
+            <div class="notification is-danger is-light">
+                <repeat group="{{ @errors }}" value="{{ @e }}">{{ @e }}<br></repeat>
+            </div>
+        </check>
+
+        <check if="{{ isset(@message) }}">
+            <div class="notification is-success is-light">{{ @message }}</div>
+        </check>
+
+        <form method="post" novalidate action="/app/nomination/{{ @award.award_slug }}/{{ @action }}/verifyToken" id="verifyForm">
+            <input type="hidden" name="csrf_token" id="csrf_token" value="{{ @SESSION.csrf_token }}">
+            <input type="hidden" name="email" value="{{ @email }}" id="email">
+            <div class="field">
+                <label class="label">Verification code</label>
+                <div class="control has-icons-left">
+                    <input
+                            class="input"
+                            type="text"
+                            name="code"
+                            id="code"
+                            inputmode="numeric"
+                            pattern="[0-9]*"
+                            minlength="4"
+                            maxlength="10"
+                            placeholder="e.g. 123456"
+                            autocomplete="one-time-code"
+                            required>
+                    <span class="icon is-small is-left">
+            <i class="fas fa-key" aria-hidden="true"></i>
+          </span>
+                </div>
+                <p class="help">Tip: you can paste the full code from your email.</p>
+            </div>
+
+            <div class="field mt-5 is-grouped">
+                <div class="control">
+                    <button class="button is-primary" type="submit">
+                        <span class="icon"><i class="fas fa-check"></i></span>
+                        <span>Continue</span>
+                    </button>
+                </div>
+
+                <!-- Notice area (reused by JS) -->
+                <div id="codeNotice" class="notification is-light is-info" style="display:none;"></div>
+
+                <button id="resendBtn" class="button is-text"
+                        data-endpoint="/app/nomination/{{ @award.award_slug }}/{{ @action }}/resend.json">
+                    <span class="icon"><i class="fas fa-rotate-right"></i></span><span>Resend code</span>
+                </button>
+
+                <div class="control">
+                    <a class="button is-text" href="/app/nomination/{{ @award.award_slug }}/{{ @action }}/registration">
+                        Use a different email
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<script>
+    // Light enhancement: allow only digits and (optional) auto-submit at 6 chars.
+    (function () {
+        var input = document.getElementById('code');
+        var form = document.getElementById('verifyForm');
+        if (!input || !form) return;
+
+        input.addEventListener('input', function () {
+            var digits = this.value.replace(/\D/g, '');
+            if (this.value !== digits) this.value = digits;
+            // Auto-submit when 6 digits entered (adjust if you use a different length)
+            if (digits.length === 6) {
+                if (form.requestSubmit) form.requestSubmit();
+                else form.submit();
+            }
+        });
+
+        // Support clean paste (digits only)
+        input.addEventListener('paste', function (e) {
+            var text = (e.clipboardData || window.clipboardData).getData('text') || '';
+            var digits = text.replace(/\D/g, '');
+            if (!digits) return;
+            e.preventDefault();
+            this.value = digits.slice(0, 10);
+            if (digits.length === 6) {
+                if (form.requestSubmit) form.requestSubmit();
+                else form.submit();
+            }
+        });
+    })();
+
+    //resend code
+    (function() {
+        const btn     = document.getElementById('resendBtn');
+        const notice  = document.getElementById('codeNotice');
+        const emailEl = document.getElementById('email');
+        const csrfEl  = document.getElementById('csrf_token');
+        let cooldownTimer = null;
+
+        function showNotice(msg, kind) {
+        // kind: 'info' | 'success' | 'warning' | 'danger'
+        notice.className = 'notification is-light is-' + (kind || 'info');
+        notice.textContent = msg;
+        notice.style.display = 'block';
+    }
+
+        function startCooldown(seconds) {
+        let remaining = seconds;
+        btn.disabled = true;
+        const original = btn.textContent;
+        btn.textContent = `Resend (${remaining})`;
+        cooldownTimer = setInterval(() => {
+        remaining--;
+        btn.textContent = `Resend (${remaining})`;
+        if (remaining <= 0) {
+        clearInterval(cooldownTimer);
+        btn.disabled = false;
+        btn.textContent = original;
+    }
+    }, 1000);
+    }
+
+        btn.addEventListener('click', async function(e) {
+        e.preventDefault();
+        if (!emailEl || !csrfEl) return;
+
+        // guard
+        if (btn.disabled) return;
+
+        const endpoint = btn.getAttribute('data-endpoint');
+        console.log(endpoint);
+        const formData = new FormData();
+        formData.append('email', emailEl.value);
+        formData.append('csrf_token', csrfEl.value);
+
+        btn.disabled = true;
+        const original = btn.textContent;
+        btn.textContent = 'Sending…';
+
+        try {
+        const res = await fetch(endpoint, {
+        method: 'POST',
+        body: formData,
+        headers: {'X-Requested-With': 'fetch'}
+    });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (res.ok && data.ok) {
+        showNotice(data.message || 'A new code was sent.', 'success');
+        // rotate CSRF if provided
+        if (data.csrf_token) csrfEl.value = data.csrf_token;
+        // start 60s cooldown to match server throttle
+        startCooldown(60);
+        return;
+    }
+
+        // handle known statuses
+        if (res.status === 429) {
+        showNotice(data.message || 'Please wait a minute before requesting another code.', 'warning');
+        startCooldown(60);
+    } else if (res.status === 419) {
+        showNotice(data.message || 'Session expired. Refresh the page and try again.', 'danger');
+    } else {
+        showNotice(data.message || 'Unable to resend code right now. Try again shortly.', 'danger');
+    }
+
+    } catch (err) {
+        showNotice('Network error. Please try again.', 'danger');
+    } finally {
+        if (!btn.disabled) return; // cooldown may have disabled it
+        // If cooldown started, keep it disabled; else restore.
+        if (!cooldownTimer) {
+        btn.disabled = false;
+        btn.textContent = original;
+    }
+        cooldownTimer = null;
+    }
+    });
+    })();
+
+
+</script>

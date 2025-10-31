@@ -1,39 +1,50 @@
-<section class="section">
-    <div class="container">
-        <div class="column is-8 is-offset-2">
-            <h1 class="subtitle">Enter Access Token</h1>
+<h1 class="title is-4 has-text-weight-semibold mb-4">Enter Access Token</h1>
+<p class="subtitle is-6 has-text-grey mb-5">
+    This award requires an access token to continue the nomination.
+</p>
 
-            <p class="content notification has-background-warning-light warning-border">
-                This award requires an access token to continue the nomination.
-            </p>
+<check if="{{ isset(@notice) }}">
+    <div class="notification is-info is-light">{{ @notice }}</div>
+</check>
 
-            <check if="{{ @errors && count(@errors) }}">
-                <div class="notification is-danger">
-                    <repeat group="{{ @errors }}" value="{{ @err }}">
-                        <p>{{ @err }}</p>
-                    </repeat>
-                </div>
-            </check>
+<check if="{{ isset(@errors) }}">
+    <div class="notification is-danger is-light">
+        <repeat group="{{ @errors }}" value="{{ @e }}">{{ @e }}<br></repeat>
+    </div>
+</check>
 
-            <form method="post" action="">
-                <input type="hidden" name="token" value="{{ @SESSION.csrf_token }}">
-                <div class="field">
-                    <label class="label" for="access_token">Access Token</label>
-                    <div class="control">
-                        <input class="input" type="text" id="access_token" name="access_token"
-                               placeholder="Enter the access token" autocomplete="one-time-code" required>
-                    </div>
-                </div>
+<form method="post" novalidate>
+    <!-- CSRF -->
+    <input type="hidden" name="csrf_token" value="{{ @SESSION.csrf_token }}">
 
-                <div class="field is-grouped">
-                    <div class="control">
-                        <button class="button is-primary" type="submit">Continue</button>
-                    </div>
-                    <div class="control">
-                        <a class="button is-light" href="/awards/{{ @award.award_slug }}">Cancel</a>
-                    </div>
-                </div>
-            </form>
+    <div class="field">
+        <label class="label" for="access_token">Access Token</label>
+        <div class="control has-icons-left">
+            <input
+                    class="input is-medium"
+                    type="text"
+                    id="access_token"
+                    name="access_token"
+                    placeholder="Enter the access token"
+                    autocomplete="one-time-code"
+                    required
+            >
+            <span class="icon is-small is-left"><i class="fas fa-key" aria-hidden="true"></i></span>
+        </div>
+        <p class="help">Paste the token you received from the organizer.</p>
+    </div>
+
+    <div class="field is-grouped is-justify-content-space-between mt-5">
+        <div class="control">
+            <button class="button is-primary" type="submit">
+                <span class="icon"><i class="fas fa-unlock"></i></span>
+                <span>Continue</span>
+            </button>
+        </div>
+        <div class="control">
+            <a class="button is-light" href="/awards/{{ @award.award_slug }}">
+                Cancel
+            </a>
         </div>
     </div>
-</section>
+</form>

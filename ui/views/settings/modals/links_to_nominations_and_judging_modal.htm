@@ -11,24 +11,24 @@
                             </check>
                             <strong>Link to LIVE Nomination/Award Forms:</strong>
                             <i class="fa-light fa-copy" onclick="copyToClipboard('liveLink')"></i>
-                            <a href="{{ @server_name }}/app/nomination/{{ @SESSION.awardSlug }}/live/begin" target="_blank" id="liveLink">
-                                {{ @server_name }}/app/nomination/{{ @SESSION.awardSlug }}/live/begin
+                            <a href="https://nominations.nominatepro.com/app/nomination/{{ @SESSION.awardSlug }}/live/begin" target="_blank" id="liveLink">
+                                https://nominations.nominatepro.com/app/nomination/{{ @SESSION.awardSlug }}/live/begin
                             </a>
                         </p>
 
                         <p class="is-size-6 content">Use the following link to <strong>test</strong> or <strong>demo</strong> the nomination forms and process.<br>
                             <strong>Link to DEMO Nomination/Award Forms:</strong>
                             <i class="fa-light fa-copy" onclick="copyToClipboard('demoLink')"></i>
-                            <a href="{{ @server_name }}/app/nomination/{{ @SESSION.awardSlug }}/demo/begin" target="_blank" id="demoLink">
-                                {{ @server_name }}/app/nomination/{{ @SESSION.awardSlug }}/demo/begin
+                            <a href="https://nominations.nominatepro.com/app/nomination/{{ @SESSION.awardSlug }}/demo/begin" target="_blank" id="demoLink">
+                                https://nominations.nominatepro.com/app/nomination/{{ @SESSION.awardSlug }}/demo/begin
                             </a>
                         </p>
 
                         <p class="is-size-6 content pb-3">If you are using our judging system, provide the link below to each person who will be judging this award.<br>
                             <strong>Link to Judging Module:</strong>
                             <i class="fa-light fa-copy" onclick="copyToClipboard('judgeLink')"></i>
-                            <a href="{{ @server_name }}/app/judges/{{ @SESSION.awardSlug }}/renderJudgingRegistrationForm" target="_blank" id="judgeLink">
-                                https://{{ @server_name }}/app/judges/{{ @SESSION.cp_slug }}/renderJudgingRegistrationForm"
+                            <a href="https://nominations.nominatepro.com/app/judges/{{ @SESSION.awardSlug }}/renderJudgingRegistrationForm" target="_blank" id="judgeLink">
+                                https://nominations.nominatepro.com/app/judges/{{ @SESSION.cp_slug }}/renderJudgingRegistrationForm"
                             </a>
                         </p>
                     </true>
